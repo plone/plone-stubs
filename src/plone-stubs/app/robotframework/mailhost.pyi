@@ -1,0 +1,9 @@
+from plone.app.robotframework.remote import RemoteLibrary
+
+class MockMailHost(RemoteLibrary):
+    def get_the_last_sent_email(self):
+        """Return the last sent email from MockMailHost sent messages storage"""
+    def get_the_total_amount_of_sent_emails(self):
+        """Return the total amount of sent emails in MockMailHost sent messages
+        storage as integer
+        """

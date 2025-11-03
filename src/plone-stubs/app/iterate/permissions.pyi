@@ -1,0 +1,2 @@
+CheckinPermission: str
+CheckoutPermission: str

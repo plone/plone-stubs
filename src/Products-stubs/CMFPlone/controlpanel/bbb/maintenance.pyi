@@ -1,0 +1,9 @@
+from _typeshed import Incomplete
+
+class MaintenanceControlPanelAdapter:
+    context: Incomplete
+    maintenance_settings: Incomplete
+    def __init__(self, context) -> None: ...
+    def get_days(self): ...
+    def set_days(self, value) -> None: ...
+    days: Incomplete

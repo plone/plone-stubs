@@ -1,0 +1,13 @@
+from _typeshed import Incomplete
+
+HAS_MARKDOWN: bool
+DEFAULT_EXTENSIONS: Incomplete
+
+class markdown:
+    inputs: Incomplete
+    output: str
+    def name(self): ...
+    def extensions(self): ...
+    def convert(self, orig, data, **kwargs): ...
+
+def register(): ...

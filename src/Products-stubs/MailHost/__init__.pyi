@@ -1,0 +1,3 @@
+from Products.MailHost import SendMailTag as SendMailTag
+
+def initialize(context) -> None: ...

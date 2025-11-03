@@ -1,0 +1,207 @@
+from _typeshed import Incomplete
+from zope.interface import Interface
+from zope.publisher.interfaces.browser import IDefaultBrowserLayer
+
+class IPloneRestapiLayer(IDefaultBrowserLayer):
+    """Marker interface that defines a browser layer."""
+
+class IControlpanelLayer(IPloneRestapiLayer):
+    """Marker interface for REST API controlpanel requests.
+    This is used to isolate controlpanel adapters from normal traversal.
+    """
+
+class ISerializeToJson(Interface):
+    """Adapter to serialize a Dexterity object into a JSON object."""
+
+class ISerializeToJsonSummary(Interface):
+    """Adapter to serialize an object into a JSON compatible summary that
+    contains only the most basic information.
+    """
+
+class IJsonCompatible(Interface):
+    """Convert a value to a JSON compatible data structure."""
+
+class IContextawareJsonCompatible(IJsonCompatible):
+    """Convert a value to a JSON compatible data structure, using a context."""
+    def __init__(value, context) -> None:
+        """Adapts value and a context"""
+
+class ISchemaSerializer(Interface):
+    """The schema serializer serializes all field values from a schema
+    into JSON-compatible Python data."""
+    def __init__(schema, context, request) -> None:
+        """Adapts schema, context, and request."""
+    def __call__() -> None:
+        """Returns JSON-compatible Python data."""
+
+class IFieldSerializer(Interface):
+    """The field serializer multi adapter serializes the field value into
+    JSON compatible python data.
+    """
+    def __init__(field, context, request) -> None:
+        """Adapts field, context and request."""
+    def __call__() -> None:
+        """Returns JSON-compatible Python data."""
+
+class IPrimaryFieldTarget(Interface):
+    """Return a URL to direct the user to if this is the primary field.
+    Useful e.g. if you want to redirect certain users to a download url
+    instead of the item's view.
+    """
+    def __init__(field, context, request) -> None:
+        """Adapts field, context and request."""
+    def __call__() -> None:
+        """Returns a URL."""
+
+class IObjectPrimaryFieldTarget(Interface):
+    """Return a URL to direct the user to if the object has a primary field
+    that provides an IPrimaryFieldTarget.
+    """
+    def __init__(field, context, request) -> None:
+        """Adapts field, context and request."""
+    def __call__() -> None:
+        """Returns a URL."""
+
+class IDeserializeFromJson(Interface):
+    """An adapter to deserialize a JSON object into an object in Plone."""
+
+class IFieldDeserializer(Interface):
+    """An adapter to deserialize a JSON value into a field value."""
+    def __init__(field, context, request) -> None:
+        """Adapts a field, it's context and the request."""
+    def __call__(value) -> None:
+        """Convert the provided JSON value to a field value."""
+
+class IBlockTransformer(Interface):
+    """Transform a block value.
+
+    Meant to be looked up as an adapter of context and request.
+    The list of transformers is filtered by block_type and sorted by order.
+    Disabled transformers are ignored.
+
+    Block transformers for specific use cases extend this interface.
+    """
+
+    block_type: Incomplete
+    order: Incomplete
+    disabled: Incomplete
+    def __call__(value) -> None:
+        """Do the transform."""
+
+class IBlockFieldDeserializationTransformer(IBlockTransformer):
+    """Convert/adjust raw block deserialized value into block value."""
+    def __call__(value) -> None:
+        """Convert the provided raw Python value to a block value."""
+
+class IBlockFieldSerializationTransformer(IBlockTransformer):
+    """Transform block value before final JSON serialization"""
+    def __call__(value) -> None:
+        """Convert the provided raw Python value to a block value."""
+
+class IBlockFieldLinkIntegrityRetriever(Interface):
+    """Retrieve internal links set in current block."""
+    def __call__(value) -> None:
+        """Return a list of internal links set in this block."""
+
+class IExpandableElement(Interface):
+    """A named adapter that deserializes an element in expanded or collapsed
+    form.
+    """
+    def __call__(expand: bool = False) -> None:
+        """ """
+
+class IZCatalogCompatibleQuery(Interface):
+    """A multi adapter responsible for converting a catalog query provided as
+    a Python dictionary, but with possibly incorrect value types, to a
+    Python dictionary that can be passed directly to catalog.searchResults().
+
+    Values (query values or query options) that can't be serialized in JSON
+    (like datetimes) or a query string (any type other than string) must be
+    converted back by this adapter, by delegating that job to an
+    IIndexQueryParser for each of the queried indexes.
+    """
+
+    global_query_params: Incomplete
+    def __init__(context, request) -> None:
+        """Adapts context and request."""
+    def __call__(query) -> None:
+        """Returns a ZCatalog compatible query (Python dictionary)."""
+
+class IIndexQueryParser(Interface):
+    """A multi adapter responsible for deserializing values in catalog query
+    options for a particular index type.
+
+    The main issue here is typing of query values and query options: ZCatalog
+    expects any values in queries to have the proper type, and fails
+    unpredictably otherwise.
+
+    Because we can't avoid losing (some of) this typing information when
+    submitting queries to the API via a HTTP query string, we need to
+    reconstruct it based on what the index that is queried expects.
+
+    This adapter therefore needs to know what data types the adapted index
+    expects, and turn any values (query values or query options) back into the
+    proper data type.
+    """
+
+    query_value_type: Incomplete
+    query_options: Incomplete
+    def __init__(index, context, request) -> None:
+        """Adapts a ZCatalog index, context and request."""
+    def parse(idx_query) -> None:
+        """Takes a query against a single index (the value part of a
+        {'index_name': idx_query} pair).
+
+        `idx_query` can therefore be
+          - a single string value
+          - a list of string values
+          - a dictionary with one or more query options, among them the actual
+            query value identified by the 'query' key
+
+        Returns a transformed `idx_query` whose query options and query values
+        have been reconstructed to the proper data types that the adapted
+        index expects.
+        """
+
+class IBlockSearchableText(Interface):
+    """Allow blocks to provide text for the SearchableText index
+
+    Register as a named adapter, where the name is the block @type
+    """
+    def __init__(field, context, request) -> None:
+        """Adapts a context and the request."""
+    def __call__(value) -> None:
+        """Extract text from the block value. Returns text"""
+
+class IJSONSummarySerializerMetadata(Interface):
+    """Configure JSONSummary serializer."""
+    def default_metadata() -> None:
+        """Returns a set with default metadata to be serialized."""
+    def field_accessors() -> None:
+        """Returns a dictionary with field accessors to be used during serialization."""
+    def non_metadata_attributes() -> None:
+        """Returns a set with non metadata attributes."""
+    def blocklisted_attributes() -> None:
+        """Returns a set with attributes blocked during serialization."""
+
+class IBlockVisitor(Interface):
+    """Find sub-blocks
+
+    Used by the visit_blocks utility.
+    """
+    def __call__(self, block) -> None:
+        """Return an iterable of sub-blocks found inside `block`."""
+
+class ILoginProviders(Interface):
+    """An interface needed to be implemented by providers that want to be listed
+    in the @login endpoint
+    """
+    def get_providers() -> None:
+        """
+        return a list of login providers, with its id, title, plugin and url
+        """
+
+class ISiteEndpointExpander(Interface):
+    """An adapter which adds additional data to the @site endpoint."""
+    def __call__(data) -> None:
+        """Add additional key/values to data"""

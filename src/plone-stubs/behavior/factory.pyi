@@ -1,0 +1,6 @@
+from _typeshed import Incomplete
+
+class BehaviorAdapterFactory:
+    behavior: Incomplete
+    def __init__(self, behavior) -> None: ...
+    def __call__(self, context): ...

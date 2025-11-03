@@ -1,0 +1,13 @@
+from _typeshed import Incomplete
+
+class BaseSerializer:
+    context: Incomplete
+    request: Incomplete
+    def __init__(self, context, request) -> None: ...
+    def __call__(self): ...
+
+class SerializeUserToJsonSummary(BaseSerializer):
+    def __call__(self): ...
+
+class SerializeUserToJson(BaseSerializer):
+    def __call__(self): ...

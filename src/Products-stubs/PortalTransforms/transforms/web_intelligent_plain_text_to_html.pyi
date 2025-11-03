@@ -1,0 +1,16 @@
+from _typeshed import Incomplete
+
+class WebIntelligentPlainTextToHtml:
+    """Transform which replaces urls and email into hyperlinks"""
+
+    output: str
+    config: Incomplete
+    config_metadata: Incomplete
+    def __init__(
+        self, name=None, inputs=("text/x-web-intelligent",), tab_width: int = 4
+    ) -> None: ...
+    def name(self): ...
+    def __getattr__(self, attr): ...
+    def convert(self, orig, data, **kwargs): ...
+
+def register(): ...

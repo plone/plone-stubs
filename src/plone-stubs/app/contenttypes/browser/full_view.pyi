@@ -1,0 +1,9 @@
+from Products.Five.browser import BrowserView
+
+class FullViewItem(BrowserView):
+    @property
+    def default_view(self): ...
+    @property
+    def item_macros(self): ...
+    @property
+    def item_url(self): ...

@@ -1,0 +1,6 @@
+from _typeshed import Incomplete
+
+PATCHES: Incomplete
+
+def get_from_object(self): ...
+def set_from_object(self, obj) -> None: ...

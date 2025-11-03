@@ -1,0 +1,9 @@
+{
+  "files.encoding": "utf8",
+  "ruff.organizeImports": true,
+  "python.terminal.activateEnvironment": true,
+  "github.copilot.chat.codeGeneration.useInstructionFiles": true,
+  "[markdown]": {
+    "editor.formatOnSave": false
+  }
+}

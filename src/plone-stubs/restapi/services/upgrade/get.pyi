@@ -1,0 +1,6 @@
+from plone.restapi.services import Service
+
+def format_steps(upgrades): ...
+
+class UpgradeSiteGet(Service):
+    def reply(self): ...

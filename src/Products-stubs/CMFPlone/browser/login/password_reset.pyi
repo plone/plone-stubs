@@ -1,0 +1,46 @@
+from _typeshed import Incomplete
+from plone.memoize import view
+from Products.Five import BrowserView
+
+class PasswordResetToolView(BrowserView):
+    @view.memoize_contextless
+    def portal_state(self):
+        """return portal_state of plone.app.layout"""
+    def encode_mail_header(self, text):
+        """Encodes text into correctly encoded email header"""
+    def encoded_mail_sender(self):
+        """returns encoded version of Portal name <portal_email>"""
+    def registered_notify_subject(self): ...
+    def mail_password_subject(self): ...
+    def construct_url(self, randomstring): ...
+    def expiration_timeout(self): ...
+
+class PasswordResetView(BrowserView):
+    """ """
+
+    invalid: Incomplete
+    expired: Incomplete
+    finish: Incomplete
+    form: Incomplete
+    subpath: Incomplete
+    def handle_initial_login(self) -> None: ...
+    def redirect_after_login(
+        self, came_from=None, is_initial_login: bool = False
+    ) -> None: ...
+    def __call__(self): ...
+    def publishTraverse(self, request, name): ...
+    def getErrors(self): ...
+    def login_url(self): ...
+    def expiration_timeout(self): ...
+
+class ExplainPWResetToolView(BrowserView):
+    """ """
+    def timeout_days(self): ...
+    def user_check(self): ...
+    @property
+    def stats(self):
+        """Return a dictionary like so:
+            {"open":3, "expired":0}
+        about the number of open and expired reset requests.
+        """
+    def __call__(self): ...

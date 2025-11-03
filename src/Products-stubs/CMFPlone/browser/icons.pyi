@@ -1,0 +1,16 @@
+from _typeshed import Incomplete
+from Products.Five.browser import BrowserView
+
+logger: Incomplete
+SVG_MODIFER: Incomplete
+ADDITIONAL_CLASSES: Incomplete
+
+class IconsView(BrowserView):
+    prefix: str
+    defaulticon: str
+    name: str
+    def publishTraverse(self, request, name): ...
+    def __call__(self): ...
+    def lookup(self, name): ...
+    def url(self, name): ...
+    def tag(self, name, tag_class: str = "", tag_alt: str = ""): ...

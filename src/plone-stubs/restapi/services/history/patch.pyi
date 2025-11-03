@@ -1,0 +1,6 @@
+from plone.restapi.services import Service
+
+class HistoryPatch(Service):
+    def reply(self): ...
+
+def revert(context, version): ...

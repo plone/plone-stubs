@@ -1,0 +1,6 @@
+from Products.Five import BrowserView
+
+class DeleteFieldset(BrowserView):
+    def __call__(self): ...
+    @property
+    def nextURL(self): ...

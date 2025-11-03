@@ -1,0 +1,6 @@
+from _typeshed import Incomplete
+
+logger: Incomplete
+
+def fixUpSMIGlobs(context, reinit: bool = True) -> None: ...
+def post_install(context) -> None: ...

@@ -1,0 +1,16 @@
+from _typeshed import Incomplete
+
+__all__ = ["clearafter", "clearbefore", "memoize", "memoizedproperty"]
+
+class Memojito:
+    propname: str
+    def clear(self, inst) -> None: ...
+    def clearbefore(self, func): ...
+    def clearafter(self, func): ...
+    def memoize(self, func): ...
+
+memoize: Incomplete
+clearbefore: Incomplete
+clearafter: Incomplete
+
+def memoizedproperty(func): ...

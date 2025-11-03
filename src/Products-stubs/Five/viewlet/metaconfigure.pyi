@@ -1,0 +1,28 @@
+def viewletManagerDirective(
+    _context,
+    name,
+    permission,
+    for_=...,
+    layer=...,
+    view=...,
+    provides=...,
+    class_=None,
+    template=None,
+    allowed_interface=None,
+    allowed_attributes=None,
+) -> None: ...
+def viewletDirective(
+    _context,
+    name,
+    permission,
+    for_=...,
+    layer=...,
+    view=...,
+    manager=...,
+    class_=None,
+    template=None,
+    attribute: str = "render",
+    allowed_interface=None,
+    allowed_attributes=None,
+    **kwargs,
+): ...

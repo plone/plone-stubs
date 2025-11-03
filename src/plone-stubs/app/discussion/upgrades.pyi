@@ -1,0 +1,19 @@
+from _typeshed import Incomplete
+
+default_profile: str
+logger: Incomplete
+
+def update_registry(context) -> None: ...
+def update_rolemap(context) -> None: ...
+def upgrade_comment_workflows_retain_current_workflow(context) -> None: ...
+def upgrade_comment_workflows_apply_rolemapping(context) -> None: ...
+def upgrade_comment_workflows(context) -> None: ...
+def add_js_to_plone_legacy(context) -> None: ...
+def extend_review_workflow(context) -> None:
+    """Apply changes made to review workflow."""
+
+def set_timezone_on_dates(context) -> None:
+    """Ensure timezone data is stored against all creation/modified dates"""
+
+def set_discussion_behavior(context) -> None:
+    """Add the discussion behavior to all default types, if they exist."""

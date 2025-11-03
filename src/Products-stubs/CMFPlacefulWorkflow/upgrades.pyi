@@ -1,0 +1,3 @@
+PROFILE_ID: str
+
+def apply_full_profile(context) -> None: ...

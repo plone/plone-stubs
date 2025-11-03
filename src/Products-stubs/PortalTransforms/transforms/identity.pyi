@@ -1,0 +1,16 @@
+from _typeshed import Incomplete
+
+class IdentityTransform:
+    """Identity transform
+
+    return content unchanged.
+    """
+
+    config: Incomplete
+    config_metadata: Incomplete
+    def __init__(self, name=None, **kwargs) -> None: ...
+    def __getattr__(self, attr): ...
+    def name(self): ...
+    def convert(self, data, cache, **kwargs): ...
+
+def register(): ...

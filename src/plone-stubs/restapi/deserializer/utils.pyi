@@ -1,0 +1,6 @@
+from _typeshed import Incomplete
+
+PATH_RE: Incomplete
+
+def get_portal(): ...
+def path2uid(context, link): ...

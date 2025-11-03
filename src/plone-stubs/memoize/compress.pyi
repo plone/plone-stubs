@@ -1,0 +1,3 @@
+from plone.memoize.interfaces import IXHTMLCompressor as IXHTMLCompressor
+
+def xhtml_compress(string): ...

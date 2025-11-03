@@ -1,0 +1,3 @@
+__all__ = ["memoize"]
+
+def memoize(fun): ...

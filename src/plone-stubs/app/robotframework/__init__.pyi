@@ -1,0 +1,16 @@
+from plone.app.robotframework.annotate import Annotate as Annotate
+from plone.app.robotframework.autologin import AutoLogin as AutoLogin
+from plone.app.robotframework.content import Content as Content
+from plone.app.robotframework.genericsetup import GenericSetup as GenericSetup
+from plone.app.robotframework.i18n import I18N as I18N
+from plone.app.robotframework.keywords import Debugging as Debugging
+from plone.app.robotframework.keywords import LayoutMath as LayoutMath
+from plone.app.robotframework.mailhost import MockMailHost as MockMailHost
+from plone.app.robotframework.quickinstaller import QuickInstaller as QuickInstaller
+from plone.app.robotframework.remote import RemoteLibraryLayer as RemoteLibraryLayer
+from plone.app.robotframework.saucelabs import SauceLabs as SauceLabs
+from plone.app.robotframework.server import RobotListener as RobotListener
+from plone.app.robotframework.server import Zope2Server as Zope2Server
+from plone.app.robotframework.server import Zope2ServerRemote as Zope2ServerRemote
+from plone.app.robotframework.testing import PLONE_ROBOT_TESTING as PLONE_ROBOT_TESTING
+from plone.app.robotframework.users import Users as Users

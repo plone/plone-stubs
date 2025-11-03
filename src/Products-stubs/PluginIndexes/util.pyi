@@ -1,0 +1,6 @@
+from _typeshed import Incomplete
+
+MAX32: Incomplete
+
+def safe_callable(ob): ...
+def datetime_to_minutes(value, precision: int = 1, max_value=..., min_value=...): ...

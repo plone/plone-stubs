@@ -1,0 +1,4 @@
+add_transient_containers: str
+create_transient_objects: str
+access_transient_objects: str
+manage_transient_containers: str

@@ -1,0 +1,3 @@
+from plone.app.relationfield.behavior import IRelatedItems as IRelatedItems
+
+def related_items_behavior_BBB(): ...

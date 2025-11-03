@@ -1,0 +1,3 @@
+from OFS.SimpleItem import SimpleItem
+
+class InstalledProduct(SimpleItem): ...

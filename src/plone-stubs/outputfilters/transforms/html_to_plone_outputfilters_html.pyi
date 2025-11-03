@@ -1,0 +1,13 @@
+from _typeshed import Incomplete
+
+class html_to_plone_outputfilters_html:
+    """transform which applies output filters"""
+
+    inputs: Incomplete
+    output: str
+    config_metadata: Incomplete
+    def __init__(self, name=None) -> None: ...
+    def name(self): ...
+    def convert(self, orig, data, **kwargs): ...
+
+def register(): ...

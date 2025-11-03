@@ -1,0 +1,13 @@
+from _typeshed import Incomplete
+
+HAS_PLONE_6: Incomplete
+
+class SerializeSiteRootToJson:
+    context: Incomplete
+    request: Incomplete
+    def __init__(self, context, request) -> None: ...
+    def __call__(
+        self, version=None, include_items: bool = True, include_expansion: bool = True
+    ): ...
+    def check_permission(self, permission_name, obj): ...
+    def serialize_blocks(self): ...

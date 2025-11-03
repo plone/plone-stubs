@@ -1,0 +1,6 @@
+from _typeshed import Incomplete
+
+def custom_json_handler(obj): ...
+def json_dumps(data): ...
+
+json_loads: Incomplete

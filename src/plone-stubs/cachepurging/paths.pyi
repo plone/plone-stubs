@@ -1,0 +1,9 @@
+from _typeshed import Incomplete
+
+class TraversablePurgePaths:
+    """Default purge for OFS.Traversable-style objects"""
+
+    context: Incomplete
+    def __init__(self, context) -> None: ...
+    def getRelativePaths(self): ...
+    def getAbsolutePaths(self): ...

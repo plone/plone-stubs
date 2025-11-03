@@ -1,0 +1,6 @@
+class AddWithPresettingsViewBase:
+    """Base class for add views with selectable presettings."""
+    def title(self): ...
+    def __call__(
+        self, add_input_name: str = "", settings_id: str = "", submit_add: str = ""
+    ): ...

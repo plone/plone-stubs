@@ -1,0 +1,6 @@
+word_pattern: str
+glob_pattern: str
+
+class HTMLWordSplitter:
+    def process(self, text, wordpat=...): ...
+    def processGlob(self, text): ...

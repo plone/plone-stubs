@@ -1,0 +1,23 @@
+def json_body(request): ...
+def boolean_value(value):
+    """
+
+    Args:
+        value: a value representing a boolean which can be
+               a string, a boolean or an integer
+                   (usually a string from a GET parameter).
+
+    Returns: a boolean
+
+    """
+
+def parse_int(data, prop, default):
+    """
+    Args:
+        data: dict from a request
+        prop: name of a integer parameter in the dict
+        default: default if not found
+
+    Returns: an integer
+    Raises: BadRequest if not an int
+    """

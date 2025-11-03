@@ -1,0 +1,6 @@
+from _typeshed import Incomplete
+
+logger: Incomplete
+
+def migrate_to_email_login(context) -> None: ...
+def migrate_from_email_login(context) -> None: ...

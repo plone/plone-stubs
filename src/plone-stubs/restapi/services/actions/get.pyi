@@ -1,0 +1,13 @@
+from _typeshed import Incomplete
+from plone.restapi.services import Service
+
+class Actions:
+    context: Incomplete
+    request: Incomplete
+    def __init__(self, context, request) -> None: ...
+    def __call__(self, expand: bool = False): ...
+    @property
+    def all_categories(self): ...
+
+class ActionsGet(Service):
+    def reply(self): ...

@@ -1,0 +1,66 @@
+from _typeshed import Incomplete
+from plone.app.users.browser.interfaces import IAccountPanelForm
+from plone.autoform.form import AutoExtensibleForm
+from z3c.form import form
+from zope.cachedescriptors.property import Lazy as lazy_property
+
+MESSAGE_EMAIL_CANNOT_CHANGE: Incomplete
+MESSAGE_EMAIL_IN_USE: Incomplete
+MESSAGE_IMAGE_NOT_SUPPORTED: Incomplete
+
+def getSchema(schema_interface, schema_adapter, form_name=None): ...
+def isDefaultPortrait(value, portal): ...
+
+class AccountPanelSchemaAdapter:
+    """Data manager that gets and sets any property mentioned
+    in the schema to the property sheet
+    """
+
+    context: Incomplete
+    schema = IAccountPanelForm
+    def __init__(self, context) -> None: ...
+    def __getattr__(self, name): ...
+    def __setattr__(self, name, value): ...
+    @property
+    def portal(self): ...
+    def get_portrait(self):
+        """If user has default portrait, return none"""
+    def set_portrait(self, value) -> None: ...
+    portrait: Incomplete
+    @property
+    def wysiwyg_editor(self): ...
+    @wysiwyg_editor.setter
+    def wysiwyg_editor(self, value): ...
+    @property
+    def timezone(self): ...
+    @timezone.setter
+    def timezone(self, value): ...
+
+class AccountPanelForm(AutoExtensibleForm, form.Form):
+    """A simple form to be used as a basis for account panel screens."""
+
+    schema = IAccountPanelForm
+    template: Incomplete
+    enableCSRFProtection: bool
+    hidden_widgets: Incomplete
+    successMessage: Incomplete
+    noChangesMessage: Incomplete
+    @lazy_property
+    def member(self): ...
+    @property
+    def label(self): ...
+    def makeQuery(self): ...
+    def action(self): ...
+    def validate_email(self, action, data) -> None: ...
+    def validate_portrait(self, action, data) -> None:
+        """Portrait validation.
+        Checks if image is supported by Pillow.
+        SVG files are not yet supported.
+        """
+    status: Incomplete
+    def handleSave(self, action) -> None: ...
+    def updateActions(self) -> None: ...
+    def cancel(self, action) -> None: ...
+    def prepareObjectTabs(
+        self, default_tab: str = "view", sort_first=["folderContents"]
+    ): ...

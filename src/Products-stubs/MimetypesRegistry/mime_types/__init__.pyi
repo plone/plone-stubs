@@ -1,0 +1,3 @@
+from .mtr_mimetypes import *
+
+def initialize(registry) -> None: ...

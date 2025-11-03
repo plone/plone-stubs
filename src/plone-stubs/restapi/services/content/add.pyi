@@ -1,0 +1,6 @@
+from plone.restapi.services import Service
+
+class FolderPost(Service):
+    """Creates a new content object."""
+    def reply(self): ...
+    def get_object(self, key): ...

@@ -1,0 +1,13 @@
+from _typeshed import Incomplete
+from plone.app.layout.viewlets.common import TitleViewlet
+
+logger: Incomplete
+
+class SocialTagsViewlet(TitleViewlet):
+    social_image_scale: str
+    def head_tag_filter(self, value): ...
+    def body_tag_filter(self, value): ...
+    @property
+    def tags(self): ...
+    @property
+    def body_tags(self): ...

@@ -1,0 +1,13 @@
+from plone.restapi.serializer.controlpanels import ControlpanelSerializeToJson
+
+class FakeDXContext:
+    """Fake DX content class, so we can reuse the DX field serializers"""
+
+def rule_schema_as_json(schema, request):
+    """Build a complete JSON schema for the given controlpanel."""
+
+class ContentRulesControlpanelSerializeToJson(ControlpanelSerializeToJson):
+    def addable_actions(self, manage_elements): ...
+    def addable_conditions(self, manage_elements): ...
+    def serialize_item(self, proxy): ...
+    def __call__(self, item=None): ...

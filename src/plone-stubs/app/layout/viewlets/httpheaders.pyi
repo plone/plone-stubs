@@ -1,0 +1,13 @@
+from _typeshed import Incomplete
+from plone.app.layout.viewlets.common import ViewletBase
+
+class HeaderViewlet(ViewletBase):
+    """a base viewlet that do not render anything, just ready to set headers"""
+    def index(self): ...
+    setHeader: Incomplete
+    def update(self) -> None: ...
+    def getHeaders(self): ...
+
+class HTTPCachingHeaders(HeaderViewlet):
+    """Replace the old global_cache_settings/macros/cacheheaders"""
+    def getHeaders(self): ...

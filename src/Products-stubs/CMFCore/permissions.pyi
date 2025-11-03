@@ -1,0 +1,29 @@
+from _typeshed import Incomplete
+
+security: Incomplete
+AccessContentsInformation: Incomplete
+ChangePermissions: Incomplete
+DeleteObjects: Incomplete
+FTPAccess: Incomplete
+ManageProperties: Incomplete
+ManageUsers: Incomplete
+UndoChanges: Incomplete
+View: Incomplete
+ViewManagementScreens: Incomplete
+ListFolderContents: str
+ListUndoableChanges: str
+AccessInactivePortalContent: str
+ModifyCookieCrumblers: str
+ReplyToItem: str
+ManagePortal: str
+ModifyPortalContent: str
+ListPortalMembers: str
+AddPortalFolders: str
+AddPortalContent: str
+AddPortalMember: str
+SetOwnPassword: str
+SetOwnProperties: str
+ChangeLocalRoles: str
+MailForgottenPassword: str
+RequestReview: str
+ReviewPortalContent: str

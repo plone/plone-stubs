@@ -1,0 +1,3 @@
+from plone.dexterity.browser.view import DefaultView
+
+class DexterityBabelView(DefaultView): ...

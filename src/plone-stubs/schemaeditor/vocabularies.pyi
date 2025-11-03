@@ -1,0 +1,3 @@
+class VocabulariesVocabulary:
+    """Vocabulary for a list of available vocabulary factories"""
+    def __call__(self, context): ...

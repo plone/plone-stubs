@@ -1,0 +1,6 @@
+access_session_data: str
+access_user_session_data: str
+add_browser_id_managers: str
+add_session_data_managers: str
+change_browser_id_managers: str
+change_session_data_managers: str

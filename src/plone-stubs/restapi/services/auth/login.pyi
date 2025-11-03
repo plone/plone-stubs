@@ -1,0 +1,6 @@
+from plone.restapi.services import Service
+
+class Login(Service):
+    """Handles login and returns a JSON web token (JWT)."""
+    def reply(self): ...
+    def check_permission(self) -> None: ...
