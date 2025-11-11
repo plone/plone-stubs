@@ -49,6 +49,13 @@ build-backend = "uv_build"
 
 [tool.uv.build-backend]
 namespace = true
+module-name = [
+    "plone-stubs",
+    "Products-stubs",
+    "transaction-stubs",
+    "ZTUtils-stubs"
+]
+
 
 [tool.uv]
 default-groups = ["test"]
