@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from typing import Any
+from typing import Literal
 
 __all__ = [
     "AddonInformation",
@@ -10,6 +11,15 @@ __all__ = [
     "get_version",
     "install",
     "uninstall",
+]
+
+AddonLimitType = Literal[
+    "",
+    "installed",
+    "upgradable",
+    "available",
+    "non_installable",
+    "broken",
 ]
 
 @dataclass
@@ -35,41 +45,34 @@ class AddonInformation:
     upgrade_info: dict[str, Any]
     valid: bool
     flags: list[str]
-
-def get_addons(limit: str = "") -> list[AddonInformation]:
+def get_addons(limit: AddonLimitType = "") -> list[AddonInformation]:
     """List add-ons in this Plone site.
 
-    :param limit: Limit list of add-ons ('installed', 'upgradable', 'available', 'non_installable', 'broken')
-    :type limit: string
+    :param limit: Limit list of add-ons.
+    :type limit: AddonLimitType
     :returns: List of AddonInformation.
-    :raises: InvalidParameterError
     """
-
-def get_addon_ids(limit: str = "") -> list[str]:
+def get_addon_ids(limit: AddonLimitType = "") -> list[str]:
     """List add-ons ids in this Plone site.
 
-    :param limit: Limit list of add-ons ('installed', 'upgradable', 'available', 'non_installable', 'broken')
-    :type limit: string
+    :param limit: Limit list of add-ons.
+    :type limit: AddonLimitType
     :returns: List of add-on ids.
     """
-
 def get_version(addon: str) -> str:
     """Return the version of the product (package).
 
-    :param addon: [required] ID of the add-on
+    :param addon: [required] ID of the add-on.
     :type addon: string
-    :returns: Version string
+    :returns: Version string.
     """
-
 def get(addon: str) -> AddonInformation:
     """Information about an Add-on.
 
     :param addon: [required] ID of the add-on to be retrieved.
     :type addon: string
     :returns: Add-on information.
-    :raises: InvalidParameterError
     """
-
 def install(addon: str) -> bool:
     """Install an add-on.
 
@@ -77,7 +80,6 @@ def install(addon: str) -> bool:
     :type addon: string
     :returns: Status of the installation.
     """
-
 def uninstall(addon: str) -> bool:
     """Uninstall an add-on.
 
