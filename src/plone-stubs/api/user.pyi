@@ -26,6 +26,7 @@ def create(
     :returns: Newly created user.
     :rtype: MemberData object
     """
+
 def get(
     userid: str | None = None,
     username: str | None = None,
@@ -39,12 +40,14 @@ def get(
     :returns: User or None if not found.
     :rtype: MemberData object
     """
+
 def get_current() -> MemberData:
     """Get the currently logged-in user.
 
     :returns: Currently logged-in user.
     :rtype: MemberData object
     """
+
 def get_users(
     groupname: str | None = None,
     group: GroupData | None = None,
@@ -58,6 +61,7 @@ def get_users(
     :returns: All users (optionally filtered by group).
     :rtype: list of MemberData objects
     """
+
 def delete(
     username: str | None = None,
     user: MemberData | IBasicUser | None = None,
@@ -69,12 +73,14 @@ def delete(
     :param user: User object to be deleted.
     :type user: MemberData object
     """
+
 def is_anonymous() -> bool:
     """Check if the currently logged-in user is anonymous.
 
     :returns: True if the current user is anonymous, False otherwise.
     :rtype: bool
     """
+
 def get_roles(
     username: str | None = None,
     user: MemberData | IBasicUser | None = None,
@@ -94,6 +100,7 @@ def get_roles(
     :returns: List of roles.
     :rtype: list of strings
     """
+
 def get_permissions(
     username: str | None = None,
     user: MemberData | IBasicUser | None = None,
@@ -110,6 +117,7 @@ def get_permissions(
     :returns: Dictionary mapping permission names to boolean values.
     :rtype: dict
     """
+
 def has_permission(
     permission: str,
     username: str | None = None,
@@ -129,6 +137,7 @@ def has_permission(
     :returns: True if the user has the permission, False otherwise.
     :rtype: bool
     """
+
 def grant_roles(
     username: str | None = None,
     user: MemberData | IBasicUser | None = None,
@@ -146,6 +155,7 @@ def grant_roles(
     :param roles: [required] List of roles to grant.
     :type roles: list of strings
     """
+
 def revoke_roles(
     username: str | None = None,
     user: MemberData | IBasicUser | None = None,

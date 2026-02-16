@@ -1,6 +1,6 @@
+from DateTime import DateTime
 from datetime import date
 from datetime import datetime
-from DateTime import DateTime
 from plone.base.interfaces import INavigationRoot
 from plone.dexterity.content import DexterityContent
 from Products.CMFCore.interfaces import IActionsTool
@@ -26,6 +26,7 @@ def get() -> PloneSite:
     :returns: Plone portal object.
     :rtype: PloneSite
     """
+
 def get_navigation_root(context: Any) -> INavigationRoot:
     """Get the navigation root object for the context.
 
@@ -34,6 +35,7 @@ def get_navigation_root(context: Any) -> INavigationRoot:
     :returns: Navigation Root.
     :rtype: INavigationRoot
     """
+
 @overload
 def get_tool(name: Literal["portal_catalog"]) -> ICatalogTool: ...
 @overload
@@ -54,6 +56,7 @@ def get_tool(name: str) -> Any:
     :type name: string
     :returns: The tool.
     """
+
 def send_email(
     recipient: str,
     subject: str,
@@ -74,6 +77,7 @@ def send_email(
     :param immediate: Send immediate or queued at transaction commit time.
     :type immediate: boolean
     """
+
 def get_localized_time(
     datetime: datetime | date | DateTime,
     long_format: bool = False,
@@ -90,6 +94,7 @@ def get_localized_time(
     :returns: Localized time.
     :rtype: string
     """
+
 def show_message(
     message: str,
     request: IBrowserRequest | None = None,
@@ -104,6 +109,7 @@ def show_message(
     :param type: Message type. Possible values: 'info', 'warn', 'error'.
     :type type: Literal["info", "warn", "error"]
     """
+
 def get_registry_record(
     name: str,
     interface: InterfaceClass | None = None,
@@ -119,6 +125,7 @@ def get_registry_record(
     :type default: anything
     :returns: Registry record value.
     """
+
 def set_registry_record(
     name: str,
     value: Any,
@@ -133,12 +140,14 @@ def set_registry_record(
     :param interface: Interface whose attributes are plone.app.registry settings.
     :type interface: InterfaceClass
     """
+
 def get_default_language() -> str:
     """Return the default language.
 
     :returns: Language identifier.
     :rtype: string
     """
+
 def get_current_language(context: DexterityContent | None = None) -> str:
     """Return the current negotiated language.
 
@@ -147,6 +156,7 @@ def get_current_language(context: DexterityContent | None = None) -> str:
     :returns: Language identifier.
     :rtype: string
     """
+
 def translate(
     msgid: str,
     domain: str = "plone",
@@ -163,6 +173,7 @@ def translate(
     :returns: Translated message.
     :rtype: string
     """
+
 def get_vocabulary(
     name: str,
     context: Any = None,
@@ -176,6 +187,7 @@ def get_vocabulary(
     :returns: A SimpleVocabulary instance that implements IVocabularyTokenized.
     :rtype: SimpleVocabulary
     """
+
 def get_vocabulary_names() -> list[str]:
     """Return a list of vocabulary names.
 

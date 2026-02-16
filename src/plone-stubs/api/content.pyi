@@ -31,6 +31,7 @@ def create(
     :type safe_id: boolean
     :returns: Content object
     """
+
 def get(
     path: str | None = None,
     UID: str | None = None,
@@ -43,6 +44,7 @@ def get(
     :type UID: string
     :returns: Content object or None if not found.
     """
+
 def move(
     source: DexterityContent,
     target: DexterityContent | None = None,
@@ -61,6 +63,7 @@ def move(
     :type safe_id: boolean
     :returns: Content object that was moved.
     """
+
 def rename(
     obj: DexterityContent,
     new_id: str,
@@ -76,6 +79,7 @@ def rename(
     :type safe_id: boolean
     :returns: Content object that was renamed.
     """
+
 def copy(
     source: DexterityContent,
     target: DexterityContent | None = None,
@@ -94,6 +98,7 @@ def copy(
     :type safe_id: boolean
     :returns: Content object that was created.
     """
+
 def delete(
     obj: DexterityContent | None = None,
     objects: list[DexterityContent] | None = None,
@@ -108,6 +113,7 @@ def delete(
     :param check_linkintegrity: Raise exception if there are linkintegrity-breaches.
     :type check_linkintegrity: boolean
     """
+
 def get_state(obj: DexterityContent, default: Any = ...) -> str:
     """Get the current workflow state of the object.
 
@@ -117,6 +123,7 @@ def get_state(obj: DexterityContent, default: Any = ...) -> str:
     :returns: Object's current workflow state, or default.
     :rtype: string
     """
+
 def transition(
     obj: DexterityContent,
     transition: str | None = None,
@@ -132,18 +139,21 @@ def transition(
     :param to_state: Name of the workflow state.
     :type to_state: string
     """
+
 def disable_roles_acquisition(obj: DexterityContent) -> None:
     """Disable acquisition of local roles on given obj.
 
     :param obj: [required] Context object to block the acquisition on.
     :type obj: Content object
     """
+
 def enable_roles_acquisition(obj: DexterityContent) -> None:
     """Enable acquisition of local roles on given obj.
 
     :param obj: [required] Context object to enable the acquisition on.
     :type obj: Content object
     """
+
 def get_view(
     name: str,
     context: DexterityContent,
@@ -159,6 +169,7 @@ def get_view(
     :type request: request object
     :returns: BrowserView object.
     """
+
 def get_uuid(obj: DexterityContent) -> str:
     """Get the object's Universally Unique IDentifier (UUID).
 
@@ -167,6 +178,7 @@ def get_uuid(obj: DexterityContent) -> str:
     :returns: Object's UUID.
     :rtype: string
     """
+
 def get_path(obj: DexterityContent, relative: bool = False) -> str:
     """Get the path of an object.
 
@@ -177,6 +189,7 @@ def get_path(obj: DexterityContent, relative: bool = False) -> str:
     :returns: Path to the object.
     :rtype: string
     """
+
 def find(
     context: DexterityContent | None = None,
     depth: int | None = None,
@@ -194,12 +207,13 @@ def find(
     :returns: Catalog brains.
     :rtype: Iterable
     """
+
 def iter_ancestors(
     obj: DexterityContent,
     function: Callable[[DexterityContent], bool] | None = None,
     interface: Interface | None = None,
     stop_at: DexterityContent | bool | None = ...,
-) -> Generator[DexterityContent, None, None]:
+) -> Generator[DexterityContent]:
     """Iterate over the object ancestors.
 
     :param obj: [required] Object for which we want to iterate over the ancestors.
@@ -214,6 +228,7 @@ def iter_ancestors(
     :returns: Iterator of ancestor objects, from immediate to site root.
     :rtype: Generator
     """
+
 def get_closest_ancestor(
     obj: DexterityContent,
     function: Callable[[DexterityContent], bool] | None = None,

@@ -15,26 +15,32 @@ def adopt_user(
     :param user: User object to switch to inside block.
     :type user: user object from acl_users.getUser() or api.user.get()
     """
+
 def adopt_roles(roles: list[str] | str) -> AbstractContextManager[None]:
     """Context manager for temporarily switching roles.
 
     :param roles: [required] New roles to gain inside block. Existing roles will be lost.
     :type roles: list of strings or a single string
     """
+
 def debug_mode() -> bool:
     """Return True if your zope instance is running in debug mode."""
+
 def test_mode() -> bool:
     """Returns True if you are running the zope test runner."""
+
 def read_only_mode() -> bool:
     """Check if the Zope instance is running on a read-only ZODB.
 
     :returns: bool isReadOnly True if ZODB is read-only
     """
+
 def plone_version() -> str:
     """Return Plone version number.
 
     :returns: string denoting what release of Plone this distribution contains
     """
+
 def zope_version() -> str:
     """Return Zope 2 version number.
 

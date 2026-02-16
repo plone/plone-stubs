@@ -29,6 +29,7 @@ def get(
     :returns: A list of relations.
     :rtype: list of RelationValue objects
     """
+
 @overload
 def get(
     source: DexterityContent | None = None,
@@ -53,6 +54,7 @@ def get(
     :returns: A dict with relationship name as keys.
     :rtype: dict of string to list of RelationValue objects
     """
+
 def create(
     source: DexterityContent,
     target: DexterityContent,
@@ -67,6 +69,7 @@ def create(
     :param relationship: [required] Relationship name.
     :type relationship: string
     """
+
 def delete(
     source: DexterityContent | None = None,
     target: DexterityContent | None = None,

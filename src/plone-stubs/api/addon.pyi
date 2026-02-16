@@ -45,6 +45,7 @@ class AddonInformation:
     upgrade_info: dict[str, Any]
     valid: bool
     flags: list[str]
+
 def get_addons(limit: AddonLimitType = "") -> list[AddonInformation]:
     """List add-ons in this Plone site.
 
@@ -52,6 +53,7 @@ def get_addons(limit: AddonLimitType = "") -> list[AddonInformation]:
     :type limit: AddonLimitType
     :returns: List of AddonInformation.
     """
+
 def get_addon_ids(limit: AddonLimitType = "") -> list[str]:
     """List add-ons ids in this Plone site.
 
@@ -59,6 +61,7 @@ def get_addon_ids(limit: AddonLimitType = "") -> list[str]:
     :type limit: AddonLimitType
     :returns: List of add-on ids.
     """
+
 def get_version(addon: str) -> str:
     """Return the version of the product (package).
 
@@ -66,6 +69,7 @@ def get_version(addon: str) -> str:
     :type addon: string
     :returns: Version string.
     """
+
 def get(addon: str) -> AddonInformation:
     """Information about an Add-on.
 
@@ -73,6 +77,7 @@ def get(addon: str) -> AddonInformation:
     :type addon: string
     :returns: Add-on information.
     """
+
 def install(addon: str) -> bool:
     """Install an add-on.
 
@@ -80,6 +85,7 @@ def install(addon: str) -> bool:
     :type addon: string
     :returns: Status of the installation.
     """
+
 def uninstall(addon: str) -> bool:
     """Uninstall an add-on.
 

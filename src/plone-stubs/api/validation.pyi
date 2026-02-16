@@ -13,6 +13,7 @@ def required_parameters(*required_params: str) -> Callable[[_F], _F]:
         def foo(a=None, b=None, c=None):
             pass
     """
+
 def mutually_exclusive_parameters(*exclusive_params: str) -> Callable[[_F], _F]:
     """Raise an exception if more than one of the specified parameters has been supplied.
 
@@ -22,6 +23,7 @@ def mutually_exclusive_parameters(*exclusive_params: str) -> Callable[[_F], _F]:
         def foo(a=None, b=None, c=None):
             pass
     """
+
 def at_least_one_of(*candidate_params: str) -> Callable[[_F], _F]:
     """Raise an exception if none of the specified parameters has been supplied.
 

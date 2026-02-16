@@ -25,6 +25,7 @@ def create(
     :returns: Newly created group.
     :rtype: GroupData object
     """
+
 def get(groupname: str) -> GroupData | None:
     """Get a group.
 
@@ -33,6 +34,7 @@ def get(groupname: str) -> GroupData | None:
     :returns: Group or None if not found.
     :rtype: GroupData object
     """
+
 def get_groups(
     username: str | None = None,
     user: MemberData | IBasicUser | None = None,
@@ -46,6 +48,7 @@ def get_groups(
     :returns: All groups (optionally filtered by user).
     :rtype: list of GroupData objects
     """
+
 def delete(
     groupname: str | None = None,
     group: GroupData | None = None,
@@ -59,6 +62,7 @@ def delete(
     :returns: True if the group was deleted.
     :rtype: bool
     """
+
 def add_user(
     groupname: str | None = None,
     group: GroupData | None = None,
@@ -76,6 +80,7 @@ def add_user(
     :param user: User to add to the group.
     :type user: MemberData or IBasicUser object
     """
+
 def remove_user(
     groupname: str | None = None,
     group: GroupData | None = None,
@@ -93,6 +98,7 @@ def remove_user(
     :param user: User to remove from the group.
     :type user: MemberData or IBasicUser object
     """
+
 def get_roles(
     groupname: str | None = None,
     group: GroupData | None = None,
@@ -112,6 +118,7 @@ def get_roles(
     :returns: List of roles.
     :rtype: list of strings
     """
+
 def grant_roles(
     groupname: str | None = None,
     group: GroupData | None = None,
@@ -129,6 +136,7 @@ def grant_roles(
     :param obj: If obj is set then grant local roles on this context.
     :type obj: Content object
     """
+
 def revoke_roles(
     groupname: str | None = None,
     group: GroupData | None = None,
