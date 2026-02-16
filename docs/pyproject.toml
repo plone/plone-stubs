@@ -34,7 +34,6 @@ dev = [
     "linkify-it-py",
     "myst-parser",
     "plone-sphinx-theme>=1.4.1",  # Use the latest stable version or a minimum
-    "setuptools",  # required by sphinxcontrib.httpexample, remove when it migrates to importlib. See https://github.com/collective/sphinxcontrib-httpexample/issues/106
     "sphinx-autobuild",
     "sphinx-copybutton",
     "sphinx-design",
@@ -44,7 +43,7 @@ dev = [
     "sphinx-sitemap",
     "sphinx-tippy",
     "sphinxcontrib-httpdomain",
-    "sphinxcontrib-httpexample",
+    "sphinxcontrib-httpexample>=2.0rc1",
     "sphinxcontrib-mermaid",
     "sphinxcontrib-video",
     "sphinxcontrib-youtube",
