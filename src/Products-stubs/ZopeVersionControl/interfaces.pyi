@@ -15,19 +15,19 @@ class IVersionControl(Interface):
     Future versions or extensions of this interface will likely support
     more advanced version control features such as concurrent lines of
     descent (activities) and collection versioning."""
-    def isAVersionableResource(object) -> None:
+    def isAVersionableResource(self, object) -> None:
         """
         Returns true if the given object is a versionable resource.
 
         Permission: public
         """
-    def isUnderVersionControl(object) -> None:
+    def isUnderVersionControl(self, object) -> None:
         """
         Returns true if the given object is under version control.
 
         Permission: public
         """
-    def isResourceUpToDate(object, require_branch: int = 0) -> None:
+    def isResourceUpToDate(self, object, require_branch: int = 0) -> None:
         """
         Returns true if a resource is based on the latest version. Note
         that the latest version is in the context of any activity (branch).
@@ -39,7 +39,7 @@ class IVersionControl(Interface):
 
         Permission: public
         """
-    def isResourceChanged(object) -> None:
+    def isResourceChanged(self, object) -> None:
         """
         Return true if the state of a resource has changed in a transaction
         *after* the version bookkeeping was saved. Note that this method is
@@ -47,7 +47,7 @@ class IVersionControl(Interface):
 
         Permission: public
         """
-    def getVersionInfo(object) -> None:
+    def getVersionInfo(self, object) -> None:
         """
         Return the VersionInfo associated with the given object. The
         VersionInfo object contains version control bookkeeping information.
@@ -56,7 +56,7 @@ class IVersionControl(Interface):
 
         Permission: public
         """
-    def applyVersionControl(object, message=None) -> None:
+    def applyVersionControl(self, object, message=None) -> None:
         """
         Place the given object under version control. A VersionControlError
         will be raised if the object is already under version control.
@@ -69,7 +69,7 @@ class IVersionControl(Interface):
 
         Permission: Use version control
         """
-    def checkoutResource(object) -> None:
+    def checkoutResource(self, object) -> None:
         """
         Put the given version-controlled object into the 'checked-out'
         state, allowing changes to be made to the object. If the object is
@@ -78,7 +78,7 @@ class IVersionControl(Interface):
 
         Permission: Use version control
         """
-    def checkinResource(object, message: str = "") -> None:
+    def checkinResource(self, object, message: str = "") -> None:
         """
         Check-in (create a new version) of the given object, updating the
         state and bookkeeping information of the given object. The optional
@@ -88,13 +88,13 @@ class IVersionControl(Interface):
 
         Permission: Use version control
         """
-    def uncheckoutResource(object) -> None:
+    def uncheckoutResource(self, object) -> None:
         """
         Discard changes to the given object made since the last checkout.
         If the object is not under version control or is not checked out,
         a VersionControlError will be raised.
         """
-    def updateResource(object, selector=None) -> None:
+    def updateResource(self, object, selector=None) -> None:
         """
         Update the state of the given object to that of a specific version
         of the object. The object must be in the checked-in state to be
@@ -104,7 +104,7 @@ class IVersionControl(Interface):
 
         Permission: Use version control
         """
-    def labelResource(object, label, force=None) -> None:
+    def labelResource(self, object, label, force=None) -> None:
         """
         Associate the given resource with a label. If force is true, then
         any existing association with the given label will be removed and
@@ -114,7 +114,7 @@ class IVersionControl(Interface):
 
         Permission: Use version control
         """
-    def getVersionOfResource(history_id, selector) -> None:
+    def getVersionOfResource(self, history_id, selector) -> None:
         """
         Given a version history id and a version selector, return the
         object as of that version. Note that the returned object has no
@@ -124,7 +124,7 @@ class IVersionControl(Interface):
 
         Permission: Use version control
         """
-    def getVersionIds(object) -> None:
+    def getVersionIds(self, object) -> None:
         """
         Return a sequence of the (string) version ids corresponding to the
         available versions of an object. This should be used by UI elements
@@ -132,7 +132,7 @@ class IVersionControl(Interface):
 
         Permission: Use version control
         """
-    def getLabelsForResource(object) -> None:
+    def getLabelsForResource(self, object) -> None:
         """
         Return a sequence of the (string) labels corresponding to the
         versions of the given object that have been associated with a
@@ -141,7 +141,7 @@ class IVersionControl(Interface):
 
         Permission: Use version control
         """
-    def getLogEntries(object) -> None:
+    def getLogEntries(self, object) -> None:
         """
         Return a sequence of LogEntry objects (most recent first) that
         are associated with a version-controlled object.
@@ -203,7 +203,7 @@ class INonVersionedData(Interface):
     Containerish objects implement this interface to allow the items they
     contain to be versioned independently of the container.
     """
-    def listNonVersionedObjects() -> None:
+    def listNonVersionedObjects(self) -> None:
         """Returns a list of subobjects that should not be pickled.
 
         The objects in the list must not be wrapped, because only the
@@ -211,19 +211,19 @@ class INonVersionedData(Interface):
         repository uses this method to avoid cloning subobjects that
         will soon be removed by removeNonVersionedData.
         """
-    def removeNonVersionedData() -> None:
+    def removeNonVersionedData(self) -> None:
         """Removes the non-versioned data from this object.
 
         The version repository uses this method before storing an
         object in the version repository.
         """
-    def getNonVersionedData() -> None:
+    def getNonVersionedData(self) -> None:
         """Returns an opaque object containing the non-versioned data.
 
         The version repository uses this method before reverting an
         object to a revision.
         """
-    def restoreNonVersionedData(dict) -> None:
+    def restoreNonVersionedData(self, dict) -> None:
         """Restores non-versioned data to this object.
 
         The version repository uses this method after reverting an

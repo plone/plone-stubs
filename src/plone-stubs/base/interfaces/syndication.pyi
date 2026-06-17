@@ -4,43 +4,43 @@ from zope.interface import Interface
 class ISyndicatable(Interface): ...
 
 class IFeedData(Interface):
-    def link() -> None:
+    def link(self) -> None:
         """
         Link to item
         """
-    def base_url() -> None:
+    def base_url(self) -> None:
         """
         base url to item
         """
-    def title() -> None:
+    def title(self) -> None:
         """
         title of item
         """
-    def description() -> None:
+    def description(self) -> None:
         """ """
-    def categories() -> None:
+    def categories(self) -> None:
         """
         List of tags
         """
-    def published() -> None:
+    def published(self) -> None:
         """
         publishing date
         """
-    def modified() -> None:
+    def modified(self) -> None:
         """
         modification date
         """
-    def uid() -> None:
+    def uid(self) -> None:
         """ """
-    def rights() -> None:
+    def rights(self) -> None:
         """ """
-    def publisher() -> None:
+    def publisher(self) -> None:
         """ """
-    def author() -> None:
+    def author(self) -> None:
         """ """
-    def author_name() -> None:
+    def author_name(self) -> None:
         """ """
-    def author_email() -> None:
+    def author_email(self) -> None:
         """ """
 
 class IFeed(IFeedData):
@@ -48,19 +48,19 @@ class IFeed(IFeedData):
     An adapter on the context and request
     to get feed information
     """
-    def show_about() -> None:
+    def show_about(self) -> None:
         """ """
-    def logo() -> None:
+    def logo(self) -> None:
         """ """
-    def icon() -> None:
+    def icon(self) -> None:
         """ """
-    def items() -> None:
+    def items(self) -> None:
         """
         adapted items
         """
-    def limit() -> None:
+    def limit(self) -> None:
         """ """
-    def language() -> None:
+    def language(self) -> None:
         """ """
 
 class ISearchFeed(IFeed): ...
@@ -69,19 +69,19 @@ class IFeedItem(IFeedData):
     """
     An adapter on the feed item and IFeed instance
     """
-    def body() -> None:
+    def body(self) -> None:
         """ """
-    def guid() -> None:
+    def guid(self) -> None:
         """ """
-    def has_enclosure() -> None:
+    def has_enclosure(self) -> None:
         """ """
-    def file() -> None:
+    def file(self) -> None:
         """ """
-    def file_url() -> None:
+    def file_url(self) -> None:
         """ """
-    def file_length() -> None:
+    def file_length(self) -> None:
         """ """
-    def file_type() -> None:
+    def file_type(self) -> None:
         """ """
 
 class ISiteSyndicationSettings(Interface):
@@ -103,35 +103,35 @@ class IFeedSettings(Interface):
     max_items: Incomplete
 
 class ISyndicationUtil(Interface):
-    def allowed_feed_types() -> None:
+    def allowed_feed_types(self) -> None:
         """
         get a list of allow feed types
         """
-    def context_allowed() -> None:
+    def context_allowed(self) -> None:
         """
         If syndication is allowed on the context
         """
-    def context_enabled(raise404: bool = False) -> None:
+    def context_enabled(self, raise404: bool = False) -> None:
         """
         If syndication is enabled on the context
         """
-    def site_enabled() -> None:
+    def site_enabled(self) -> None:
         """
         If syndication is enabled on the site
         """
-    def search_rss_enabled(raise404: bool = False) -> None:
+    def search_rss_enabled(self, raise404: bool = False) -> None:
         """
         If search_rss is enabled
         """
-    def show_author_info() -> None:
+    def show_author_info(self) -> None:
         """
         If author information should show on feeds
         """
-    def max_items() -> None:
+    def max_items(self) -> None:
         """
         Default max items to show on the site
         """
-    def rss_url() -> None:
+    def rss_url(self) -> None:
         """
         Default rss url. Mainly to be used for the
         rss portal_action link

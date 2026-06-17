@@ -37,7 +37,7 @@ class INextPreviousProvider(Interface):
     """
 
     enabled: Incomplete
-    def getNextItem(obj) -> None:
+    def getNextItem(self, obj) -> None:
         """Returns information about next item in the container relative to
         the given object.
 
@@ -50,7 +50,7 @@ class INextPreviousProvider(Interface):
             - description, a description of the object
             - portal_type, the object's portal type
         """
-    def getPreviousItem(obj) -> None:
+    def getPreviousItem(self, obj) -> None:
         """Returns the previous item in the container relative to the given
         object
         """

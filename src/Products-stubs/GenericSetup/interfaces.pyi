@@ -11,32 +11,32 @@ class IPseudoInterface(Interface):
 
 class ISetupEnviron(Interface):
     """Context for im- and export adapters."""
-    def getLogger(name) -> None:
+    def getLogger(self, name) -> None:
         """Get a logger with the specified name, creating it if necessary."""
-    def shouldPurge() -> None:
+    def shouldPurge(self) -> None:
         """When installing, should the existing setup be purged?"""
 
 class ISetupContext(ISetupEnviron):
     """Context used for export / import plugins."""
-    def getSite() -> None:
+    def getSite(self) -> None:
         """Return the site object being configured / dumped."""
-    def getSetupTool() -> None:
+    def getSetupTool(self) -> None:
         """Return the site object being configured / dumped."""
-    def getEncoding() -> None:
+    def getEncoding(self) -> None:
         """Get the encoding used for configuration data within the site.
 
         o Return None if the data should not be encoded.
         """
-    def listNotes() -> None:
+    def listNotes(self) -> None:
         """Return notes recorded by this context.
 
         o Result a sequence of (component, message) tuples
         """
-    def clearNotes() -> None:
+    def clearNotes(self) -> None:
         """Clear all notes recorded by this context."""
 
 class IImportContext(ISetupContext):
-    def readDataFile(filename, subdir=None) -> None:
+    def readDataFile(self, filename, subdir=None) -> None:
         """Search the current configuration for the requested file.
 
         o \'filename\' is the name (without path elements) of the file.
@@ -47,7 +47,7 @@ class IImportContext(ISetupContext):
         o Return the file contents as bytes, or None if the file cannot be
           found.
         """
-    def getLastModified(path) -> None:
+    def getLastModified(self, path) -> None:
         """Return the modification timestamp of the item at 'path'.
 
         o Result will be a DateTime instance.
@@ -62,7 +62,7 @@ class IImportContext(ISetupContext):
 
         o Return None if 'path' does not point to any object.
         """
-    def isDirectory(path) -> None:
+    def isDirectory(self, path) -> None:
         """Test whether path points to a directory / folder.
 
         o If the context is filesystem based, check that \'path\' points to
@@ -74,7 +74,7 @@ class IImportContext(ISetupContext):
         o Return None if \'path\' does not resolve;  otherwise, return a
           bool.
         """
-    def listDirectory(path, skip=...) -> None:
+    def listDirectory(self, path, skip=...) -> None:
         """List IDs of the contents of a  directory / folder.
 
         o Omit names in 'skip'.
@@ -83,7 +83,7 @@ class IImportContext(ISetupContext):
         """
 
 class IChunkableImportContext(IImportContext):
-    def openDataFile(filename, subdir=None) -> None:
+    def openDataFile(self, filename, subdir=None) -> None:
         """Open a datafile for reading from the specified location.
 
         o \'filename\' is the unqualified name of the file.
@@ -99,7 +99,7 @@ class IChunkableImportContext(IImportContext):
 
 class IImportPlugin(IPseudoInterface):
     """Signature for callables used to import portions of site configuration."""
-    def __call__(context) -> None:
+    def __call__(self, context) -> None:
         """Perform the setup step.
 
         o Return a message describing the work done.
@@ -108,7 +108,7 @@ class IImportPlugin(IPseudoInterface):
         """
 
 class IExportContext(ISetupContext):
-    def writeDataFile(filename, text, content_type, subdir=None) -> None:
+    def writeDataFile(self, filename, text, content_type, subdir=None) -> None:
         """Write data into the specified location.
 
         o \'filename\' is the unqualified name of the file.
@@ -123,7 +123,7 @@ class IExportContext(ISetupContext):
         """
 
 class IChunkableExportContext(IExportContext):
-    def openDataFile(filename, content_type, subdir=None) -> None:
+    def openDataFile(self, filename, content_type, subdir=None) -> None:
         """Open a datafile for writing into the specified location.
 
         o \'filename\' is the unqualified name of the file.
@@ -140,7 +140,7 @@ class IChunkableExportContext(IExportContext):
 
 class IExportPlugin(IPseudoInterface):
     """Signature for callables used to export portions of site configuration."""
-    def __call__(context) -> None:
+    def __call__(self, context) -> None:
         """Write export data for the site wrapped by context.
 
         o Return a message describing the work done.
@@ -151,48 +151,54 @@ class IExportPlugin(IPseudoInterface):
 
 class IStepRegistry(Interface):
     """Base interface for step registries."""
-    def listSteps() -> None:
+    def listSteps(self) -> None:
         """Return a sequence of IDs of registered steps.
 
         o Order is not significant.
         """
-    def listStepMetadata() -> None:
+    def listStepMetadata(self) -> None:
         """Return a sequence of mappings describing registered steps.
 
         o Mappings will be ordered alphabetically.
         """
-    def getStepMetadata(key, default=None) -> None:
+    def getStepMetadata(self, key, default=None) -> None:
         """Return a mapping of metadata for the step identified by 'key'.
 
         o Return 'default' if no such step is registered.
 
         o The 'handler' metadata is available via 'getStep'.
         """
-    def generateXML() -> None:
+    def generateXML(self) -> None:
         """Return a round-trippable XML representation of the registry.
 
         o 'handler' values are serialized using their dotted names.
         """
-    def parseXML(text) -> None:
+    def parseXML(self, text) -> None:
         """Parse 'text'."""
 
 class IImportStepRegistry(IStepRegistry):
     """API for import step registry."""
-    def sortSteps() -> None:
+    def sortSteps(self) -> None:
         """Return a sequence of registered step IDs
 
         o Sequence is sorted topologically by dependency, with the dependent
           steps *after* the steps they depend on.
         """
-    def checkComplete() -> None:
+    def checkComplete(self) -> None:
         """Return a sequence of (node, edge) tuples for unsatisifed deps."""
-    def getStep(key, default=None) -> None:
+    def getStep(self, key, default=None) -> None:
         """Return the IImportPlugin registered for 'key'.
 
         o Return 'default' if no such step is registered.
         """
     def registerStep(
-        id, version=None, handler=None, dependencies=(), title=None, description=None
+        self,
+        id,
+        version=None,
+        handler=None,
+        dependencies=(),
+        title=None,
+        description=None,
     ) -> None:
         """Register a setup step.
 
@@ -228,12 +234,12 @@ class IImportStepRegistry(IStepRegistry):
 
 class IExportStepRegistry(IStepRegistry):
     """API for export step registry."""
-    def getStep(key, default=None) -> None:
+    def getStep(self, key, default=None) -> None:
         """Return the IExportPlugin registered for 'key'.
 
         o Return 'default' if no such step is registered.
         """
-    def registerStep(id, handler, title=None, description=None) -> None:
+    def registerStep(self, id, handler, title=None, description=None) -> None:
         """Register an export step.
 
         o 'id' is the unique identifier for this step
@@ -251,18 +257,18 @@ class IExportStepRegistry(IStepRegistry):
 
 class IToolsetRegistry(Interface):
     """API for toolset registry."""
-    def listForbiddenTools() -> None:
+    def listForbiddenTools(self) -> None:
         """Return a list of IDs of tools which must be removed, if present."""
-    def addForbiddenTool(tool_id) -> None:
+    def addForbiddenTool(self, tool_id) -> None:
         """Add \'tool_id\' to the list of forbidden tools.
 
         o Raise KeyError if \'tool_id\' is already in the list.
 
         o Raise ValueError if \'tool_id\' is in the "required" list.
         """
-    def listRequiredTools() -> None:
+    def listRequiredTools(self) -> None:
         """Return a list of IDs of tools which must be present."""
-    def getRequiredToolInfo(tool_id) -> None:
+    def getRequiredToolInfo(self, tool_id) -> None:
         """Return a mapping describing a partiuclar required tool.
 
         o Keys include:
@@ -273,9 +279,9 @@ class IToolsetRegistry(Interface):
 
         o Raise KeyError if 'tool_id' id not a known tool.
         """
-    def listRequiredToolInfo() -> None:
+    def listRequiredToolInfo(self) -> None:
         """Return a list of IDs of tools which must be present."""
-    def addRequiredTool(tool_id, dotted_name) -> None:
+    def addRequiredTool(self, tool_id, dotted_name) -> None:
         """Add a tool to our "required" list.
 
         o \'tool_id\' is the tool\'s ID.
@@ -289,7 +295,7 @@ class IToolsetRegistry(Interface):
 
 class IProfileRegistry(Interface):
     """API for profile registry."""
-    def getProfileInfo(profile_id, for_=None) -> None:
+    def getProfileInfo(self, profile_id, for_=None) -> None:
         """Return a mapping describing a registered filesystem profile.
 
         o Keys include:
@@ -313,7 +319,7 @@ class IProfileRegistry(Interface):
             Products.PluggableAuthService.interfaces.IPluggableAuthService.
             If \'None\', list all profiles.
         """
-    def listProfiles(for_=None) -> None:
+    def listProfiles(self, for_=None) -> None:
         """Return a list of IDs for registered profiles.
 
         o \'for_\', if passed, should be the interface specifying the "site
@@ -322,7 +328,7 @@ class IProfileRegistry(Interface):
             Products.PluggableAuthService.interfaces.IPluggableAuthService.
             If \'None\', list all profiles.
         """
-    def listProfileInfo(for_=None) -> None:
+    def listProfileInfo(self, for_=None) -> None:
         """Return a list of mappings describing registered profiles.
 
         o See \'getProfileInfo\' for a description of the mappings\' keys.
@@ -334,7 +340,7 @@ class IProfileRegistry(Interface):
             If \'None\', list all profiles.
         """
     def registerProfile(
-        name, title, description, path, product=None, profile_type=..., for_=None
+        self, name, title, description, path, product=None, profile_type=..., for_=None
     ) -> None:
         """Add a new profile to the registry.
 
@@ -353,40 +359,40 @@ class IProfileRegistry(Interface):
 
 class ISetupTool(Interface):
     """API for SetupTool."""
-    def getEncoding() -> None:
+    def getEncoding(self) -> None:
         """Get the encoding used for configuration data within the site.
 
         o Return None if the data should not be encoded.
         """
-    def getBaselineContextID() -> None:
+    def getBaselineContextID(self) -> None:
         """Get the ID of the base profile for this configuration."""
-    def setBaselineContext(context_id, encoding=None) -> None:
+    def setBaselineContext(self, context_id, encoding=None) -> None:
         """Specify the base profile for this configuration."""
-    def getExcludeGlobalSteps() -> None:
+    def getExcludeGlobalSteps(self) -> None:
         """Does this instance of the tool ignore globally-registered steps?"""
-    def setExcludeGlobalSteps(value) -> None:
+    def setExcludeGlobalSteps(self, value) -> None:
         """Specify whether to ignore globally-registered steps.
 
         'value' must be a boolean.
         """
-    def applyContext(context, encoding=None) -> None:
+    def applyContext(self, context, encoding=None) -> None:
         """Update the tool from the supplied context, without modifying its
         "permanent" ID.
         """
-    def getImportStepRegistry() -> None:
+    def getImportStepRegistry(self) -> None:
         """Return the IImportStepRegistry for the tool."""
-    def getExportStepRegistry() -> None:
+    def getExportStepRegistry(self) -> None:
         """Return the IExportStepRegistry for the tool."""
-    def getToolsetRegistry() -> None:
+    def getToolsetRegistry(self) -> None:
         """Return the IToolsetRegistry for the tool."""
-    def getProfileDependencyChain(profile_id) -> None:
+    def getProfileDependencyChain(self, profile_id) -> None:
         """Return a list of dependencies for a profile.
 
         The list is ordered by install order, with the requested profile as
         last item.
         """
     def runImportStepFromProfile(
-        profile_id, step_id, run_dependencies: bool = True, purge_old=None
+        self, profile_id, step_id, run_dependencies: bool = True, purge_old=None
     ) -> None:
         """Execute a given setup step from the given profile.
 
@@ -410,6 +416,7 @@ class ISetupTool(Interface):
             step
         """
     def runAllImportStepsFromProfile(
+        self,
         profile_id,
         purge_old=None,
         ignore_dependencies: bool = False,
@@ -438,7 +445,7 @@ class ISetupTool(Interface):
           \'messages\' -- a dictionary holding messages returned from each
             step
         """
-    def runExportStep(step_id) -> None:
+    def runExportStep(self, step_id) -> None:
         """Generate a tarball containing artifacts from one export step.
 
         o 'step_id' identifies the export step.
@@ -452,7 +459,7 @@ class ISetupTool(Interface):
 
           'tarball' -- the stringified tar-gz data.
         """
-    def runAllExportSteps() -> None:
+    def runAllExportSteps(self) -> None:
         """Generate a tarball containing artifacts from all export steps.
 
         o Return a mapping, with keys:
@@ -464,12 +471,13 @@ class ISetupTool(Interface):
 
           'tarball' -- the stringified tar-gz data.
         """
-    def createSnapshot(snapshot_id) -> None:
+    def createSnapshot(self, snapshot_id) -> None:
         """Create a snapshot folder using all steps.
 
         o 'snapshot_id' is the ID of the new folder.
         """
     def compareConfigurations(
+        self,
         lhs_context,
         rhs_context,
         missing_as_empty: bool = False,
@@ -485,7 +493,7 @@ class ISetupTool(Interface):
         o If 'ignore_whitespace', then suppress diffs due only to whitespace
           (c.f:  'diff -wbB')
         """
-    def getProfileImportDate(profile_id) -> None:
+    def getProfileImportDate(self, profile_id) -> None:
         """Return the last date an extension was imported.
 
         o The result will be a string, formated as IS0.
@@ -493,19 +501,19 @@ class ISetupTool(Interface):
 
 class IWriteLogger(Interface):
     """Write methods used by the python logging Logger."""
-    def debug(msg, *args, **kwargs) -> None:
+    def debug(self, msg, *args, **kwargs) -> None:
         """Log 'msg % args' with severity 'DEBUG'."""
-    def info(msg, *args, **kwargs) -> None:
+    def info(self, msg, *args, **kwargs) -> None:
         """Log 'msg % args' with severity 'INFO'."""
-    def warning(msg, *args, **kwargs) -> None:
+    def warning(self, msg, *args, **kwargs) -> None:
         """Log 'msg % args' with severity 'WARNING'."""
-    def error(msg, *args, **kwargs) -> None:
+    def error(self, msg, *args, **kwargs) -> None:
         """Log 'msg % args' with severity 'ERROR'."""
-    def exception(msg, *args) -> None:
+    def exception(self, msg, *args) -> None:
         """Convenience method for logging an ERROR with exception information."""
-    def critical(msg, *args, **kwargs) -> None:
+    def critical(self, msg, *args, **kwargs) -> None:
         """Log 'msg % args' with severity 'CRITICAL'."""
-    def log(level, msg, *args, **kwargs) -> None:
+    def log(self, level, msg, *args, **kwargs) -> None:
         """Log 'msg % args' with the integer severity 'level'."""
 
 class INode(Interface):
@@ -536,7 +544,7 @@ class IBody(INode):
 
 class IFilesystemExporter(Interface):
     """Plugin interface for site structure export."""
-    def export(export_context, subdir, root: bool = False) -> None:
+    def export(self, export_context, subdir, root: bool = False) -> None:
         """Export our \'context\' using the API of \'export_context\'.
 
         o \'export_context\' must implement
@@ -549,7 +557,7 @@ class IFilesystemExporter(Interface):
           "root" of an import (this may be used to adjust paths when
           interacting with the context).
         """
-    def listExportableItems() -> None:
+    def listExportableItems(self) -> None:
         """Return a sequence of the child items to be exported.
 
         o Each item in the returned sequence will be a tuple,
@@ -559,7 +567,7 @@ class IFilesystemExporter(Interface):
 
 class IFilesystemImporter(Interface):
     """Plugin interface for site structure export."""
-    def import_(import_context, subdir, root: bool = False) -> None:
+    def import_(self, import_context, subdir, root: bool = False) -> None:
         """Import our \'context\' using the API of \'import_context\'.
 
         o \'import_context\' must implement
@@ -575,12 +583,12 @@ class IFilesystemImporter(Interface):
 
 class IContentFactory(Interface):
     """Adapter interface for factories specific to a container."""
-    def __call__(id) -> None:
+    def __call__(self, id) -> None:
         """Return a new instance, seated in the context under 'id'."""
 
 class IContentFactoryName(Interface):
     """Adapter interface for finding the name of the ICF for an object."""
-    def __call__() -> None:
+    def __call__(self) -> None:
         """Return a string, suitable for looking up an IContentFactory.
 
         o The string should allow finding a factory for our context\'s
@@ -590,11 +598,11 @@ class IContentFactoryName(Interface):
 
 class ICSVAware(Interface):
     """Interface for objects which dump / load 'text/comma-separated-values'."""
-    def getId() -> None:
+    def getId(self) -> None:
         """Return the Zope id of the object."""
-    def as_csv() -> None:
+    def as_csv(self) -> None:
         """Return a string representing the object as CSV."""
-    def put_csv(fd) -> None:
+    def put_csv(self, fd) -> None:
         """Parse CSV and update the object.
 
         o 'fd' must be a file-like object whose 'read' method returns
@@ -603,11 +611,11 @@ class ICSVAware(Interface):
 
 class IINIAware(Interface):
     """Interface for objects which dump / load INI-format files.."""
-    def getId() -> None:
+    def getId(self) -> None:
         """Return the Zope id of the object."""
-    def as_ini() -> None:
+    def as_ini(self) -> None:
         """Return a string representing the object as INI."""
-    def put_ini(stream_or_text) -> None:
+    def put_ini(self, stream_or_text) -> None:
         """Parse INI-formatted text and update the object.
 
         o 'stream_or_text' must be either a string, or else a stream
@@ -616,11 +624,11 @@ class IINIAware(Interface):
 
 class IDAVAware(Interface):
     """Interface for objects which handle their own FTP / DAV operations."""
-    def getId() -> None:
+    def getId(self) -> None:
         """Return the Zope id of the object."""
-    def manage_FTPget() -> None:
+    def manage_FTPget(self) -> None:
         """Return a string representing the object as a file."""
-    def PUT(REQUEST, RESPONSE) -> None:
+    def PUT(self, REQUEST, RESPONSE) -> None:
         """Parse file content and update the object.
 
         o \'REQUEST\' will have a \'get\' method, which will have the
@@ -649,7 +657,7 @@ class IComponentsHandlerBlacklist(Interface):
     """Interface for named utilities which can exclude specified interfaces
     from being handled by the components export and import handlers.
     """
-    def getExcludedInterfaces() -> None:
+    def getExcludedInterfaces(self) -> None:
         """Return a sequence of interfaces.
 
         Objects providing any of the returned interfaces should be ignored by

@@ -8,33 +8,33 @@ FEED_DATA: Incomplete
 logger: Incomplete
 
 class IFeed(Interface):
-    def __init__(url, timeout) -> None:
+    def __init__(self, url, timeout) -> None:
         """initialize the feed with the given url. will not automatically load it
         timeout defines the time between updates in minutes
         """
-    def loaded() -> None:
+    def loaded(self) -> None:
         """return if this feed is in a loaded state"""
-    def title() -> None:
+    def title(self) -> None:
         """return the title of the feed"""
-    def items() -> None:
+    def items(self) -> None:
         """return the items of the feed"""
-    def feed_link() -> None:
+    def feed_link(self) -> None:
         """return the url of this feed in feed:// format"""
-    def site_url() -> None:
+    def site_url(self) -> None:
         """return the URL of the site"""
-    def last_update_time_in_minutes() -> None:
+    def last_update_time_in_minutes(self) -> None:
         """return the time this feed was last updated in minutes since epoch"""
-    def last_update_time() -> None:
+    def last_update_time(self) -> None:
         """return the time the feed was last updated as DateTime object"""
-    def needs_update() -> None:
+    def needs_update(self) -> None:
         """return if this feed needs to be updated"""
-    def update() -> None:
+    def update(self) -> None:
         """update this feed. will automatically check failure state etc.
         returns True or False whether it succeeded or not
         """
-    def update_failed() -> None:
+    def update_failed(self) -> None:
         """return if the last update failed or not"""
-    def ok() -> None:
+    def ok(self) -> None:
         """is this feed ok to display?"""
 
 class RSSFeed:

@@ -21,7 +21,7 @@ class IPortletContext(Interface):
     """
 
     uid: Incomplete
-    def getParent() -> None:
+    def getParent(self) -> None:
         """Get the portlet parent of the current context.
 
         This is used to aggregate portlets by walking up the content hierarchy.
@@ -29,7 +29,7 @@ class IPortletContext(Interface):
         This should be adaptable to IPortletContext. If there is no portlet
         parent (e.g. this is the site root), return None.
         """
-    def globalPortletCategories(placeless: bool = False) -> None:
+    def globalPortletCategories(self, placeless: bool = False) -> None:
         """Get global portlet key-value pairs, in order.
 
         When rendered, a portlet manager (column) will be filled first by
@@ -126,7 +126,7 @@ class IPortletRetriever(Interface):
     Typically, a content object and an IPortletManager will be multi-
     adapted to IPortletRetriever.
     """
-    def getPortlets() -> None:
+    def getPortlets(self) -> None:
         """Return a list of IPortletAssignment's to be rendered.
 
         Returns a list of dicts with keys 'assignment', containing the actual
@@ -175,7 +175,7 @@ class ILocalPortletAssignmentManager(Interface):
     an IPortletManager to this interface, to manage how portlets will be
     displayed relative to this context.
     """
-    def setBlacklistStatus(category, status) -> None:
+    def setBlacklistStatus(self, category, status) -> None:
         """Manage the blacklisting status of the given category.
 
         If status is None, the blacklist status will be obtained from a parent,
@@ -189,7 +189,7 @@ class ILocalPortletAssignmentManager(Interface):
         setBlacklistStatus('user', None) will cause the status to be acquired
         from the parent instead (defaulting to no blacklisting).
         """
-    def getBlacklistStatus(category) -> None:
+    def getBlacklistStatus(self, category) -> None:
         """Get the blacklisting status of the given category.
 
         Note that this only applies to the current context - the status is
@@ -202,7 +202,7 @@ class IPortletManager(IPortletStorage, IContained):
     Typically, objects providing this interface will be persisted and used
     to manage portlet assignments.
     """
-    def getAddablePortletTypes() -> None:
+    def getAddablePortletTypes(self) -> None:
         """Get all addable portlet types.
 
         This is achieved by looking up utilities providing IPortletType and
@@ -210,7 +210,7 @@ class IPortletManager(IPortletStorage, IContained):
         portlets) or those which specify an interface available on this
         portlet manager instance.
         """
-    def __call__(context, request, view) -> None:
+    def __call__(self, context, request, view) -> None:
         """Act as an adapter factory.
 
         When called, should return an IPortletManagerRenderer for rendering
@@ -241,19 +241,19 @@ class IPortletManagerRenderer(IContentProvider):
 
     template: Incomplete
     visible: Incomplete
-    def filter(portlets) -> None:
+    def filter(self, portlets) -> None:
         """Return a list of portlets to display that is a subset of
         the list of portlets passed in. The list contains dicts as returned
         by IPortletRetriever.getPortlets().
         """
-    def portletsToShow() -> None:
+    def portletsToShow(self) -> None:
         """Get a list of portlets that will be shown.
 
         Returns a list of dicts with keys corresponding to that returned by
         IPortletRetriever.getPortlets(), with the additional key 'renderer'
         containing the appropriate IPortletRenderer.
         """
-    def safe_render(portlet_renderer) -> None:
+    def safe_render(self, portlet_renderer) -> None:
         """Render a portlet in such a way that exceptions are not
         raised but rather logged and an error is shown in place of the
         portlet.

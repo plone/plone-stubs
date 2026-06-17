@@ -13,9 +13,9 @@ class IFormWrapper(Interface):
     In Zope 2.12 and later, this approach is optional: you may register the
     form class directly as a browser view.
     """
-    def update() -> None:
+    def update(self) -> None:
         """We use the content provider update/render couple."""
-    def render() -> None:
+    def render(self) -> None:
         """We use the content provider update/render couple."""
     form: Incomplete
     form_instance: Incomplete
@@ -38,5 +38,5 @@ class ISubformFactory(Interface):
     """Factory that will instantiate our subforms for ObjectWidget.
     BBB: backported from z3c.form 3.6.x
     """
-    def __call__() -> None:
+    def __call__(self) -> None:
         """Return a default object created to be populated."""

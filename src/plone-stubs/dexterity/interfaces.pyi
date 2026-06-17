@@ -11,7 +11,7 @@ DAV_FOLDER_DATA_ID: str
 
 class IDexterityFTI(ITypeInformation):
     """The Factory Type Information for Dexterity content objects"""
-    def lookupSchema() -> None:
+    def lookupSchema(self) -> None:
         """Return an InterfaceClass that represents the schema of this type.
         Raises a ValueError if it cannot be found.
 
@@ -20,7 +20,7 @@ class IDexterityFTI(ITypeInformation):
         model XML file, and build a schema from the unnamed schema
         specified in this model.
         """
-    def lookupModel() -> None:
+    def lookupModel(self) -> None:
         """Return the IModel specified in either the model_source or
         model_file (the former takes precedence). See plone.supermodel for
         more information about this type.

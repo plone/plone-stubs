@@ -12,7 +12,7 @@ class IActionsTool(Interface):
 
     __module__: str
     id: Incomplete
-    def listActionProviders() -> None:
+    def listActionProviders(self) -> None:
         """Return a sequence of names of all IActionProvider utilities
             registered with this tool.
 
@@ -26,7 +26,7 @@ class IActionsTool(Interface):
 
         o Permission:  Manage portal
         """
-    def addActionProvider(provider_name) -> None:
+    def addActionProvider(self, provider_name) -> None:
         """Register an IActionProvider to the set queried by this tool.
 
         o 'provider_name' is appended to the set of names already registered
@@ -41,7 +41,7 @@ class IActionsTool(Interface):
 
         o Permission:  Manage portal
         """
-    def deleteActionProvider(provider_name) -> None:
+    def deleteActionProvider(self, provider_name) -> None:
         """Remove an IActionProvider from the set queried by this tool.
 
         o Return silently if 'provider_name' is not already registered with
@@ -53,7 +53,7 @@ class IActionsTool(Interface):
 
         o Permission:  Manage portal
         """
-    def listFilteredActionsFor(object=None) -> None:
+    def listFilteredActionsFor(self, object=None) -> None:
         """Map actions available to the user by category.
 
         o Returned mapping will have category IDs as keys, and sequences
@@ -69,7 +69,7 @@ class IActionProvider(Interface):
     """Objects that can be queried for actions."""
 
     __module__: str
-    def listActions(info=None, object=None) -> None:
+    def listActions(self, info=None, object=None) -> None:
         """List known actions.
 
         o Return a sequence of action objects.
@@ -78,6 +78,7 @@ class IActionProvider(Interface):
           ignored (use 'listActionInfos' to filter actions by context).
         """
     def listActionInfos(
+        self,
         action_chain=None,
         object=None,
         check_visibility: bool = True,
@@ -110,6 +111,7 @@ class IActionProvider(Interface):
         o Permission:  Public (but not URL-publishable)
         """
     def getActionInfo(
+        self,
         action_chain,
         object=None,
         check_visibility: bool = False,
@@ -138,7 +140,7 @@ class IActionCategory(Interface):
     """Group of IAction objects and child categories."""
 
     __module__: str
-    def listActions() -> None:
+    def listActions(self) -> None:
         """Return a sequence of IAction objects defined by this category.
 
         o Include actions defined by subcategories.
@@ -150,7 +152,7 @@ class IAction(Interface):
     """Specification for an action."""
 
     __module__: str
-    def getInfoData() -> None:
+    def getInfoData(self) -> None:
         """Return a lazy mapping of the data needed to create an
             IActionInfo object.
 
@@ -192,45 +194,45 @@ class IActionInfo(Interface):
 
 class ICachingPolicy(Interface):
     __module__: str
-    def getPolicyId() -> None:
+    def getPolicyId(self) -> None:
         """ """
-    def getPredicate() -> None:
+    def getPredicate(self) -> None:
         """ """
-    def getMTimeFunc() -> None:
+    def getMTimeFunc(self) -> None:
         """ """
-    def getMaxAgeSecs() -> None:
+    def getMaxAgeSecs(self) -> None:
         """ """
-    def getSMaxAgeSecs() -> None:
+    def getSMaxAgeSecs(self) -> None:
         """ """
-    def getNoCache() -> None:
+    def getNoCache(self) -> None:
         """ """
-    def getNoStore() -> None:
+    def getNoStore(self) -> None:
         """ """
-    def getMustRevalidate() -> None:
+    def getMustRevalidate(self) -> None:
         """ """
-    def getProxyRevalidate() -> None:
+    def getProxyRevalidate(self) -> None:
         """ """
-    def getPublic() -> None:
+    def getPublic(self) -> None:
         """ """
-    def getPrivate() -> None:
+    def getPrivate(self) -> None:
         """ """
-    def getNoTransform() -> None:
+    def getNoTransform(self) -> None:
         """ """
-    def getVary() -> None:
+    def getVary(self) -> None:
         """ """
-    def getETagFunc() -> None:
+    def getETagFunc(self) -> None:
         """ """
-    def getEnable304s() -> None:
+    def getEnable304s(self) -> None:
         """ """
-    def getLastModified() -> None:
+    def getLastModified(self) -> None:
         """Should we set the last modified header?"""
-    def getPreCheck() -> None:
+    def getPreCheck(self) -> None:
         """ """
-    def getPostCheck() -> None:
+    def getPostCheck(self) -> None:
         """ """
-    def testPredicate(expr_context) -> None:
+    def testPredicate(self, expr_context) -> None:
         """Does this request match our predicate?"""
-    def getHeaders(expr_context) -> None:
+    def getHeaders(self, expr_context) -> None:
         """Does this request match our predicate?
 
         If so, return a sequence of caching headers as (key, value) tuples.
@@ -242,7 +244,7 @@ class ICachingPolicyManager(Interface):
 
     __module__: str
     id: Incomplete
-    def getHTTPCachingHeaders(content, view_method, keywords, time=None) -> None:
+    def getHTTPCachingHeaders(self, content, view_method, keywords, time=None) -> None:
         """Update HTTP caching headers in REQUEST
 
         o 'content' is the content object being published.
@@ -260,30 +262,30 @@ class ICatalogTool(Interface):
 
     __module__: str
     id: Incomplete
-    def searchResults(REQUEST=None, **kw) -> None:
+    def searchResults(self, REQUEST=None, **kw) -> None:
         """Decorate ZCatalog.searchResults() with extra arguments
 
         o The extra arguments that the results to what the user would be
           allowed to see.
         """
-    def __call__(REQUEST=None, **kw) -> None:
+    def __call__(self, REQUEST=None, **kw) -> None:
         """Alias for searchResults()."""
-    def unrestrictedSearchResults(REQUEST=None, **kw) -> None:
+    def unrestrictedSearchResults(self, REQUEST=None, **kw) -> None:
         """Calls ZCatalog.searchResults() without any CMF-specific processing.
 
         o Permission:  Private (Python only)
         """
-    def indexObject(object) -> None:
+    def indexObject(self, object) -> None:
         """Add 'object' to the catalog.
 
         o Permission:  Private (Python only)
         """
-    def unindexObject(object) -> None:
+    def unindexObject(self, object) -> None:
         """Remove 'object' from the catalog.
 
         o Permission:  Private (Python only)
         """
-    def reindexObject(object, idxs=[], update_metadata: bool = True) -> None:
+    def reindexObject(self, object, idxs=[], update_metadata: bool = True) -> None:
         """Update 'object' in catalog.
 
         o 'idxs', if passed, is a list of specific indexes to update
@@ -299,7 +301,7 @@ class IIndexableObjectWrapper(Interface):
     """Wrapper for catalogued objects, for indexing "virtual" attributes."""
 
     __module__: str
-    def allowedRolesAndUsers() -> None:
+    def allowedRolesAndUsers(self) -> None:
         """Return a sequence roles and users with View permission.
 
         o PortalCatalog indexes this sequence to allow filtering out items
@@ -321,11 +323,11 @@ class IContentTypeRegistryPredicate(Interface):
     """
 
     __module__: str
-    def __call__(name, typ, body) -> None:
+    def __call__(self, name, typ, body) -> None:
         """Return true if the rule matches, else false."""
-    def getTypeLabel() -> None:
+    def getTypeLabel(self) -> None:
         """Return a human-readable label for the predicate type."""
-    def predicateWidget() -> None:
+    def predicateWidget(self) -> None:
         """Return a snippet of HTML suitable for editing the predicate.
 
         o This method may be defined via DTMLFile or PageTemplateFile
@@ -340,7 +342,7 @@ class IContentTypeRegistry(Interface):
     """Apply policy mapping PUT arguments to a CMF portal type."""
 
     __module__: str
-    def findTypeName(name, typ, body) -> None:
+    def findTypeName(self, name, typ, body) -> None:
         """Return the the portal type (an ID) for a PUT request.
 
         o 'name' is the filename supplied as the end of the path of the
@@ -359,7 +361,7 @@ class IOldstyleDiscussionTool(Interface):
 
     __module__: str
     id: Incomplete
-    def getDiscussionFor(content) -> None:
+    def getDiscussionFor(self, content) -> None:
         """Return an IDiscussionItemContainer for 'content'.
 
         o Create the IDC if necessary.
@@ -368,7 +370,7 @@ class IOldstyleDiscussionTool(Interface):
 
         o Permission:  Public
         """
-    def isDiscussionAllowedFor(content) -> None:
+    def isDiscussionAllowedFor(self, content) -> None:
         """Return True discussion is allowed for 'content', else False.
 
         o Result may be looked up from an object-specific value, or by place,
@@ -381,7 +383,7 @@ class IDiscussionTool(IOldstyleDiscussionTool):
     """Links content to discussions."""
 
     __module__: str
-    def overrideDiscussionFor(content, allowDiscussion) -> None:
+    def overrideDiscussionFor(self, content, allowDiscussion) -> None:
         """Override discussability for the given object or clear the setting.
 
         o 'allowDiscussion' may be True, False, or None.
@@ -399,12 +401,12 @@ class IMemberDataTool(Interface):
 
     __module__: str
     id: Incomplete
-    def wrapUser(user) -> None:
+    def wrapUser(self, user) -> None:
         """Returns an IMember instance for the given user object.
 
         o Permission:  Private (Python-only)
         """
-    def getMemberDataContents() -> None:
+    def getMemberDataContents(self) -> None:
         """Returns a list containing a dictionary with information
         about the _members BTree contents
 
@@ -420,7 +422,7 @@ class IMemberDataTool(Interface):
 
         o Permission:  Private (Python-only)
         """
-    def pruneMemberDataContents() -> None:
+    def pruneMemberDataContents(self) -> None:
         """Delete member data of all members not findable in acl_users.
 
         o Compare the user IDs stored in the member data tool with the
@@ -429,7 +431,7 @@ class IMemberDataTool(Interface):
 
         o Permission:  Private (Python only)
         """
-    def searchMemberData(search_param, search_term, attributes=()) -> None:
+    def searchMemberData(self, search_param, search_term, attributes=()) -> None:
         """Return a sequence of mappings of memberdata for the given criteria.
 
         o 'search_param' is the property ID to be searched.
@@ -444,7 +446,7 @@ class IMemberDataTool(Interface):
 
         o Permission:  Private (Python only)
         """
-    def registerMemberData(m, id) -> None:
+    def registerMemberData(self, m, id) -> None:
         """Add the given member data to the _members btree.
 
         o 'm' is an object whose attributes are the memberdata for the member.
@@ -459,7 +461,7 @@ class IMemberDataTool(Interface):
 
         o Permission:  Private (Python only)
         """
-    def deleteMemberData(member_id) -> None:
+    def deleteMemberData(self, member_id) -> None:
         """Delete member data of specified member.
 
         o Return True if a record was deleted, else False.
@@ -471,7 +473,7 @@ class IMemberData(Interface):
     """MemberData interface."""
 
     __module__: str
-    def setProperties(properties=None, **kw) -> None:
+    def setProperties(self, properties=None, **kw) -> None:
         """Allow the authenticated member to update his/her member data.
 
         o 'properties', if passed, is a mapping of the IDs and values of
@@ -495,12 +497,12 @@ class IMembershipTool(Interface):
 
     __module__: str
     id: Incomplete
-    def setPassword(password, domains=None) -> None:
+    def setPassword(self, password, domains=None) -> None:
         """Allow the authenticated member to set his/her own password.
 
         Permission:  Set own password
         """
-    def getAuthenticatedMember() -> None:
+    def getAuthenticatedMember(self) -> None:
         """Return the currently authenticated member object
 
         o If no valid credentials are passed in the request, return
@@ -508,12 +510,12 @@ class IMembershipTool(Interface):
 
         o Permission:  Public
         """
-    def isAnonymousUser() -> None:
+    def isAnonymousUser(self) -> None:
         """Return True if no valid credentials are passed in the requeset.
 
         o Permission:  Public
         """
-    def checkPermission(permissionName, object, subobjectName=None) -> None:
+    def checkPermission(self, permissionName, object, subobjectName=None) -> None:
         """Return True if the current user has the given permission on
             the given object or subobject.
 
@@ -526,13 +528,13 @@ class IMembershipTool(Interface):
 
         o Permission:  Public
         """
-    def isMemberAccessAllowed(member_id) -> None:
+    def isMemberAccessAllowed(self, member_id) -> None:
         """Check if the authenticated user is this member or an user manager.
 
         If you don't have the 'Manage users' permission for the membership
         tool, you shouldn't have write access to other members.
         """
-    def credentialsChanged(password, REQUEST=None) -> None:
+    def credentialsChanged(self, password, REQUEST=None) -> None:
         """Notify the authentication mechanism that this user has
             changed passwords.
 
@@ -549,7 +551,7 @@ class IMembershipTool(Interface):
 
         Permission:  Public # ????
         """
-    def getMembersFolder() -> None:
+    def getMembersFolder(self) -> None:
         """Return the folderish object which contains membmer folders.
 
         o Return None if no members folder is set or if the specified
@@ -557,7 +559,7 @@ class IMembershipTool(Interface):
 
         o Permission:  Public
         """
-    def getHomeFolder(id=None, verifyPermission: bool = False) -> None:
+    def getHomeFolder(self, id=None, verifyPermission: bool = False) -> None:
         """Return a member's home folder object or None.
 
         o 'id', if passed, is the ID of the member whose folder should be
@@ -568,7 +570,7 @@ class IMembershipTool(Interface):
 
         o Permission:  Public
         """
-    def getHomeUrl(id=None, verifyPermission: int = 0) -> None:
+    def getHomeUrl(self, id=None, verifyPermission: int = 0) -> None:
         """Return the URL to a member's home folder or None.
 
         o 'id', if passed, is the ID of the member whose folder should be
@@ -579,12 +581,12 @@ class IMembershipTool(Interface):
 
         Permission:  Public
         """
-    def getMemberById(id) -> None:
+    def getMemberById(self, id) -> None:
         """Returns the IMember instance corresponding to the given id.
 
         o Permission:  Manage users
         """
-    def listMemberIds() -> None:
+    def listMemberIds(self) -> None:
         """Return a sequence of ids of all members.
 
         o This may eventually be replaced with a set of methods for querying
@@ -592,7 +594,7 @@ class IMembershipTool(Interface):
 
         o Permission:  Manage users
         """
-    def listMembers() -> None:
+    def listMembers(self) -> None:
         """Return a sequence of all IMember instances.
 
         o This may eventually be replaced with a set of methods for querying
@@ -600,7 +602,7 @@ class IMembershipTool(Interface):
 
         o Permission:  Manage users
         """
-    def getCandidateLocalRoles(obj) -> None:
+    def getCandidateLocalRoles(self, obj) -> None:
         """Return a sequence local roles assignable by the current user for
             a given object.
 
@@ -608,7 +610,7 @@ class IMembershipTool(Interface):
 
         o Permission:  Public # ????
         """
-    def setLocalRoles(obj, member_ids, member_role, reindex: bool = True) -> None:
+    def setLocalRoles(self, obj, member_ids, member_role, reindex: bool = True) -> None:
         """Assign a local role on an item to one or more members.
 
         o 'obj' is the object on which to assign the role.
@@ -626,7 +628,7 @@ class IMembershipTool(Interface):
         o Permission:  Public # ????
         """
     def deleteLocalRoles(
-        obj, member_ids, reindex: bool = True, recursive: bool = False
+        self, obj, member_ids, reindex: bool = True, recursive: bool = False
     ) -> None:
         """Remove local roles of specified members from an object.
 
@@ -644,7 +646,7 @@ class IMembershipTool(Interface):
 
         Permission:  Public
         """
-    def addMember(id, password, roles, domains) -> None:
+    def addMember(self, id, password, roles, domains) -> None:
         """Adds a new member to the user folder.
 
         o Security checks will have already been performed. Called by
@@ -653,7 +655,7 @@ class IMembershipTool(Interface):
         Permission:  Private (Python only)
         """
     def deleteMembers(
-        member_ids, delete_memberareas: int = 1, delete_localroles: int = 1
+        self, member_ids, delete_memberareas: int = 1, delete_localroles: int = 1
     ) -> None:
         """Remove specified members from the site.
 
@@ -673,20 +675,20 @@ class IMembershipTool(Interface):
 
         o Permission:  Manage users
         """
-    def getPortalRoles() -> None:
+    def getPortalRoles(self) -> None:
         """Return a sequence of role names defined by the portal itself.
 
         o Returned role names are those understood by the portal object.
 
         o Permission:  Manage portal
         """
-    def setRoleMapping(portal_role, userfolder_role) -> None:
+    def setRoleMapping(self, portal_role, userfolder_role) -> None:
         """Register a mapping of a role defined by the portal to a role
             coming from outside user sources.
 
         o Permission:  Manage portal
         """
-    def getMappedRole(portal_role) -> None:
+    def getMappedRole(self, portal_role) -> None:
         """Returns a mapped role name corresponding to 'portal_role', or
             the empty string if no mapping exists.
 
@@ -694,13 +696,13 @@ class IMembershipTool(Interface):
 
         o Permission:  Manage portal
         """
-    def getMemberareaCreationFlag() -> None:
+    def getMemberareaCreationFlag(self) -> None:
         """Return True if the membership tool will create a member area for
             a user at login.
 
         o Permission:  Manage portal
         """
-    def setMemberareaCreationFlag() -> None:
+    def setMemberareaCreationFlag(self) -> None:
         """Toggle the policy flag for create a member areas at login.
 
         o ???:  Toggle is a weak semantic here;  shouldn't we be passing
@@ -708,7 +710,7 @@ class IMembershipTool(Interface):
 
         o Permission:  Manage portal
         """
-    def createMemberArea(member_id: str = "") -> None:
+    def createMemberArea(self, member_id: str = "") -> None:
         """Return a member area for the given member, creating if necessary.
 
         o If member area creation is disabled, return None.
@@ -718,7 +720,7 @@ class IMembershipTool(Interface):
 
         o Permission:  Public # ????
         """
-    def deleteMemberArea(member_id) -> None:
+    def deleteMemberArea(self, member_id) -> None:
         """Delete member area of specified member
 
         o Return True if a member area previously existed for the member.
@@ -733,7 +735,7 @@ class IMetadataTool(Interface):
 
     __module__: str
     id: Incomplete
-    def getFullName(userid) -> None:
+    def getFullName(self, userid) -> None:
         """Convert an internal userid to a "formal" name.
 
         o Convert only if possible, perhaps using the \'portal_membership\'
@@ -741,9 +743,9 @@ class IMetadataTool(Interface):
 
         o Used to map userid\'s for Creator, Contributor DCMI queries.
         """
-    def getPublisher() -> None:
+    def getPublisher(self) -> None:
         """Return the "formal" name of the publisher of the site."""
-    def listAllowedSubjects(content=None, content_type=None) -> None:
+    def listAllowedSubjects(self, content=None, content_type=None) -> None:
         """List the allowed values of the 'Subject' DCMI element.
 
         o 'Subject' elements should be keywords categorizing their resource.
@@ -751,7 +753,7 @@ class IMetadataTool(Interface):
         o Return only values appropriate for content's type, or all values if
           both 'content' and 'content_type' are None.
         """
-    def listAllowedFormats(content=None, content_type=None) -> None:
+    def listAllowedFormats(self, content=None, content_type=None) -> None:
         """List the allowed values of the 'Format' DCMI element.
 
         o These items should be usable as HTTP 'Content-type' values.
@@ -759,7 +761,7 @@ class IMetadataTool(Interface):
         o Return only values appropriate for content's type, or all values if
           both 'content' and 'content_type' are None.
         """
-    def listAllowedLanguages(content=None, content_type=None) -> None:
+    def listAllowedLanguages(self, content=None, content_type=None) -> None:
         """List the allowed values of the 'Language' DCMI element.
 
         o 'Language' element values should be suitable for generating
@@ -768,7 +770,7 @@ class IMetadataTool(Interface):
         o Return only values appropriate for content's type, or all values if
           both 'content' and 'content_type' are None.
         """
-    def listAllowedRights(content=None, content_type=None) -> None:
+    def listAllowedRights(self, content=None, content_type=None) -> None:
         """List the allowed values of the 'Rights' DCMI element.
 
         o The 'Rights' element describes copyright or other IP declarations
@@ -777,31 +779,33 @@ class IMetadataTool(Interface):
         o Return only values appropriate for content's type, or all values if
           both 'content' and 'content_type' are None.
         """
-    def listAllowedVocabulary(schema, element, content=None, content_type=None) -> None:
+    def listAllowedVocabulary(
+        self, schema, element, content=None, content_type=None
+    ) -> None:
         """List allowed values for a given schema element and content object.
 
         o List possible keywords if both 'content' and 'content_type' are None.
         """
-    def listSchemas() -> None:
+    def listSchemas(self) -> None:
         """Return a list of (id, schema) tuples enumerating our schema."""
-    def addSchema(schema_id) -> None:
+    def addSchema(self, schema_id) -> None:
         """Create a new schema with the given ID.
 
         o Return the newly-created schema object.
 
         o Raise KeyError if such a schema already exists.
         """
-    def removeSchema(schema_id) -> None:
+    def removeSchema(self, schema_id) -> None:
         """Remove an existing schema with the given ID.
 
         o Raise KeyError if no such schema exists.
         """
-    def setInitialMetadata(content) -> None:
+    def setInitialMetadata(self, content) -> None:
         """Set initial values for content metatdata.
 
         o Supply any site-specific defaults.
         """
-    def validateMetadata(content) -> None:
+    def validateMetadata(self, content) -> None:
         """Enforce portal-wide policies about metadata.
 
         o E.g., policies may require non-empty title/description, etc.
@@ -816,16 +820,16 @@ class IPropertiesTool(Interface):
 
     __module__: str
     id: Incomplete
-    def editProperties(props) -> None:
+    def editProperties(self, props) -> None:
         """Change portal settings.
 
         o 'props' is a mapping of values to be updates.
 
         o Permission:  Manage portal
         """
-    def title() -> None:
+    def title(self) -> None:
         """Return the site's title."""
-    def smtp_server() -> None:
+    def smtp_server(self) -> None:
         """Return the configured SMTP server for the site."""
 
 class IRegistrationTool(Interface):
@@ -838,13 +842,13 @@ class IRegistrationTool(Interface):
 
     __module__: str
     id: Incomplete
-    def isRegistrationAllowed(REQUEST) -> None:
+    def isRegistrationAllowed(self, REQUEST) -> None:
         """Return True if the current user is allowed to add a member to
             the site, else False.
 
         o Permission:  Public
         """
-    def testPasswordValidity(password, confirm=None) -> None:
+    def testPasswordValidity(self, password, confirm=None) -> None:
         """Return None if the password is valid;  otherwise return a string
             explaining why not.
 
@@ -854,7 +858,7 @@ class IRegistrationTool(Interface):
 
         o Permission:  Public
         """
-    def testPropertiesValidity(new_properties, member=None) -> None:
+    def testPropertiesValidity(self, new_properties, member=None) -> None:
         """Return None if the supplied properties are valid;  otherwise
             return a string explaining why not.
 
@@ -866,14 +870,14 @@ class IRegistrationTool(Interface):
 
         o Permission:  Public
         """
-    def generatePassword() -> None:
+    def generatePassword(self) -> None:
         """Return a generated password which is complies with the site's
             password policy.
 
         o Permission:  Public
         """
     def addMember(
-        id, password, roles=("Member",), domains: str = "", properties=None
+        self, id, password, roles=("Member",), domains: str = "", properties=None
     ) -> None:
         """Creates and return a new member.
 
@@ -895,19 +899,19 @@ class IRegistrationTool(Interface):
 
         o Permission:  Add portal member
         """
-    def isMemberIdAllowed(id) -> None:
+    def isMemberIdAllowed(self, id) -> None:
         """Return True if 'id' is not in use as a member ID and is not
             reserved, else False.
 
         o Permission:  Add portal member
         """
-    def afterAdd(member, id, password, properties) -> None:
+    def afterAdd(self, member, id, password, properties) -> None:
         """Notification called by portal_registration.addMember() after a
             member has been added successfully.
 
         o Permission:  Private (Python only)
         """
-    def mailPassword(forgotten_userid, REQUEST) -> None:
+    def mailPassword(self, forgotten_userid, REQUEST) -> None:
         """Email a forgotten password to a member.
 
         o Raise ValueError if user ID is not found.
@@ -926,22 +930,22 @@ class ISkinsContainer(Interface):
     """An object that provides skins."""
 
     __module__: str
-    def getSkinPath(name) -> None:
+    def getSkinPath(self, name) -> None:
         """Convert a skin name to a skin path.
 
         o Permission:  Access contents information
         """
-    def getDefaultSkin() -> None:
+    def getDefaultSkin(self) -> None:
         """Return the default skin name.
 
         o Permission:  Access contents information
         """
-    def getRequestVarname() -> None:
+    def getRequestVarname(self) -> None:
         """Return the variable name to look for in the REQUEST.
 
         o Permission:  Access contents information
         """
-    def getSkinByPath(path, raise_exc: int = 0) -> None:
+    def getSkinByPath(self, path, raise_exc: int = 0) -> None:
         """Return a skin at the given path.
 
         o ???:  what are we doing here?
@@ -956,7 +960,7 @@ class ISkinsContainer(Interface):
 
         o Permission:  Private (Python only)
         """
-    def getSkinByName(name) -> None:
+    def getSkinByName(self, name) -> None:
         """Get the named skin.
 
         Permission:  Private (Python only)
@@ -970,7 +974,7 @@ class ISkinsTool(ISkinsContainer):
 
     __module__: str
     id: Incomplete
-    def getSkinSelections() -> None:
+    def getSkinSelections(self) -> None:
         """Get the sorted list of available skin names.
 
         o Permission:  Public
@@ -985,20 +989,20 @@ class ISyndicationTool(Interface):
     frequency: Incomplete
     base: Incomplete
     max_items: Incomplete
-    def enableSyndication(obj) -> None:
+    def enableSyndication(self, obj) -> None:
         """Enable syndication for the passed-in object
 
         o raises 'Syndication is Disabled' if syndication is now allowed
 
         o raises 'Syndication Information Exists' if used repeatedly
         """
-    def disableSyndication(obj) -> None:
+    def disableSyndication(self, obj) -> None:
         """Disable syndication for the passed-in object
 
         o raises 'This object does not have Syndication Information' if
           syndication has already been disabled
         """
-    def getSyndicatableContent(obj) -> None:
+    def getSyndicatableContent(self, obj) -> None:
         """Retrieve all syndicatable content from the passed-in object
 
         o will call the hool "synContentValues" if it exists to allow
@@ -1006,14 +1010,14 @@ class ISyndicationTool(Interface):
 
         o falls back to calling contentValues
         """
-    def isSiteSyndicationAllowed() -> None:
+    def isSiteSyndicationAllowed(self) -> None:
         """Return the site-wide syndication flag"""
-    def isSyndicationAllowed(obj=None) -> None:
+    def isSyndicationAllowed(self, obj=None) -> None:
         """Return the syndication flag for the passed-in object
 
         o falls back to retrieving the site-wide syndication flag
         """
-    def getSyndicationInfo(obj) -> None:
+    def getSyndicationInfo(self, obj) -> None:
         """Return a dictionary of syndication information for an
         an object:
         * period
@@ -1021,7 +1025,7 @@ class ISyndicationTool(Interface):
         * base as a DateTime object
         * max_items
         """
-    def getUpdatePeriod(obj=None) -> None:
+    def getUpdatePeriod(self, obj=None) -> None:
         """Return the update period for the syndicated feed
 
         o falls back to the site-wide value if no object is passed in
@@ -1029,7 +1033,7 @@ class ISyndicationTool(Interface):
         o raises 'Syndication is not Allowed' if the site-wide policy
           does not allow syndication
         """
-    def getUpdateFrequency(obj=None) -> None:
+    def getUpdateFrequency(self, obj=None) -> None:
         """Return the syndicated feed update frequency
 
         o falls back to the site-wide value if no object is passed in
@@ -1037,7 +1041,7 @@ class ISyndicationTool(Interface):
         o raises 'Syndication is not Allowed' if the site-wide policy
           does not allow syndication
         """
-    def getUpdateBase(obj=None) -> None:
+    def getUpdateBase(self, obj=None) -> None:
         """Return the syndication feed base date for the publishing schedule
 
         o falls back to the site-wide value if no object is passed in
@@ -1045,7 +1049,7 @@ class ISyndicationTool(Interface):
         o raises 'Syndication is not Allowed' if the site-wide policy
           does not allow syndication
         """
-    def getHTML4UpdateBase(obj=None) -> None:
+    def getHTML4UpdateBase(self, obj=None) -> None:
         """return the HTML-formatted feed publishing base date
 
         This method is deprecated
@@ -1055,7 +1059,7 @@ class ISyndicationTool(Interface):
         o raises 'Syndication is not Allowed' if the site-wide policy
           does not allow syndication
         """
-    def getMaxItems(obj=None) -> None:
+    def getMaxItems(self, obj=None) -> None:
         """Return the number of items published at any one time in the feed
 
         o falls back to the site-wide value if no object is passed in
@@ -1073,67 +1077,67 @@ class ISyndicationInfo(Interface):
     frequency: Incomplete
     base: Incomplete
     max_items: Incomplete
-    def revert() -> None:
+    def revert(self) -> None:
         """
         Remove any object specific syndication settings and revert to site
         settings
         """
-    def enable() -> None:
+    def enable(self) -> None:
         """Enable syndication for an object"""
-    def disable() -> None:
+    def disable(self) -> None:
         """Disable syndication for an object"""
 
 class ITypeInformation(Interface):
     """Type definition interface."""
 
     __module__: str
-    def Metatype() -> None:
+    def Metatype(self) -> None:
         """Return the Zope 'meta_type' for this content object.
 
         o Deprecated (not all objects of a given type may even share
           the same meta_type).
         """
-    def Title() -> None:
+    def Title(self) -> None:
         """Return the "human readable" type name
 
         o Note that it may not map exactly to the \'meta_type\', e.g.,
           for l10n/i18n or where a single content class is being
           used twice, under different names.
         """
-    def Description() -> None:
+    def Description(self) -> None:
         """Return a textual description of the type
 
         o This descriptoin is used for display in a "constructor list".
         """
-    def isConstructionAllowed(container) -> None:
+    def isConstructionAllowed(self, container) -> None:
         """Return True if the current user is allowed to construct an
         instance of this type in 'container, else False.
         """
-    def allowType(contentType) -> None:
+    def allowType(self, contentType) -> None:
         """Can objects of 'contentType' be added to containers of our type?"""
-    def constructInstance(container, id) -> None:
+    def constructInstance(self, container, id) -> None:
         """Build a "bare" instance of the appropriate type in \'container\'.
 
         o Give the new instance an ID of \'id\'.
 
         o Return the newly-created instance, seated in \'container\'.
         """
-    def allowDiscussion() -> None:
+    def allowDiscussion(self) -> None:
         """Return True if objects of this type are allowed to support
             discussion, else False.
 
         o Individual objects may still disable discussion.
         """
-    def getIconExprObject() -> None:
+    def getIconExprObject(self) -> None:
         """Get the expression object representing the icon for this type."""
-    def getMethodAliases() -> None:
+    def getMethodAliases(self) -> None:
         """Return a mapping of method aliases for this type.
 
         o ???:  define keys and values of the mapping.
 
         o Permission:  Manage portal
         """
-    def setMethodAliases(aliases) -> None:
+    def setMethodAliases(self, aliases) -> None:
         """Assign method aliases for this type.
 
         o Return True if the operation changed any aliases, else False.
@@ -1144,7 +1148,7 @@ class ITypeInformation(Interface):
 
         o Permission:  Manage portal
         """
-    def queryMethodID(alias, default=None, context=None) -> None:
+    def queryMethodID(self, alias, default=None, context=None) -> None:
         """Return the method ID for a given alias.
 
         o 'context', if passed, points to the object calling this method.
@@ -1163,7 +1167,7 @@ class ITypesTool(Interface):
 
     __module__: str
     id: Incomplete
-    def getTypeInfo(contentType) -> None:
+    def getTypeInfo(self, contentType) -> None:
         """Return an ITypeInformation for the given type name / object.
 
         o If 'contentType' is actually an object, rather than a string,
@@ -1171,7 +1175,7 @@ class ITypesTool(Interface):
 
         o Permission:  Public
         """
-    def listTypeInfo(container=None) -> None:
+    def listTypeInfo(self, container=None) -> None:
         """Return a sequence of ITypeInformations registered for the
             site.
 
@@ -1180,7 +1184,7 @@ class ITypesTool(Interface):
 
         o Permission:  Public
         """
-    def listContentTypes(container=None, by_metatype: int = 0) -> None:
+    def listContentTypes(self, container=None, by_metatype: int = 0) -> None:
         """Return a sequence of IDs of ITypeInformations registered
             for the site.
 
@@ -1193,7 +1197,7 @@ class ITypesTool(Interface):
         o Permission:  Public
         """
     def constructContent(
-        contentType, container, id, RESPONSE=None, *args, **kw
+        self, contentType, container, id, RESPONSE=None, *args, **kw
     ) -> None:
         """Build an instance of the appropriate type in \'container\'
 
@@ -1216,6 +1220,7 @@ class IUndoTool(Interface):
     __module__: str
     id: Incomplete
     def listUndoableTransactionsFor(
+        self,
         object,
         first_transaction=None,
         last_transaction=None,
@@ -1230,7 +1235,7 @@ class IUndoTool(Interface):
 
         o Permission:  Undo changes
         """
-    def undo(object, transaction_info) -> None:
+    def undo(self, object, transaction_info) -> None:
         """Performs an undo operation.
 
         o Permission:  Undo changes
@@ -1246,7 +1251,7 @@ class IURLTool(Interface):
 
     __module__: str
     id: Incomplete
-    def __call__(relative: int = 0, *args, **kw) -> None:
+    def __call__(self, relative: int = 0, *args, **kw) -> None:
         """Return URL of the site, as a string.
 
         o If \'relative\' is True, return only the "path" portion of the site
@@ -1258,14 +1263,14 @@ class IURLTool(Interface):
 
         o Permission:  Public
         """
-    def getPortalObject() -> None:
+    def getPortalObject(self) -> None:
         """Return the site object itself.
 
         o The site is the parent of the tool.
 
         o Permission:  Public
         """
-    def getRelativeContentPath(content) -> None:
+    def getRelativeContentPath(self, content) -> None:
         """Return the site-relative path for 'content'
 
         o The site is the parent of the tool.
@@ -1274,7 +1279,7 @@ class IURLTool(Interface):
 
         o Permission:  Public
         """
-    def getRelativeContentURL(content) -> None:
+    def getRelativeContentURL(self, content) -> None:
         """Return the site-relative URL for 'content', as a string.
 
         o The site is the parent of the tool.
@@ -1285,7 +1290,7 @@ class IURLTool(Interface):
 
         o Permission:  Public
         """
-    def getRelativeUrl(content) -> None:
+    def getRelativeUrl(self, content) -> None:
         """Return the site-relative URL for 'content', as a string.
 
         o The site is the parent of the tool.
@@ -1296,7 +1301,7 @@ class IURLTool(Interface):
 
         o Permission:  Public
         """
-    def getPortalPath() -> None:
+    def getPortalPath(self) -> None:
         """Return the portal object's URL without the server URL component.
 
         o Return a slash-delimited string.
@@ -1309,7 +1314,7 @@ class IWorkflowTool(Interface):
 
     __module__: str
     id: Incomplete
-    def getCatalogVariablesFor(ob) -> None:
+    def getCatalogVariablesFor(self, ob) -> None:
         """Get a mapping of "workflow-relevant" attributes.
 
         o Invoked by \'portal_catalog\' when indexing content.
@@ -1319,7 +1324,7 @@ class IWorkflowTool(Interface):
 
         o Permission:  Private (Python only)
         """
-    def doActionFor(ob, action, wf_id=None, *args, **kw) -> None:
+    def doActionFor(self, ob, action, wf_id=None, *args, **kw) -> None:
         """Perform the given workflow action on 'ob'.
 
         o 'ob' is the target object.
@@ -1337,7 +1342,7 @@ class IWorkflowTool(Interface):
 
         o Permission:  Public
         """
-    def getInfoFor(ob, name, default=..., wf_id=None) -> None:
+    def getInfoFor(self, ob, name, default=..., wf_id=None) -> None:
         """Get the given bit of workflow information for the object.
 
         o 'ob' is the target object.
@@ -1356,7 +1361,7 @@ class IWorkflowTool(Interface):
 
         o Permission:  Public
         """
-    def notifyCreated(ob) -> None:
+    def notifyCreated(self, ob) -> None:
         """Notify all applicable workflows that an object has been created.
 
         o \'ob\' is the newly-created object;  it will already be "seated"
@@ -1364,7 +1369,7 @@ class IWorkflowTool(Interface):
 
         o Permission:  Private (Python only)
         """
-    def notifyBefore(ob, action) -> None:
+    def notifyBefore(self, ob, action) -> None:
         """Notify all applicable workflows of an action before it happens.
 
         o 'ob' is the content object which is the target of the action.
@@ -1379,7 +1384,7 @@ class IWorkflowTool(Interface):
 
         o Permission:  Private (Python only)
         """
-    def notifySuccess(ob, action, result=None) -> None:
+    def notifySuccess(self, ob, action, result=None) -> None:
         """Notify all applicable workflows that an action has taken place.
 
         o 'ob' is the content object which is the target of the action.
@@ -1390,7 +1395,7 @@ class IWorkflowTool(Interface):
 
         o Permission:  Private (Python only)
         """
-    def notifyException(ob, action, exc) -> None:
+    def notifyException(self, ob, action, exc) -> None:
         """Notify all applicable workflows that an action failed.
 
         o 'ob' is the content object which is the target of the action.
@@ -1401,7 +1406,7 @@ class IWorkflowTool(Interface):
 
         o Permission:  Private (Python only)
         """
-    def getHistoryOf(wf_id, ob) -> None:
+    def getHistoryOf(self, wf_id, ob) -> None:
         """Get the history of an object for a given workflow.
 
         o 'wf_id' is the id of the selected workflow.
@@ -1412,7 +1417,7 @@ class IWorkflowTool(Interface):
 
         o Permission:  Private (Python only)
         """
-    def getStatusOf(wf_id, ob) -> None:
+    def getStatusOf(self, wf_id, ob) -> None:
         """Get the last element of a workflow history for a given workflow.
 
         o 'wf_id' is the id of the selected workflow.
@@ -1423,7 +1428,7 @@ class IWorkflowTool(Interface):
 
         o Permission:  Private (Python only)
         """
-    def setStatusOf(wf_id, ob, status) -> None:
+    def setStatusOf(self, wf_id, ob, status) -> None:
         """Append a record to the workflow history of a given workflow.
 
         o 'wf_id' is the id of the selected workflow.
@@ -1441,12 +1446,12 @@ class IConfigurableWorkflowTool(IWorkflowTool):
     """Manage workflow tool settings."""
 
     __module__: str
-    def setDefaultChain(default_chain) -> None:
+    def setDefaultChain(self, default_chain) -> None:
         """Set the default chain for this tool.
 
         o Permission:  Manage portal
         """
-    def setChainForPortalTypes(pt_names, chain, verify: bool = True) -> None:
+    def setChainForPortalTypes(self, pt_names, chain, verify: bool = True) -> None:
         """Set a chain for specific portal types.
 
         o If chain is None, set the chain for the portal types to be the
@@ -1454,17 +1459,17 @@ class IConfigurableWorkflowTool(IWorkflowTool):
 
         o Permission:  Manage portal
         """
-    def getDefaultChain() -> None:
+    def getDefaultChain(self) -> None:
         """Get the default chain for this tool.
 
         o Permission:  Private (Python only)
         """
-    def listChainOverrides() -> None:
+    def listChainOverrides(self) -> None:
         """List portal type specific chain overrides.
 
         o Permission:  Private (Python only)
         """
-    def getChainFor(ob) -> None:
+    def getChainFor(self, ob) -> None:
         """Get the chain that applies to the given object.
 
         o If 'ob' is a string, it is used as portal type name.
@@ -1476,9 +1481,9 @@ class IWorkflowDefinition(Interface):
     """Plugin interface for workflow definitions managed by IWorkflowTool."""
 
     __module__: str
-    def getId() -> None:
+    def getId(self) -> None:
         """Return the id of the workflow definition."""
-    def getCatalogVariablesFor(ob) -> None:
+    def getCatalogVariablesFor(self, ob) -> None:
         """Return a mapping of attributes relevant to this workflow.
 
         o Invoked by the workflow tool.
@@ -1488,7 +1493,7 @@ class IWorkflowDefinition(Interface):
 
         o Permission:  Private (Python only)
         """
-    def updateRoleMappingsFor(ob) -> None:
+    def updateRoleMappingsFor(self, ob) -> None:
         """Update the object permissions according to the current workflow
             state of 'ob'.
 
@@ -1497,7 +1502,7 @@ class IWorkflowDefinition(Interface):
 
         o Permission:  Private (Python only)
         """
-    def listObjectActions(info) -> None:
+    def listObjectActions(self, info) -> None:
         """Return a sequence of workflow action objects.
 
         o 'info' is an OAI (ObjectActionInformation ?) structure.
@@ -1509,7 +1514,7 @@ class IWorkflowDefinition(Interface):
 
         o Permission:  Private (Python only)
         """
-    def listGlobalActions(info) -> None:
+    def listGlobalActions(self, info) -> None:
         """Return a sequence of workflow action objects.
 
         o \'info\' is an OAI (ObjectActionInformation ?) structure.
@@ -1522,7 +1527,7 @@ class IWorkflowDefinition(Interface):
 
         o Permission:  Private (Python only)
         """
-    def isActionSupported(ob, action, **kw) -> None:
+    def isActionSupported(self, ob, action, **kw) -> None:
         """Return True if the given workflow action is supported by this
             workfow for a content object, else False.
 
@@ -1534,7 +1539,7 @@ class IWorkflowDefinition(Interface):
 
         o Permission:  Private (Python only)
         """
-    def doActionFor(ob, action, comment: str = "") -> None:
+    def doActionFor(self, ob, action, comment: str = "") -> None:
         """Perform the requested workflow action on a content object.
 
         o 'ob' is the content object.
@@ -1551,7 +1556,7 @@ class IWorkflowDefinition(Interface):
 
         o Permission:  Private (Python only)
         """
-    def isInfoSupported(ob, name) -> None:
+    def isInfoSupported(self, ob, name) -> None:
         """Return True if the given info name is supported by this workflow
             for a given content object, else False.
 
@@ -1563,7 +1568,7 @@ class IWorkflowDefinition(Interface):
 
         o Permission:  Private (Python only)
         """
-    def getInfoFor(ob, name, default) -> None:
+    def getInfoFor(self, ob, name, default) -> None:
         """Return the requested workflow information for a content object.
 
         o 'ob' is the content object.
@@ -1578,7 +1583,7 @@ class IWorkflowDefinition(Interface):
 
         o Permission:  Private (Python only)
         """
-    def notifyCreated(ob) -> None:
+    def notifyCreated(self, ob) -> None:
         """Notification that an object has been created and put in its place.
 
         o 'ob' is the newly-created object.
@@ -1590,7 +1595,7 @@ class IWorkflowDefinition(Interface):
 
         o Permission:  Private (Python only)
         """
-    def notifyBefore(ob, action) -> None:
+    def notifyBefore(self, ob, action) -> None:
         """Notification of a workflow action before it happens.
 
         o 'ob' is the target object of the action.
@@ -1608,7 +1613,7 @@ class IWorkflowDefinition(Interface):
 
         o Permission:  Private (Python only)
         """
-    def notifySuccess(ob, action, result) -> None:
+    def notifySuccess(self, ob, action, result) -> None:
         """Notification that a workflow action has taken place.
 
         o 'ob' is the target object of the action.
@@ -1622,7 +1627,7 @@ class IWorkflowDefinition(Interface):
 
         o Permission:  Private (Python only)
         """
-    def notifyException(ob, action, exc) -> None:
+    def notifyException(self, ob, action, exc) -> None:
         """Notifies this workflow that an action failed.
 
         o 'ob' is the target object of the action.
@@ -1639,9 +1644,9 @@ class IWorkflowDefinition(Interface):
 
 class IWorkflowStatus(Interface):
     __module__: str
-    def get() -> None:
+    def get(self) -> None:
         """Return the current workflow status or None"""
-    def set(status) -> None:
+    def set(self, status) -> None:
         """Update the current workflow status to `status`"""
 
 class IWorkflowHistory(Interface):
@@ -1657,7 +1662,7 @@ class ILinebreakNormalizer(Interface):
     """
 
     __module__: str
-    def normalizeIncoming(ob, text) -> None:
+    def normalizeIncoming(self, ob, text) -> None:
         """Normalize line breaks in text pushed into the system
 
         o ob is the content object receiving the text value
@@ -1666,7 +1671,7 @@ class ILinebreakNormalizer(Interface):
 
         o Permission:  Private (Python only)
         """
-    def normalizeOutgoing(ob, text) -> None:
+    def normalizeOutgoing(self, ob, text) -> None:
         """Normalize line breaks in text emitted by the system
 
         o ob is the content object rendering the text value
@@ -1681,36 +1686,36 @@ class IIndexing(Interface):
     the processors, which perform the actual indexing;  the queue gets
     registered as a utility while the processors (portal catalog, solr)
     are registered as named utilties"""
-    def index(obj, attributes=None) -> None:
+    def index(self, obj, attributes=None) -> None:
         """queue an index operation for the given object and attributes"""
-    def reindex(obj, attributes=None) -> None:
+    def reindex(self, obj, attributes=None) -> None:
         """queue a reindex operation for the given object and attributes"""
-    def unindex(obj) -> None:
+    def unindex(self, obj) -> None:
         """queue an unindex operation for the given object"""
 
 class IIndexQueue(IIndexing):
     """a queue for storing and optimizing indexing operations"""
-    def setHook(hook) -> None:
+    def setHook(self, hook) -> None:
         """set the hook for the transaction manager;  this hook must be
         called whenever an indexing operation is added to the queue"""
-    def getState() -> None:
+    def getState(self) -> None:
         """get the state of the queue, i.e. its contents"""
-    def setState(state) -> None:
+    def setState(self, state) -> None:
         """set the state of the queue, i.e. its contents"""
-    def process() -> None:
+    def process(self) -> None:
         """process the contents of the queue, i.e. start indexing;
         returns the number of processed queue items"""
-    def clear() -> None:
+    def clear(self) -> None:
         """clear the queue's contents in an ordered fashion"""
 
 class IIndexQueueProcessor(IIndexing):
     """a queue processor, i.e. an actual implementation of index operations
     for a particular search engine, e.g. the catalog, solr etc"""
-    def begin() -> None:
+    def begin(self) -> None:
         """called before processing of the queue is started"""
-    def commit() -> None:
+    def commit(self) -> None:
         """called after processing of the queue has ended"""
-    def abort() -> None:
+    def abort(self) -> None:
         """called if processing of the queue needs to be aborted"""
 
 class IPortalCatalogQueueProcessor(IIndexQueueProcessor):

@@ -5,33 +5,33 @@ class IPortalTransformsTool(Interface):
 
 class IDataStream(Interface):
     """data stream, is the result of a transform"""
-    def setData(value) -> None:
+    def setData(self, value) -> None:
         """set the main data produced by a transform,
         i.e. usually a native string"""
-    def getData() -> None:
+    def getData(self) -> None:
         """provide access to the transformed data object,
         i.e. usually a native string
         This data may references subobjects.
         """
-    def setSubObjects(objects) -> None:
+    def setSubObjects(self, objects) -> None:
         """set a dict-like object containing subobjects.
         keys should be object's identifier (e.g. usually a filename) and
         values object's content.
         """
-    def getSubObjects() -> None:
+    def getSubObjects(self) -> None:
         """return a dict-like object with any optional subobjects associated
         with the data"""
-    def getMetadata() -> None:
+    def getMetadata(self) -> None:
         """return a dict-like object with any optional metadata from
         the transform
         You can modify the returned dictionary to add/change metadata
         """
-    def isCacheable() -> None:
+    def isCacheable(self) -> None:
         """Return a bool which indicates whether the result should be cached
 
         Default is true
         """
-    def setCachable(value) -> None:
+    def setCachable(self, value) -> None:
         """Set cacheable flag to yes or no"""
 
 class ITransform(Interface):
@@ -39,7 +39,7 @@ class ITransform(Interface):
     must be threadsafe and stateless"""
     def name(self) -> None:
         """return the name of the transform instance"""
-    def convert(data, idata, filename=None, **kwargs) -> None:
+    def convert(self, data, idata, filename=None, **kwargs) -> None:
         """convert the data, store the result in idata and return that
 
         optional argument filename may give the original file name of
@@ -53,21 +53,21 @@ class ITransform(Interface):
         """
 
 class IChain(ITransform):
-    def registerTransform(transform, condition=None) -> None:
+    def registerTransform(self, transform, condition=None) -> None:
         """Append a transform to the chain"""
 
 class IEngine(Interface):
-    def registerTransform(transform) -> None:
+    def registerTransform(self, transform) -> None:
         """register a transform
 
         transform must implement ITransform
         """
-    def unregisterTransform(name) -> None:
+    def unregisterTransform(self, name) -> None:
         """unregister a transform
         name is the name of a registered transform
         """
     def convertTo(
-        mimetype, orig, data=None, object=None, context=None, **kwargs
+        self, mimetype, orig, data=None, object=None, context=None, **kwargs
     ) -> None:
         """Convert orig to a given mimetype
 
@@ -87,14 +87,14 @@ class IEngine(Interface):
         return an object implementing idatastream or None if no path has been
         found.
         """
-    def convert(name, orig, data=None, context=None, **kwargs) -> None:
+    def convert(self, name, orig, data=None, context=None, **kwargs) -> None:
         """run a transform of a given name on data
 
         * name is the name of a registered transform
 
         see convertTo docstring for more info
         """
-    def __call__(name, orig, data=None, context=None, **kwargs) -> None:
+    def __call__(self, name, orig, data=None, context=None, **kwargs) -> None:
         """run a transform by its name, returning the raw data product
 
         * name is the name of a registered transform.

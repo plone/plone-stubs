@@ -10,6 +10,7 @@ class IScaledImageQuality(Interface):
 class IImageScaleFactory(Interface):
     """Creates a scale"""
     def __call__(
+        self,
         fieldname=None,
         mode: str = "scale",
         height=None,
@@ -54,7 +55,7 @@ class IImageScaleFactory(Interface):
         ``dimensions``
             is a tuple (width, height)
         """
-    def get_original_value(fieldname=None) -> None:
+    def get_original_value(self, fieldname=None) -> None:
         """Get the image value.
 
         In most cases this will be a NamedBlobImage field.

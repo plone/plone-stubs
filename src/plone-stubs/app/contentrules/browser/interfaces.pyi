@@ -3,12 +3,12 @@ from zope.interface import Interface
 
 class IContentRulesInfo(Interface):
     """Site-wide information about content rules"""
-    def show_rules_tab() -> None:
+    def show_rules_tab(self) -> None:
         """Determine whether or not the rules tab should be shown."""
 
 class IContentRulesControlPanel(Interface):
     """Marker interface for rules control panel view"""
-    def globally_disabled() -> None:
+    def globally_disabled(self) -> None:
         """Whether content rules are globally disabled or not"""
 
 class IRuleAdding(IAdding):

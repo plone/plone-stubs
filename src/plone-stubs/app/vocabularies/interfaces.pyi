@@ -16,7 +16,7 @@ class IBrowsableTerm(Interface):
     parent_token: Incomplete
 
 class ISlicableVocabulary(IVocabularyTokenized):
-    def __getitem__(start, stop) -> None:
+    def __getitem__(self, start, stop) -> None:
         """return a slice of the results"""
 
 class IPermissiveVocabulary(IVocabularyTokenized):

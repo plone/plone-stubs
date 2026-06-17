@@ -6,21 +6,21 @@ class IPropertySheet(Interface):
     o Objects implementing this interface can play in read-only fashion
       in OFS.PropertySheets' framework.
     """
-    def getId() -> None:
+    def getId(self) -> None:
         """Identify the sheet within a collection."""
-    def hasProperty(id) -> None:
+    def hasProperty(self, id) -> None:
         """Does the sheet have a property corresponding to 'id'?"""
-    def getProperty(id, default=None) -> None:
+    def getProperty(self, id, default=None) -> None:
         """Return the value of the property corresponding to 'id'.
 
         o If no such property exists within the sheet, return 'default'.
         """
-    def getPropertyType(id) -> None:
+    def getPropertyType(self, id) -> None:
         """Return the string identifying the type of property, 'id'.
 
         o If no such property exists within the sheet, return None.
         """
-    def propertyInfo(id) -> None:
+    def propertyInfo(self, id) -> None:
         """Return a mapping describing property, 'id'.
 
         o Keys must include:
@@ -31,11 +31,11 @@ class IPropertySheet(Interface):
 
           'meta' -- a mapping containing additional info about the property.
         """
-    def propertyMap() -> None:
+    def propertyMap(self) -> None:
         """Return a tuple of 'propertyInfo' mappings, one per property."""
-    def propertyIds() -> None:
+    def propertyIds(self) -> None:
         """Return a sequence of the IDs of the sheet's properties."""
-    def propertyValues() -> None:
+    def propertyValues(self) -> None:
         """Return a sequence of the values of the sheet's properties."""
-    def propertyItems() -> None:
+    def propertyItems(self) -> None:
         """Return a sequence of (id, value) tuples, one per property."""

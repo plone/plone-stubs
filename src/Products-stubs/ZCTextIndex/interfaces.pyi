@@ -5,9 +5,9 @@ class IZCTextIndex(Interface):
 
 class ILexicon(Interface):
     """Object responsible for converting text to word identifiers."""
-    def clear() -> None:
+    def clear(self) -> None:
         """Empty the lexicon."""
-    def termToWordIds(text) -> None:
+    def termToWordIds(self, text) -> None:
         """Return a sequence of ids of the words parsed from the text.
 
         The input text may be either a string or a list of strings.
@@ -15,7 +15,7 @@ class ILexicon(Interface):
         Parse the text as if they are search terms, and skips words
         that aren't in the lexicon.
         """
-    def sourceToWordIds(text) -> None:
+    def sourceToWordIds(self, text) -> None:
         """Return a sequence of ids of the words parsed from the text.
 
         The input text may be either a string or a list of strings.
@@ -24,7 +24,7 @@ class ILexicon(Interface):
         creates new word ids for words that aren't (yet) in the
         lexicon.
         """
-    def globToWordIds(pattern) -> None:
+    def globToWordIds(self, pattern) -> None:
         """Return a sequence of ids of words matching the pattern.
 
         The argument should be a single word using globbing syntax,
@@ -33,25 +33,25 @@ class ILexicon(Interface):
         Return the wids for all words in the lexicon that match the
         pattern.
         """
-    def length() -> None:
+    def length(self) -> None:
         """Return the number of unique terms in the lexicon."""
-    def get_word(wid) -> None:
+    def get_word(self, wid) -> None:
         """Return the word for the given word id.
 
         Raise KeyError if the word id is not in the lexicon.
         """
-    def get_wid(word) -> None:
+    def get_wid(self, word) -> None:
         """Return the wird id for the given word.
 
         Return 0 of the word is not in the lexicon.
         """
-    def parseTerms(text) -> None:
+    def parseTerms(self, text) -> None:
         """Pass the text through the pipeline.
 
         Return a list of words, normalized by the pipeline
         (e.g. stopwords removed, case normalized etc.).
         """
-    def isGlob(word) -> None:
+    def isGlob(self, word) -> None:
         """Return true if the word is a globbing pattern.
 
         The word should be one of the words returned by parseTerm().
@@ -62,16 +62,16 @@ class IZCLexicon(Interface):
 
 class ISplitter(Interface):
     """A splitter."""
-    def process(text) -> None:
+    def process(self, text) -> None:
         """Run the splitter over the input text, returning a list of terms."""
 
 class IPipelineElement(Interface):
-    def process(source) -> None:
+    def process(self, source) -> None:
         """Provide a text processing step.
 
         Process a source sequence of words into a result sequence.
         """
-    def processGlob(source) -> None:
+    def processGlob(self, source) -> None:
         """Process, passing through globbing metacharaters.
 
         This is an optional method; if it is not used, process() is used.
@@ -79,31 +79,31 @@ class IPipelineElement(Interface):
 
 class IPipelineElementFactory(Interface):
     """Class for creating pipeline elements by name"""
-    def registerFactory(group, name, factory) -> None:
+    def registerFactory(self, group, name, factory) -> None:
         """Registers a pipeline factory by name and element group.
 
         Each name can be registered only once for a given group. Duplicate
         registrations will raise a ValueError
         """
-    def getFactoryGroups() -> None:
+    def getFactoryGroups(self) -> None:
         """Returns a sorted list of element group names"""
-    def getFactoryNames(group) -> None:
+    def getFactoryNames(self, group) -> None:
         """Returns a sorted list of registered pipeline factory names
         in the specified element group
         """
-    def instantiate(group, name) -> None:
+    def instantiate(self, group, name) -> None:
         """Instantiates a pipeline element by group and name. If name is not
         registered raise a KeyError.
         """
 
 class IQueryParseTree(Interface):
     """Interface for parse trees returned by parseQuery()."""
-    def nodeType() -> None:
+    def nodeType(self) -> None:
         """Return the node type.
 
         This is one of 'AND', 'OR', 'NOT', 'ATOM', 'PHRASE' or 'GLOB'.
         """
-    def getValue() -> None:
+    def getValue(self) -> None:
         """Return a node-type specific value.
 
         For node type:    Return:
@@ -114,9 +114,9 @@ class IQueryParseTree(Interface):
         \'PHRASE\'          a string (representing a search phrase)
         \'GLOB\'            a string (representing a pattern, e.g. "foo*")
         """
-    def terms() -> None:
+    def terms(self) -> None:
         """Return a list of all terms in this node, excluding NOT subtrees."""
-    def executeQuery(index) -> None:
+    def executeQuery(self, index) -> None:
         """Execute the query represented by this node against the index.
 
         The index argument must implement the IIndex interface.
@@ -129,7 +129,7 @@ class IQueryParseTree(Interface):
 
 class IQueryParser(Interface):
     """Interface for Query Parsers."""
-    def parseQuery(query) -> None:
+    def parseQuery(self, query) -> None:
         """Parse a query string.
 
         Return a parse tree (which implements IQueryParseTree).
@@ -142,7 +142,7 @@ class IQueryParser(Interface):
 
         May raise ParseTree.ParseError.
         """
-    def getIgnored() -> None:
+    def getIgnored(self) -> None:
         """Return the list of ignored terms.
 
         Return the list of terms that were ignored by the most recent
@@ -150,7 +150,7 @@ class IQueryParser(Interface):
 
         If parseQuery() was never called this returns None.
         """
-    def parseQueryEx(query) -> None:
+    def parseQueryEx(self, query) -> None:
         """Parse a query string.
 
         Return a tuple (tree, ignored) where 'tree' is the parse tree
@@ -162,25 +162,25 @@ class IQueryParser(Interface):
 
 class IIndex(Interface):
     """Interface for an Index."""
-    def length() -> None:
+    def length(self) -> None:
         """Return the number of words in the index."""
-    def document_count() -> None:
+    def document_count(self) -> None:
         """Return the number of documents in the index."""
-    def get_words(docid) -> None:
+    def get_words(self, docid) -> None:
         """Return a list of wordids for the given docid."""
-    def search(term) -> None:
+    def search(self, term) -> None:
         """Execute a search on a single term given as a string.
 
         Return an IIBTree mapping docid to score, or None if all docs
         match due to the lexicon returning no wids for the term (e.g.,
         if the term is entirely composed of stopwords).
         """
-    def search_phrase(phrase) -> None:
+    def search_phrase(self, phrase) -> None:
         """Execute a search on a phrase given as a string.
 
         Return an IIBtree mapping docid to score.
         """
-    def search_glob(pattern) -> None:
+    def search_glob(self, pattern) -> None:
         """Execute a pattern search.
 
         The pattern represents a set of words by using * and ?.  For
@@ -189,7 +189,7 @@ class IIndex(Interface):
 
         Return an IIBTree mapping docid to score.
         """
-    def query_weight(terms) -> None:
+    def query_weight(self, terms) -> None:
         """Return the weight for a set of query terms.
 
         \'terms\' is a sequence of all terms included in the query,
@@ -200,7 +200,7 @@ class IIndex(Interface):
         result is an upper bound on document scores returned for the
         query.
         """
-    def index_doc(docid, text) -> None:
+    def index_doc(self, docid, text) -> None:
         """Add a document with the specified id and text to the index. If a
         document by that id already exists, replace its text with the new
         text provided
@@ -208,9 +208,9 @@ class IIndex(Interface):
         of strings from which to extract the terms under which to
         index the source document.
         """
-    def unindex_doc(docid) -> None:
+    def unindex_doc(self, docid) -> None:
         """Remove the document with the specified id from the index"""
-    def has_doc(docid) -> None:
+    def has_doc(self, docid) -> None:
         """Returns true if docid is an id of a document in the index"""
 
 class INBest(Interface):
@@ -220,26 +220,26 @@ class INBest(Interface):
     .add(item, score) method.  If .add() is called M times, the worst-case
     number of comparisons performed overall is M * log2(N).
     """
-    def add(item, score) -> None:
+    def add(self, item, score) -> None:
         """Record that item 'item' has score 'score'.  No return value.
 
         The N best-scoring items are remembered, where N was passed to
         the constructor.  'item' can by anything.  'score' should be
         a number, and larger numbers are considered better.
         """
-    def addmany(sequence) -> None:
+    def addmany(self, sequence) -> None:
         """Like "for item, score in sequence: self.add(item, score)".
 
         This is simply faster than calling add() len(seq) times.
         """
-    def getbest() -> None:
+    def getbest(self) -> None:
         """Return the (at most) N best-scoring items as a sequence.
 
         The return value is a sequence of 2-tuples, (item, score), with
         the largest score first.  If .add() has been called fewer than
         N times, this sequence will contain fewer than N pairs.
         """
-    def pop_smallest() -> None:
+    def pop_smallest(self) -> None:
         """Return and remove the (item, score) pair with lowest score.
 
         If len(self) is 0, raise IndexError.
@@ -250,13 +250,13 @@ class INBest(Interface):
         using the object as an ordinary smallest-in-first-out priority
         queue.
         """
-    def __len__() -> int:
+    def __len__(self) -> int:
         """Return the number of (item, score) pairs currently known.
 
         This is N (the value passed to the constructor), unless .add()
         has been called fewer than N times.
         """
-    def capacity() -> None:
+    def capacity(self) -> None:
         """Return the maximum number of (item, score) pairs.
 
         This is N (the value passed to the constructor).

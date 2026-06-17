@@ -6,9 +6,9 @@ class ICopyModifyMergeRepository(Interface):
 
     This component exposes the main API.
     """
-    def isVersionable(obj) -> None:
+    def isVersionable(self, obj) -> None:
         """Return True if the content type is versionable."""
-    def setAutoApplyMode(autoapply) -> None:
+    def setAutoApplyMode(self, autoapply) -> None:
         """Sets the autoapply mode.
 
         Before a repository can host a version of a content it has to be
@@ -17,7 +17,7 @@ class ICopyModifyMergeRepository(Interface):
         automatically and applies version control.
         The default value is True.
         """
-    def applyVersionControl(obj, comment: str = "", metadata={}) -> None:
+    def applyVersionControl(self, obj, comment: str = "", metadata={}) -> None:
         """Register the content to the repository.
 
         Must be called prior any of the other repository related methods.
@@ -27,27 +27,27 @@ class ICopyModifyMergeRepository(Interface):
         This operation save the current version of the working copy as
         first version to the repository.
         """
-    def save(obj, comment: str = "", metadata={}) -> None:
+    def save(self, obj, comment: str = "", metadata={}) -> None:
         """Saves the current version of the content.
 
         'comment' preferably is a human readable string comment.
         'metadata' must be a dictionary.
         """
-    def revert(obj, selector=None) -> None:
+    def revert(self, obj, selector=None) -> None:
         """Reverts to a former version of the content by replacing the working
         copy.
 
         Reverts to the most recently saved version if no selector
         is passed.
         """
-    def retrieve(obj, selector=None, preserve=()) -> None:
+    def retrieve(self, obj, selector=None, preserve=()) -> None:
         """Returns a former version of a content without replacing the working
         copy.
 
         It returns an ``IVersionData`` object and doesn't modify the working
         copy in any way.
         """
-    def restore(history_id, selector, container, new_id=None) -> None:
+    def restore(self, history_id, selector, container, new_id=None) -> None:
         """Restore a Specific version of an Object into a Container
 
         Usage Hint:
@@ -56,12 +56,12 @@ class ICopyModifyMergeRepository(Interface):
         A version having been purged from the storage may never be restored.
         A new id may be chosen.
         """
-    def isUpToDate(obj, selector=None) -> None:
+    def isUpToDate(self, obj, selector=None) -> None:
         """Returns True if the working copy is modified.
 
         Comparison is done with the selected version.
         """
-    def getHistory(obj, oldestFirst: bool = False, preserve=()) -> None:
+    def getHistory(self, obj, oldestFirst: bool = False, preserve=()) -> None:
         """Returns the history of a content.
 
         Return the oldest version first  when ``oldestFirst`` set to
@@ -69,7 +69,7 @@ class ICopyModifyMergeRepository(Interface):
 
         Returns a sequence (``IHistory``) of ``IVersionData`` objects.
         """
-    def getHistoryMetadata(obj) -> None:
+    def getHistoryMetadata(self, obj) -> None:
         """Returns the versioning metadata history."""
 
 class IPurgeSupport(Interface):
@@ -109,7 +109,7 @@ class IPurgeSupport(Interface):
         version retrieved: 0, 1, 2, 5, 6, 7, 8, 9, e, e
     """
     def purge(
-        obj, selector, comment: str = "", metadata={}, countPurged: bool = True
+        self, obj, selector, comment: str = "", metadata={}, countPurged: bool = True
     ) -> None:
         """Purge a Version of a Content
 
@@ -131,7 +131,7 @@ class IPurgeSupport(Interface):
         The comment and metadata passed may be used to store information
         about the reasons of the purging.
         """
-    def revert(obj, selector=None, countPurged: bool = True) -> None:
+    def revert(self, obj, selector=None, countPurged: bool = True) -> None:
         """Reverts to a former version of the content by replacing the working
         copy.
 
@@ -141,7 +141,9 @@ class IPurgeSupport(Interface):
         Also counts purged versions if ``True`` is passed to ``countPurged``
         (see interface documentation for details).
         """
-    def retrieve(obj, selector=None, preserve=(), countPurged: bool = True) -> None:
+    def retrieve(
+        self, obj, selector=None, preserve=(), countPurged: bool = True
+    ) -> None:
         """Returns a former version of a content without replacing the working
         copy.
 
@@ -152,7 +154,7 @@ class IPurgeSupport(Interface):
         (see interface documentation for details).
         """
     def restore(
-        history_id, selector, container, new_id=None, countPurged: bool = True
+        self, history_id, selector, container, new_id=None, countPurged: bool = True
     ) -> None:
         """Restore a Specific version of an Object into a Container
 
@@ -165,7 +167,7 @@ class IPurgeSupport(Interface):
         Also counts purged versions if ``True`` is passed to ``countPurged``
         (see interface documentation for details).
         """
-    def isUpToDate(obj, selector=None, countPurged: bool = True) -> None:
+    def isUpToDate(self, obj, selector=None, countPurged: bool = True) -> None:
         """Returns True if the working copy is modified.
 
         Comparison is done with the selected version.
@@ -174,7 +176,7 @@ class IPurgeSupport(Interface):
         (see interface documentation for details).
         """
     def getHistory(
-        obj, oldestFirst: bool = False, preserve=(), countPurged: bool = True
+        self, obj, oldestFirst: bool = False, preserve=(), countPurged: bool = True
     ) -> None:
         """Returns the history of a content.
 
@@ -189,46 +191,46 @@ class IPurgeSupport(Interface):
 
 class IVersionSupport(Interface):
     """Check if versioning is supported for a specific content."""
-    def isVersionable(obj) -> None:
+    def isVersionable(self, obj) -> None:
         """Returns True if the object is versionable"""
 
 class IContentTypeVersionSupport(IVersionSupport):
     """Registry for versionable content types"""
-    def getVersionableContentTypes() -> None:
+    def getVersionableContentTypes(self) -> None:
         """Returns a list of Versionable content types"""
-    def setVersionableContentTypes(new_content_types) -> None:
+    def setVersionableContentTypes(self, new_content_types) -> None:
         """Set the list of Versionable content types"""
 
 class IContentTypeVersionPolicySupport(IContentTypeVersionSupport):
     """Determine if a type supports a particular versioning method, the policy
     parameter is simply a string representing the policy"""
-    def addPolicyForContentType(content_type, policy) -> None:
+    def addPolicyForContentType(self, content_type, policy) -> None:
         """Sets a content type to use a specific policy"""
-    def removePolicyFromContentType(content_type, policy) -> None:
+    def removePolicyFromContentType(self, content_type, policy) -> None:
         """Sets a content type to use a specific policy"""
-    def supportsPolicy(obj, policy) -> None:
+    def supportsPolicy(self, obj, policy) -> None:
         """Determine if an object is set to use a specific versioning policy"""
-    def hasPolicy(obj) -> None:
+    def hasPolicy(self, obj) -> None:
         """Determine if an object has any assigned versioning policies"""
-    def manage_setTypePolicies(policy_map) -> None:
+    def manage_setTypePolicies(self, policy_map) -> None:
         """Set the policy_mapping for all types from a dict of
         content_type : policy list mappings {content_type: [policy1, policy2]}
         """
-    def listPolicies() -> None:
+    def listPolicies(self) -> None:
         """Return a sequence of all defined VersionPolicy objects"""
-    def addPolicy(policy_id, policy_title, policy_class) -> None:
+    def addPolicy(self, policy_id, policy_title, policy_class) -> None:
         """Add a new versioning policy, can optionally use an alternate
         policy class."""
-    def removePolicy(policy_id) -> None:
+    def removePolicy(self, policy_id) -> None:
         """Removes a versioning policy from the tool and all types which
         support it"""
-    def manage_changePolicyDefs(policy_list) -> None:
+    def manage_changePolicyDefs(self, policy_list) -> None:
         """Update the policy structure with a list of tuples [(id, title),...]
          The tuples may optionally contain a policy class and a dict of
          kwargs to pass to the policy add hook. e.g.:
         [(id, title, klass, {'arg1': val1}), ...]
         """
-    def getPolicyMap() -> None:
+    def getPolicyMap(self) -> None:
         """Return a mapping of types to the lists of policies they support,
         for use in config screen."""
 
@@ -244,14 +246,14 @@ class IVersionData(Interface):
 
 class IHistory(Interface):
     """Iterable version history."""
-    def __len__() -> int:
+    def __len__(self) -> int:
         """Returns the length of the history."""
-    def __getitem__(selector) -> None:
+    def __getitem__(self, selector) -> None:
         """Returns the selected version of a content.
 
         Returns a ``IVersionData`` object.
         """
-    def __iter__():
+    def __iter__(self):
         """Returns an iterator returning 'IVersionData' object."""
 
 class IRepositoryTool(Interface):

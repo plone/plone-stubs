@@ -13,9 +13,9 @@ class ICORSPolicy(Interface):
     """Provides methods for processing simple and preflight CORS requests by
     adding access control headers.
     """
-    def process_simple_request() -> None:
+    def process_simple_request(self) -> None:
         """Process a simple request"""
-    def process_preflight_request() -> None:
+    def process_preflight_request(self) -> None:
         """Process a preflight request"""
 
 class IShouldAllowAcquiredItemPublication(Interface): ...

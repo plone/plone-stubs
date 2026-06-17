@@ -23,7 +23,7 @@ class IConstrainForm(Interface):
     allowed_types: Incomplete
     secondary_types: Incomplete
     @invariant
-    def legal_not_immediately_addable(data): ...
+    def legal_not_immediately_addable(self, data): ...
 
 class FormContentAdapter:
     context: Incomplete

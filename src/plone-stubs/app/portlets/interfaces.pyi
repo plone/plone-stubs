@@ -20,7 +20,7 @@ class IPortletPermissionChecker(Interface):
     """An adapter for an assignment manager, which can check whether the
     current user is allowed to manipulate portlets in this mapping.
     """
-    def __call__() -> None:
+    def __call__(self) -> None:
         """Check the adapted assignment manager. Will raise Unauthorized if
         something fishy is going on.
         """
@@ -62,24 +62,24 @@ class IDashboard(IDefaultPortletManager, IPlacelessPortletManager):
 
 class IDeferredPortletRenderer(IPortletRenderer):
     """Provide refresh and dynamic loading functionality"""
-    def deferred_update() -> None:
+    def deferred_update(self) -> None:
         """refresh portlet data on KSS events (and only then)
 
         this is similar to update() but it is only called from a KSS action
         and thus can be used to do long computing/retrieval only on loading
         the portlet via KSS but not in the initial page load.
         """
-    def render_full() -> None:
+    def render_full(self) -> None:
         """method for rendering the full version of the portlet
 
         this is usually the one called via KSS events
         """
-    def render_preload() -> None:
+    def render_preload(self) -> None:
         """method for rendering the portlet in preloading state
 
         this usually just contains a class to which an KSS event is bound
         """
-    def initialized() -> None:
+    def initialized(self) -> None:
         """return whether the portlet is initialized or not
 
         depending on this the render() method chooses whether to render the

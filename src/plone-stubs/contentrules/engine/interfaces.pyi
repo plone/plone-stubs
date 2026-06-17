@@ -31,7 +31,7 @@ class IRuleAssignmentManager(IOrderedContainer):
     Normally, an object will be adapted to IRuleAssignmentManager in order
     to manipulate the rule assignments in this location.
     """
-    def getRules(event, bubbled: bool = False) -> None:
+    def getRules(self, event, bubbled: bool = False) -> None:
         """Get all enabled rules registered for the given event and
         assigned to this context. If bubbled is True, only rules that are
         bubbleable will be returned.
@@ -42,7 +42,7 @@ class IRuleExecutor(Interface):
 
     Typically, a content object will be adapted to this interface
     """
-    def __call__(event, bubbled: bool = False, rule_filter=None) -> None:
+    def __call__(self, event, bubbled: bool = False, rule_filter=None) -> None:
         """Execute all rules applicable in the current context
 
         event is the triggering event. bubbled should be True if the rules

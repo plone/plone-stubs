@@ -6,11 +6,11 @@ class IPythonScript(Interface):
     The function may include standard python code, so long as it does not
     attempt to use the "exec" statement or certain restricted builtins.
     """
-    def read() -> None:
+    def read(self) -> None:
         """Generate a text representation of the Script source.
 
         Includes specially formatted comment lines for parameters, bindings
         and the title.
         """
-    def write(text) -> None:
+    def write(self, text) -> None:
         """Change the Script by parsing a read()-style source text."""

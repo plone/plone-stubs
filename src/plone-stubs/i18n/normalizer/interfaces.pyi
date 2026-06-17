@@ -4,7 +4,7 @@ class INormalizer(Interface):
     """A normalizer can normalize any unicode text string according to a
     specific ruleset implemented in the normalizer itself.
     """
-    def normalize(text, locale=None, max_length=None) -> None:
+    def normalize(self, text, locale=None, max_length=None) -> None:
         """The normalize method takes and input unicode text and an optional
         locale string and returns a normalized version of the text.
         If the locale is not None the output might differ dependent on the
@@ -35,7 +35,7 @@ class IUserPreferredNormalizer(Interface):
     """An adapter for the HTTPRequest to provide user preferred language
     dependent normalization.
     """
-    def normalize(text) -> None:
+    def normalize(self, text) -> None:
         """Returns a normalized Unicode string."""
 
 class IUserPreferredFileNameNormalizer(IUserPreferredNormalizer):

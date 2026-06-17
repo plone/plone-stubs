@@ -2,6 +2,7 @@ from zope.interface import Interface
 
 class IMailHost(Interface):
     def send(
+        self,
         messageText,
         mto=None,
         mfrom=None,

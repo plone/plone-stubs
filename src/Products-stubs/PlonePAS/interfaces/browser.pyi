@@ -1,29 +1,29 @@
 from zope.interface import Interface
 
 class IPASInfoView(Interface):
-    def hasLoginPasswordExtractor() -> None:
+    def hasLoginPasswordExtractor(self) -> None:
         """Check if a login & password extraction plugin is active.
 
         Check if there is a plugin with an enabled
         ILoginPasswordExtractionPlugin interface. This can be used to
         conditionally show username & password logins.
         """
-    def hasOpenIDExtractor() -> None:
+    def hasOpenIDExtractor(self) -> None:
         """Check if an OpenID extraction plugin is active."""
-    def hasOpenIDdExtractor() -> None:
+    def hasOpenIDdExtractor(self) -> None:
         """Check if an OpenID extraction plugin is active.
 
         BBB Keeping method name with typo for backwards compatibility.
         """
 
 class IPASMemberView(Interface):
-    def info(userid=None) -> None:
+    def info(self, userid=None) -> None:
         """Return 'harmless' member info of any user, such as full name,
         location, etc.
         """
 
 class IPASSearchView(Interface):
-    def searchUsers(sort_by=None, any_field=None, **criteria) -> None:
+    def searchUsers(self, sort_by=None, any_field=None, **criteria) -> None:
         """Search for users matching a set of criteria.
 
         The criteria are a dictionary mapping user properties to values and
@@ -44,7 +44,7 @@ class IPASSearchView(Interface):
         field that any_field would typically search (such as login name),
         the other criteria will be enforced at the expense of any_field.
         """
-    def searchUsersByRequest(request, sort_by=None) -> None:
+    def searchUsersByRequest(self, request, sort_by=None) -> None:
         """Search for users matching a set of criteria found in a request.
 
         This method will look remove any obvious values from the request
@@ -54,21 +54,21 @@ class IPASSearchView(Interface):
         result remains in the result set. The results can be sorted on
         sort_by (case insensitive).
         """
-    def searchGroups(**criteria) -> None:
+    def searchGroups(self, **criteria) -> None:
         """Search for groups matching a set of criteria.
 
         The criteria are a dictionary mapping group properties
         to values and have the semantics declared by
         IPluggableAuthService.searchGroups().
         """
-    def searchGroupsByRequest(request) -> None:
+    def searchGroupsByRequest(self, request) -> None:
         """Search for groups matching a set of criteria found in a request.
 
         This method will look remove any obvious values from the request
         which are not search criteria. It will also remove any fields
         which have an empty string value.
         """
-    def merge(results, key) -> None:
+    def merge(self, results, key) -> None:
         """merge two search results based on key as the unique criterion"""
-    def sort(results, key) -> None:
+    def sort(self, results, key) -> None:
         """sort results on a key"""

@@ -10,7 +10,7 @@ class IContentish(Interface):
     """
 
     __module__: str
-    def SearchableText() -> None:
+    def SearchableText(self) -> None:
         """Return a string containing textual information about the content.
 
         o This string may be the content of a file, or may be synthesized
@@ -23,20 +23,20 @@ class IDiscussable(Interface):
     """Interface for things which can have responses."""
 
     __module__: str
-    def createReply(title, text, Creator=None) -> None:
+    def createReply(self, title, text, Creator=None) -> None:
         """Create a reply in the proper place.
 
         o Returns: HTML (directly or via redirect) # XXX
 
         o Permission: Reply to item
         """
-    def getReplies() -> None:
+    def getReplies(self) -> None:
         """Return a sequence of IDiscussionResponse objects which are
             replies to this IDiscussable
 
         o Permission: View
         """
-    def quotedContents() -> None:
+    def quotedContents(self) -> None:
         """Return this object's contents in a form suitable for inclusion
             as a quote in a response.
 
@@ -50,14 +50,14 @@ class IOldstyleDiscussable(Interface):
     """Oldstyle discussable interface."""
 
     __module__: str
-    def createReply(title, text, REQUEST, RESPONSE) -> None:
+    def createReply(self, title, text, REQUEST, RESPONSE) -> None:
         """Create a reply in the proper place.
 
         o Returns: HTML (directly or via redirect) # XXX
 
         o Permission: Reply to item
         """
-    def getReplyLocationAndID(REQUEST) -> None:
+    def getReplyLocationAndID(self, REQUEST) -> None:
         """
         This method determines where a user's reply should be stored, and
         what it's ID should be.
@@ -78,7 +78,7 @@ class IOldstyleDiscussable(Interface):
         Permissions: None assigned
         Returns: 2-tuple, containing the container object, and a string ID.
         """
-    def getReplyResults() -> None:
+    def getReplyResults(self) -> None:
         """
         Return the ZCatalog results that represent this object's replies.
 
@@ -88,7 +88,7 @@ class IOldstyleDiscussable(Interface):
         Permissions: View
         Returns: sequence of ZCatalog results representing DiscussionResponses
         """
-    def getReplies() -> None:
+    def getReplies(self) -> None:
         """
         Return a sequence of the DiscussionResponse objects which are
         associated with this Discussable
@@ -96,7 +96,7 @@ class IOldstyleDiscussable(Interface):
         Permissions: View
         Returns: sequence of DiscussionResponses
         """
-    def quotedContents() -> None:
+    def quotedContents(self) -> None:
         """
         Return this object's contents in a form suitable for inclusion
         as a quote in a response.  The default implementation returns
@@ -108,12 +108,12 @@ class IDiscussionResponse(Interface):
     """Interface for objects which are replies to IDiscussable objects."""
 
     __module__: str
-    def inReplyTo(REQUEST=None) -> None:
+    def inReplyTo(self, REQUEST=None) -> None:
         """Return the IDiscussable object to which this item is a reply.
 
         o Permission: None assigned
         """
-    def setReplyTo(reply_to) -> None:
+    def setReplyTo(self, reply_to) -> None:
         """Make this object a response to the passed object.
 
         o 'reply_to' is an IDiscussable, or a path (as a string) to one.
@@ -125,7 +125,7 @@ class IDiscussionResponse(Interface):
 
         o Permission: None assigned
         """
-    def parentsInThread(size: int = 0) -> None:
+    def parentsInThread(self, size: int = 0) -> None:
         """Return a sequence of IDiscussables which are this object's parents,
             from the point of view of the threaded discussion.
 
@@ -139,19 +139,19 @@ class IMinimalDublinCore(Interface):
     """Minimal set of Dublin Core metadata elements."""
 
     __module__: str
-    def Title() -> None:
+    def Title(self) -> None:
         """Return a single string, the DCMI Title element (resource name).
 
         o Permission:  View
         """
-    def Description() -> None:
+    def Description(self) -> None:
         """Return the DCMI Description element (resource summary).
 
         o Result is a natural language description of this object.
 
         o Permission:  View
         """
-    def Type() -> None:
+    def Type(self) -> None:
         """Return the DCMI Type element (resource type).
 
         o Result a human-readable type name for the resource (typically
@@ -164,7 +164,7 @@ class IDublinCore(IMinimalDublinCore):
     """Dublin Core metadata elements supported by CMF and their semantics."""
 
     __module__: str
-    def listCreators() -> None:
+    def listCreators(self) -> None:
         """Return a sequence of DCMI Creator elements (resource authors).
 
         o Depending on the implementation, this returns the full name(s) of the
@@ -172,19 +172,19 @@ class IDublinCore(IMinimalDublinCore):
 
         o Permission:  View
         """
-    def Creator() -> None:
+    def Creator(self) -> None:
         """Return the first DCMI Creator element, or an empty string.
 
         o Permission:  View
         """
-    def Subject() -> None:
+    def Subject(self) -> None:
         """Return a sequence of DCMI Subject elements (resource keywords).
 
         o Result is zero or more keywords associated with the content object.
 
         o Permission:  View
         """
-    def Publisher() -> None:
+    def Publisher(self) -> None:
         """Return the DCMI Publisher element (resource publisher).
 
         o Result is the full formal name of the entity or person responsible
@@ -192,7 +192,7 @@ class IDublinCore(IMinimalDublinCore):
 
         o Permission:  View
         """
-    def listContributors() -> None:
+    def listContributors(self) -> None:
         """Return a sequence of DCMI Contributor elements (resource
             collaborators).
 
@@ -201,12 +201,12 @@ class IDublinCore(IMinimalDublinCore):
 
         o Permission:  View
         """
-    def Contributors() -> None:
+    def Contributors(self) -> None:
         """Deprecated alias for 'listContributors'.
 
         o 'initial caps' names are reserved for strings.
         """
-    def Date(zone=None) -> None:
+    def Date(self, zone=None) -> None:
         """Return the DCMI Date element (default resource date).
 
         o Result is a string, formatted 'YYYY-MM-DD H24:MN:SS TZ'.
@@ -216,7 +216,7 @@ class IDublinCore(IMinimalDublinCore):
 
         o Permission:  View
         """
-    def CreationDate(zone=None) -> None:
+    def CreationDate(self, zone=None) -> None:
         """Return the DCMI Date element (date resource created).
 
         o Result is a string, formatted 'YYYY-MM-DD H24:MN:SS TZ'.
@@ -226,7 +226,7 @@ class IDublinCore(IMinimalDublinCore):
 
         o Permission:  View
         """
-    def EffectiveDate(zone=None) -> None:
+    def EffectiveDate(self, zone=None) -> None:
         """Return the DCMI Date element (date resource becomes effective).
 
         o Result is a string, formatted 'YYYY-MM-DD H24:MN:SS TZ', or
@@ -237,7 +237,7 @@ class IDublinCore(IMinimalDublinCore):
 
         o Permission:  View
         """
-    def ExpirationDate(zone=None) -> None:
+    def ExpirationDate(self, zone=None) -> None:
         """Return the DCMI Date element (date resource expires).
 
         o Result is a string, formatted 'YYYY-MM-DD H24:MN:SS TZ', or
@@ -248,7 +248,7 @@ class IDublinCore(IMinimalDublinCore):
 
         o Permission:  View
         """
-    def ModificationDate(zone=None) -> None:
+    def ModificationDate(self, zone=None) -> None:
         """DCMI Date element - date resource last modified.
 
         o Result is a string, formatted 'YYYY-MM-DD H24:MN:SS TZ'.
@@ -258,7 +258,7 @@ class IDublinCore(IMinimalDublinCore):
 
         o Permission:  View
         """
-    def Format() -> None:
+    def Format(self) -> None:
         """Return the DCMI Format element (resource format).
 
         o Result is the resource's MIME type (e.g. 'text/html',
@@ -266,14 +266,14 @@ class IDublinCore(IMinimalDublinCore):
 
         o Permission:  View
         """
-    def Identifier() -> None:
+    def Identifier(self) -> None:
         """Return the DCMI Identifier element (resource ID).
 
         o Result is a unique ID (a URL) for the resource.
 
         o Permission:  View
         """
-    def Language() -> None:
+    def Language(self) -> None:
         """DCMI Language element (resource language).
 
         o Result it the RFC language code (e.g. 'en-US', 'pt-BR') for the
@@ -281,7 +281,7 @@ class IDublinCore(IMinimalDublinCore):
 
         o Permission:  View
         """
-    def Rights() -> None:
+    def Rights(self) -> None:
         """Return the DCMI Rights element (resource copyright).
 
         o Return a string describing the intellectual property status, if
@@ -294,22 +294,22 @@ class ICatalogableDublinCore(Interface):
     """Provide Zope-internal date attributes for cataloging purposes."""
 
     __module__: str
-    def created() -> None:
+    def created(self) -> None:
         """Return the DateTime form of CreationDate.
 
         o Permission:  View
         """
-    def effective() -> None:
+    def effective(self) -> None:
         """Return the DateTime form of EffectiveDate.
 
         o Permission:  View
         """
-    def expires() -> None:
+    def expires(self) -> None:
         """Return the DateTime form of ExpirationDate.
 
         o Permission:  View
         """
-    def modified() -> None:
+    def modified(self) -> None:
         """Return the DateTime form of ModificationDate
 
         o Permission:  View
@@ -319,12 +319,12 @@ class IMutableMinimalDublinCore(IMinimalDublinCore):
     """Update interface for minimal set of mutable metadata."""
 
     __module__: str
-    def setTitle(title) -> None:
+    def setTitle(self, title) -> None:
         """Set DCMI Title element - resource name.
 
         o Permission:  Modify portal content
         """
-    def setDescription(description) -> None:
+    def setDescription(self, description) -> None:
         """Set DCMI Description element - resource summary.
 
         o Permission:  Modify portal content
@@ -334,42 +334,42 @@ class IMutableDublinCore(IMutableMinimalDublinCore, IDublinCore):
     """Update interface for mutable metadata."""
 
     __module__: str
-    def setCreators(creators) -> None:
+    def setCreators(self, creators) -> None:
         """Set DCMI Creator elements - resource authors.
 
         o Permission:  Modify portal content
         """
-    def setSubject(subject) -> None:
+    def setSubject(self, subject) -> None:
         """Set DCMI Subject element - resource keywords.
 
         o Permission:  Modify portal content
         """
-    def setContributors(contributors) -> None:
+    def setContributors(self, contributors) -> None:
         """Set DCMI Contributor elements - resource collaborators.
 
         o Permission:  Modify portal content
         """
-    def setEffectiveDate(effective_date) -> None:
+    def setEffectiveDate(self, effective_date) -> None:
         """Set DCMI Date element - date resource becomes effective.
 
         o Permission:  Modify portal content
         """
-    def setExpirationDate(expiration_date) -> None:
+    def setExpirationDate(self, expiration_date) -> None:
         """Set DCMI Date element - date resource expires.
 
         o Permission:  Modify portal content
         """
-    def setFormat(format) -> None:
+    def setFormat(self, format) -> None:
         """Set DCMI Format element - resource format.
 
         o Permission:  Modify portal content
         """
-    def setLanguage(language) -> None:
+    def setLanguage(self, language) -> None:
         """Set DCMI Language element - resource language.
 
         o Permission:  Modify portal content
         """
-    def setRights(rights) -> None:
+    def setRights(self, rights) -> None:
         """Set DCMI Rights element - resource copyright.
 
         o Permission:  Modify portal content
@@ -379,14 +379,14 @@ class IDynamicType(Interface):
     """General interface for dynamic items."""
 
     __module__: str
-    def getPortalTypeName() -> None:
+    def getPortalTypeName(self) -> None:
         """Return the name of the type information for this object.
 
         o If the object is uninitialized, return None.
 
         o Permission:  Public
         """
-    def getTypeInfo() -> None:
+    def getTypeInfo(self) -> None:
         """Return the ITypeInformation object for this object.
 
         o A shortcut to 'getTypeInfo' of portal_types.
@@ -394,7 +394,7 @@ class IDynamicType(Interface):
         o Permission:  Public
         """
     def getActionInfo(
-        action_chain, check_visibility: int = 0, check_condition: int = 0
+        self, action_chain, check_visibility: int = 0, check_condition: int = 0
     ) -> None:
         """Get an Action info mapping specified by a chain of actions.
 
@@ -403,7 +403,7 @@ class IDynamicType(Interface):
 
         o Permission:  Public
         """
-    def getIconURL() -> None:
+    def getIconURL(self) -> None:
         """Get the absolute URL of the icon for the object.
 
         o This method is used in the \'folder_contents\' view to generate an
@@ -420,11 +420,11 @@ class ICatalogAware(Interface):
     """Interface for notifying the catalog tool."""
 
     __module__: str
-    def indexObject() -> None:
+    def indexObject(self) -> None:
         """Index the object in the portal catalog."""
-    def unindexObject() -> None:
+    def unindexObject(self) -> None:
         """Unindex the object from the portal catalog."""
-    def reindexObject(idxs=[]) -> None:
+    def reindexObject(self, idxs=[]) -> None:
         """Reindex the object in the portal catalog.
 
         If idxs is present, only those indexes are reindexed. The metadata is
@@ -433,7 +433,7 @@ class ICatalogAware(Interface):
         Also update the modification date of the object, unless specific
         indexes were requested.
         """
-    def reindexObjectSecurity(skip_self: bool = False) -> None:
+    def reindexObjectSecurity(self, skip_self: bool = False) -> None:
         """Reindex security-related indexes on the object.
 
         Recurses in the children to reindex them too.
@@ -447,7 +447,7 @@ class IWorkflowAware(Interface):
     """Interface for notifying the workflow tool."""
 
     __module__: str
-    def notifyWorkflowCreated() -> None:
+    def notifyWorkflowCreated(self) -> None:
         """Notify the workflow that the object was just created."""
 
 class IOpaqueItemManager(Interface):
@@ -459,7 +459,7 @@ class IFolderish(Interface):
     """General interface for "folderish" content items."""
 
     __module__: str
-    def contentItems(filter=None) -> None:
+    def contentItems(self, filter=None) -> None:
         """Return a sequence of (object ID, object) tuples for
             IContentish and IFolderish sub-objects.
 
@@ -468,7 +468,7 @@ class IFolderish(Interface):
 
         o Permission:  Public (not publishable)
         """
-    def contentIds(filter=None) -> None:
+    def contentIds(self, filter=None) -> None:
         """Return a sequence of IDs of IContentish and IFolderish sub-objects.
 
         o Provide a filtered view onto \'objectIds\', allowing only
@@ -478,7 +478,7 @@ class IFolderish(Interface):
 
         Returns -- List of object IDs
         """
-    def contentValues(filter=None) -> None:
+    def contentValues(self, filter=None) -> None:
         """Return a sequence of IContentish and IFolderish sub-objects.
 
         o Provide a filtered view onto \'objectValues\', allowing only
@@ -488,7 +488,7 @@ class IFolderish(Interface):
 
         Returns -- List of objects
         """
-    def listFolderContents(contentFilter=None) -> None:
+    def listFolderContents(self, contentFilter=None) -> None:
         """Return a sequence of IContentish and IFolderish sub-objects,
             filtered by the current user's possession of the View permission.
 
@@ -517,29 +517,29 @@ class ICallableOpaqueItem(Interface):
     """
 
     __module__: str
-    def __init__(obj, id) -> None:
+    def __init__(self, obj, id) -> None:
         """Return the opaque item and assign it to 'obj' as attr with 'id'."""
-    def __call__() -> None:
+    def __call__(self) -> None:
         """Return the opaque items value."""
-    def getId() -> None:
+    def getId(self) -> None:
         """Return the id of the opaque item."""
 
 class ICallableOpaqueItemEvents(Interface):
     """CMF specific events upon copying, renaming and deletion."""
 
     __module__: str
-    def manage_afterClone(item) -> None:
+    def manage_afterClone(self, item) -> None:
         """After clone event hook."""
-    def manage_beforeDelete(item, container) -> None:
+    def manage_beforeDelete(self, item, container) -> None:
         """Before delete event hook."""
-    def manage_afterAdd(item, container) -> None:
+    def manage_afterAdd(self, item, container) -> None:
         """After add event hook."""
 
 class ISyndicatable(Interface):
     """Filter content for syndication."""
 
     __module__: str
-    def synContentValues() -> None:
+    def synContentValues(self) -> None:
         """Return a list of IDublinCore objects to be syndicated.
 
         o For example, 'IFolderish' containers might returns a list of

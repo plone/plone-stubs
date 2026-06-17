@@ -60,25 +60,25 @@ class IThemePlugin(Interface):
     """
 
     dependencies: Incomplete
-    def onDiscovery(theme, settings, dependenciesSettings) -> None:
+    def onDiscovery(self, theme, settings, dependenciesSettings) -> None:
         """Called when the theme is discovered at startup time. This is
         not applicable for through-the-web/zip-file imported themes!
         """
-    def onCreated(theme, settings, dependenciesSettings) -> None:
+    def onCreated(self, theme, settings, dependenciesSettings) -> None:
         """Called when the theme is created through the web (or imported
         from a zip file)
         """
-    def onEnabled(theme, settings, dependenciesSettings) -> None:
+    def onEnabled(self, theme, settings, dependenciesSettings) -> None:
         """Called when the theme is enabled through the control panel, either
         because the global "enabled" flag was switched, or because the theme
         was changed.
         """
-    def onDisabled(theme, settings, dependenciesSettings) -> None:
+    def onDisabled(self, theme, settings, dependenciesSettings) -> None:
         """Called when the given theme is disabled through the control panel,
         either because the global "enabled" flag was switched, or because the
         theme was changed.
         """
-    def onRequest(request, theme, settings, dependenciesSettings) -> None:
+    def onRequest(self, request, theme, settings, dependenciesSettings) -> None:
         """Called upon traversal into the site when a theme is enabled"""
 
 class IThemeAppliedEvent(Interface):
@@ -92,19 +92,19 @@ class IThemingPolicy(Interface):
     """An adapter on request that provides access to the current
     theme and theme settings.
     """
-    def getSettings() -> None:
+    def getSettings(self) -> None:
         """Settings for current theme."""
-    def getCurrentTheme() -> None:
+    def getCurrentTheme(self) -> None:
         """The name of the current theme."""
-    def isThemeEnabled() -> None:
+    def isThemeEnabled(self) -> None:
         """Whether theming is enabled."""
-    def getCache(theme=None) -> None:
+    def getCache(self, theme=None) -> None:
         """Managing the cache is a policy decision."""
-    def getCacheKey(theme=None) -> None:
+    def getCacheKey(self, theme=None) -> None:
         """Managing the cache is a policy decision."""
-    def invalidateCache() -> None:
+    def invalidateCache(self) -> None:
         """When our settings are changed, invalidate the cache on all zeo clients."""
-    def get_theme() -> None:
+    def get_theme(self) -> None:
         """Returns the current theme object, cached."""
-    def set_theme(themeName, themeObj) -> None:
+    def set_theme(self, themeName, themeObj) -> None:
         """Update the theme cache."""

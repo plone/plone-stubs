@@ -9,7 +9,7 @@ class ITypeProfileImport(Interface):
 
     profile_file: Incomplete
     @invariant
-    def isGoodImportFile(data) -> None: ...
+    def isGoodImportFile(self, data) -> None: ...
 
 class TypeProfileImport:
     form_fields: Incomplete

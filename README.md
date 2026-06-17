@@ -1,6 +1,8 @@
 # Plone Stubs
 
-This package depends on [mypy-zope](https://pypi.org/project/mypy-zope/) to make interfaces to be treated as types by mypy.
+Type stubs for selected packages in the `plone` and `Products` namespaces.
+
+The stubs work with any [PEP 561](https://peps.python.org/pep-0561/) type checker — mypy, pyright, and Pylance — without a checker-specific plugin. `zope.interface` interfaces are treated as types because the package bundles a partial [`zope-stubs`](https://peps.python.org/pep-0561/#partial-stub-packages) (covering `zope.interface`, `zope.component`, and `zope.schema`) and declares an explicit `self` on interface methods.
 
 ```python
 from plone import api

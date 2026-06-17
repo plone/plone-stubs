@@ -7,10 +7,10 @@ class IInterfaceTool(IPloneBaseTool):
     IInterface API"""
 
     id: Incomplete
-    def objectImplements(obj, dotted_name) -> None:
+    def objectImplements(self, obj, dotted_name) -> None:
         """Asserts if an object implements a given interface"""
-    def classImplements(obj, dotted_name) -> None:
+    def classImplements(self, obj, dotted_name) -> None:
         """Asserts if an object's class implements a given interface"""
-    def namesAndDescriptions(dotted_name, all: int = 0) -> None:
+    def namesAndDescriptions(self, dotted_name, all: int = 0) -> None:
         """Returns a list of pairs (name, description) for a given
         interface"""

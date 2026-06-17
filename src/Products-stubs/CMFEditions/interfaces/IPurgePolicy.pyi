@@ -6,7 +6,7 @@ class IPurgePolicy(Interface):
     Purge versions in a history according a policy. The methods declared
     are called by a ``IStorage`` implementation.
     """
-    def beforeSaveHook(history_id, obj, metadata={}) -> None:
+    def beforeSaveHook(self, history_id, obj, metadata={}) -> None:
         """Purge Versions from the History According a Policy
 
         The Policy has full control over the whole history of the resource
@@ -19,7 +19,7 @@ class IPurgePolicy(Interface):
         Return True if ``obj`` has to be saved by the ``IStorage``
         implementation. Return ``False`` if the object has to be discarded.
         """
-    def retrieveSubstitute(history_id, selector, default=None) -> None:
+    def retrieveSubstitute(self, history_id, selector, default=None) -> None:
         """Return a selected version of an object or a substitute
 
         Called by the storage if the object to be retrieved was purged.

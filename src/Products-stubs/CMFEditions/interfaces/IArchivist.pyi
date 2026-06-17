@@ -12,7 +12,7 @@ class IArchivist(Interface):
     any other kind of reference that allows the archivist dereferencing
     the object meant.
     """
-    def prepare(obj, app_metadata=None, sys_metadata={}) -> None:
+    def prepare(self, obj, app_metadata=None, sys_metadata={}) -> None:
         """Prepares saving and registering of versionable aspects.
 
         The archivist decides which aspects of the objects are prepared
@@ -23,13 +23,13 @@ class IArchivist(Interface):
 
         Returns an 'IPreparedObject' object.
         """
-    def register(prepared_obj) -> None:
+    def register(self, prepared_obj) -> None:
         """Register the object saving the initial state.
 
         Prior to a register the object has to prepared. Pass the
         return value of the 'prepare' method to 'prepared_obj'.
         """
-    def save(prepared_obj, autoregister=None) -> None:
+    def save(self, prepared_obj, autoregister=None) -> None:
         """Saves versionable aspects of the objects current state.
 
         Set 'autoregister' to True if the object shall be registered
@@ -38,7 +38,7 @@ class IArchivist(Interface):
         Prior to a save the object has to be prepared. Pass the
         return value of the 'prepare' method to 'prepared_obj'.
         """
-    def isUpToDate(obj=None, history_id=None, selector=None) -> None:
+    def isUpToDate(self, obj=None, history_id=None, selector=None) -> None:
         """Check if the corking copy is up to date.
 
         Returns True if the working copy has changed since the last save
@@ -48,7 +48,7 @@ class IArchivist(Interface):
         The working copy is up to date if the modification date is the
         identical to the selected version.
         """
-    def retrieve(obj=None, history_id=None, selector=None, preserve=()) -> None:
+    def retrieve(self, obj=None, history_id=None, selector=None, preserve=()) -> None:
         """Retrieves a former state of an object.
 
         Requires either an object which is the working copy, or a history_id
@@ -67,7 +67,7 @@ class IArchivist(Interface):
         'preserve' argument.
         E.g. preserve=('family_name', 'nick_name', 'real_name')
         """
-    def getHistory(obj=None, history_id=None, preserve=()) -> None:
+    def getHistory(self, obj=None, history_id=None, preserve=()) -> None:
         """Return the history of an object.
 
         The history is a 'IHistory' object.
@@ -86,13 +86,15 @@ class IArchivist(Interface):
         'preserve' argument.
         E.g. preserve=('family_name', 'nick_name', 'real_name')
         """
-    def queryHistory(obj=None, history_id=None, preserve=(), default=None) -> None:
+    def queryHistory(
+        self, obj=None, history_id=None, preserve=(), default=None
+    ) -> None:
         """Return the history of an object.
 
         Does the same as ``getHistory`` with the difference of returning
         the value supplied with ``default`` instead of raising an exception.
         """
-    def getHistoryMetadata(obj=None, history_id=None) -> None:
+    def getHistoryMetadata(self, obj=None, history_id=None) -> None:
         """Returns the versioning metadata history."""
 
 class IPurgeSupport(Interface):
@@ -132,7 +134,12 @@ class IPurgeSupport(Interface):
         version retrieved: 0, 1, 2, 5, 6, 7, 8, 9, e, e
     """
     def purge(
-        obj=None, history_id=None, selector=None, metadata={}, countPurged: bool = True
+        self,
+        obj=None,
+        history_id=None,
+        selector=None,
+        metadata={},
+        countPurged: bool = True,
     ) -> None:
         """Purge a version of a content object.
 
@@ -147,7 +154,7 @@ class IPurgeSupport(Interface):
         (see interface documentation for details).
         """
     def isUpToDate(
-        obj=None, history_id=None, selector=None, countPurged: bool = True
+        self, obj=None, history_id=None, selector=None, countPurged: bool = True
     ) -> None:
         """Check if the corking copy is up to date.
 
@@ -162,7 +169,12 @@ class IPurgeSupport(Interface):
         (see interface documentation for details).
         """
     def retrieve(
-        obj=None, history_id=None, selector=None, preserve=(), countPurged: bool = True
+        self,
+        obj=None,
+        history_id=None,
+        selector=None,
+        preserve=(),
+        countPurged: bool = True,
     ) -> None:
         """Retrieve a former state of an object.
 
@@ -186,7 +198,7 @@ class IPurgeSupport(Interface):
         (see interface documentation for details).
         """
     def getHistory(
-        obj=None, history_id=None, preserve=(), countPurged: bool = True
+        self, obj=None, history_id=None, preserve=(), countPurged: bool = True
     ) -> None:
         """Return the history of an object.
 
@@ -210,7 +222,12 @@ class IPurgeSupport(Interface):
         (see interface documentation for details).
         """
     def queryHistory(
-        obj=None, history_id=None, preserve=(), default=None, countPurged: bool = True
+        self,
+        obj=None,
+        history_id=None,
+        preserve=(),
+        default=None,
+        countPurged: bool = True,
     ) -> None:
         """Return the history of an object.
 
@@ -243,20 +260,20 @@ class IVersionData(Interface):
 
 class IHistory(Interface):
     """Iterable version history."""
-    def __init__(archivist, obj) -> None:
+    def __init__(self, archivist, obj) -> None:
         """Instantiates a lazy iterable history.
 
         This is a multi adapter adapting the archivist, the object and
         optionally a context wrapper.
         """
-    def __len__() -> int:
+    def __len__(self) -> int:
         """Returns the length of the history."""
-    def __getattr__(version_id) -> None:
+    def __getattr__(self, version_id) -> None:
         """Returns the version of an object corresponding to the version id.
 
         The object returned is of 'IVersionData'.
         """
-    def __iter__():
+    def __iter__(self):
         """Returns an ordered set of versions for being looped over.
 
         The objects returned are of 'IVersionData'.
@@ -275,15 +292,15 @@ class IAttributeAdapter(Interface):
     TODO: use ``Attribute`` instead of explicit setters/getters.
     TODO: remove ``__init__`` from signature.
     """
-    def __init__(parent, attr_name, type=None) -> None:
+    def __init__(self, parent, attr_name, type=None) -> None:
         """Store the attributes "coordinates"."""
-    def setAttribute(obj) -> None:
+    def setAttribute(self, obj) -> None:
         """Sets the given object as attribute."""
-    def getAttribute(alternate=None) -> None:
+    def getAttribute(self, alternate=None) -> None:
         """Returns the current attribute."""
-    def getAttributeName() -> None:
+    def getAttributeName(self) -> None:
         """Returns the attributes name."""
-    def getType() -> None:
+    def getType(self) -> None:
         """Returns the attributes type."""
 
 class IVersionAwareReference(Interface):
@@ -292,7 +309,7 @@ class IVersionAwareReference(Interface):
     It is used to replace python references on save time and may be used
     to rebuild those at retrieve time.
     """
-    def __init__(**info) -> None:
+    def __init__(self, **info) -> None:
         """Store some info with the reference.
 
         referencing scenarios:
@@ -315,7 +332,7 @@ class IVersionAwareReference(Interface):
         Caution: The \'info\' passed gets pickled. So take care not to
                  store deeply nested objects!!!
         """
-    def setReference(target_obj, remove_info: bool = True) -> None:
+    def setReference(self, target_obj, remove_info: bool = True) -> None:
         """Set a reference to the given target object."""
     history_id: Incomplete
     version_id: Incomplete

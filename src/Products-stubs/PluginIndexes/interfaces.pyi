@@ -2,15 +2,15 @@ from _typeshed import Incomplete
 from zope.interface import Interface
 
 class IPluggableIndex(Interface):
-    def getId() -> None:
+    def getId(self) -> None:
         """Return Id of index."""
-    def getEntryForObject(documentId, default=None) -> None:
+    def getEntryForObject(self, documentId, default=None) -> None:
         """Get all information contained for 'documentId'."""
-    def getIndexSourceNames() -> None:
+    def getIndexSourceNames(self) -> None:
         """Get a sequence of attribute names that are indexed by the index."""
-    def getIndexQueryNames() -> None:
+    def getIndexQueryNames(self) -> None:
         """Get a sequence of query parameter names to which this index applies."""
-    def index_object(documentId, obj, threshold=None) -> None:
+    def index_object(self, documentId, obj, threshold=None) -> None:
         """Index an object.
 
         - ``documentId`` is the integer ID of the document.
@@ -30,13 +30,13 @@ class IPluggableIndex(Interface):
           calling it raises an AttributeError, do not add it to the index.
           for that name.
         """
-    def unindex_object(documentId) -> None:
+    def unindex_object(self, documentId) -> None:
         """Remove the documentId from the index."""
-    def numObjects() -> None:
+    def numObjects(self) -> None:
         """Return the number of indexed objects."""
-    def indexSize() -> None:
+    def indexSize(self) -> None:
         """Return the size of the index in terms of distinct values."""
-    def clear() -> None:
+    def clear(self) -> None:
         """Empty the index"""
 
 class ILimitedResultIndex(IPluggableIndex): ...
@@ -46,16 +46,16 @@ class IQueryIndex(IPluggableIndex):
     operators: Incomplete
     useOperator: Incomplete
     query_options: Incomplete
-    def query_index(record, resultset=None) -> None:
+    def query_index(self, record, resultset=None) -> None:
         """Same as _apply_index, but the query is already a pre-parsed
         IndexQuery object.
         """
 
 class IUniqueValueIndex(IPluggableIndex):
     """An index which can return lists of unique values contained in it"""
-    def hasUniqueValuesFor(name) -> None:
+    def hasUniqueValuesFor(self, name) -> None:
         """Return true if the index can return the unique values for name"""
-    def uniqueValues(name=None, withLengths: int = 0) -> None:
+    def uniqueValues(self, name=None, withLengths: int = 0) -> None:
         """Return an iterable/sequence of unique values for name.
 
         If 'withLengths' is true, returns a iterable/sequence of tuples of
@@ -64,12 +64,12 @@ class IUniqueValueIndex(IPluggableIndex):
 
 class ISortIndex(IPluggableIndex):
     """An index which may be used to sort a set of document ids"""
-    def keyForDocument(documentId) -> None:
+    def keyForDocument(self, documentId) -> None:
         """Return the sort key that cooresponds to the specified document id
 
         This method is no longer used by ZCatalog, but is left for backwards
         compatibility."""
-    def documentToKeyMap() -> None:
+    def documentToKeyMap(self) -> None:
         """Return an object that supports __getitem__ and may be used to
         quickly lookup the sort key given a document id"""
 
@@ -97,9 +97,9 @@ class IDateRangeIndex(Interface):
 
     - Objects which match only during a specific interval.
     """
-    def getSinceField() -> None:
+    def getSinceField(self) -> None:
         """Get the name of the attribute indexed as start date."""
-    def getUntilField() -> None:
+    def getUntilField(self) -> None:
         """Get the name of the attribute indexed as end date."""
 
 class IPathIndex(Interface):
@@ -116,7 +116,7 @@ class IPathIndex(Interface):
     - the value is a mapping 'level of the path component' to
       'all docids with this path component on this level'
     """
-    def insertEntry(comp, id, level) -> None:
+    def insertEntry(self, comp, id, level) -> None:
         """Insert an entry.
 
         This method is intended for use by subclasses:  it is not
@@ -131,11 +131,11 @@ class IPathIndex(Interface):
 
 class IFilteredSet(Interface):
     """A pre-calculated result list based on an expression."""
-    def getExpression() -> None:
+    def getExpression(self) -> None:
         """Get the expression."""
-    def getIds() -> None:
+    def getIds(self) -> None:
         """Get the IDs of all objects for which the expression is True."""
-    def setExpression(expr) -> None:
+    def setExpression(self, expr) -> None:
         """Set the expression."""
 
 class ITopicIndex(Interface):
@@ -144,11 +144,11 @@ class ITopicIndex(Interface):
     Every FilteredSet object consists of an expression and and IISet with all
     Ids of indexed objects that eval with this expression to 1.
     """
-    def addFilteredSet(filter_id, typeFilteredSet, expr) -> None:
+    def addFilteredSet(self, filter_id, typeFilteredSet, expr) -> None:
         """Add a FilteredSet object."""
-    def delFilteredSet(filter_id) -> None:
+    def delFilteredSet(self, filter_id) -> None:
         """Delete the FilteredSet object specified by 'filter_id'."""
-    def clearFilteredSet(filter_id) -> None:
+    def clearFilteredSet(self, filter_id) -> None:
         """Clear the FilteredSet object specified by 'filter_id'."""
 
 class IIndexConfiguration(Interface):
@@ -161,17 +161,17 @@ class IIndexConfiguration(Interface):
 
 class IRequestCacheIndex(Interface):
     """Request cache API for pluggable indexes"""
-    def getRequestCache() -> None:
+    def getRequestCache(self) -> None:
         """Returns dict for caching per request for interim results
         of an index search. Returns 'None' if no REQUEST attribute
         is available
         """
-    def getRequestCacheKey(record, resultset=None) -> None:
+    def getRequestCacheKey(self, record, resultset=None) -> None:
         """Returns an unique key of a search record"""
 
 class ITransposeQuery(Interface):
     """Optimization API for queries and indexing"""
-    def make_query(query) -> None:
+    def make_query(self, query) -> None:
         """returns an optimized query for given index"""
-    def getIndexNames() -> None:
+    def getIndexNames(self) -> None:
         """returns index names that are optimized by index"""

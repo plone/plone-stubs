@@ -6,25 +6,25 @@ class IDiffTool(Interface):
     difference engine"""
 
     id: Incomplete
-    def listDiffTypes() -> None:
+    def listDiffTypes(self) -> None:
         """List the names of the available difference types"""
-    def setDiffForPortalType(pt_name, mapping) -> None:
+    def setDiffForPortalType(self, pt_name, mapping) -> None:
         """Set the difference type(s) for the specific portal type
 
         mapping is a dictionary where each key is an attribute or
         method on the given portal type, and the value is the name of
         a difference type."""
-    def getDiffForPortalType(pt_name) -> None:
+    def getDiffForPortalType(self, pt_name) -> None:
         """Returns a dictionary where each key is an attribute or
         method on the given portal type, and the value is the name of
         a difference type."""
-    def computeDiff(ob1, ob2) -> None:
+    def computeDiff(self, ob1, ob2) -> None:
         """Compute the differences from ob1 to ob2 (ie. ob2 - ob1).
 
         The result will be a list of objects that implements the
         IDifference interface and represent the differences between
         ob1 and ob2."""
-    def createChangeSet(ob1, ob2) -> None:
+    def createChangeSet(self, ob1, ob2) -> None:
         """Returns a ChangeSet object that represents the differences
         between ob1 and ob2 (ie. ob2 - ob1) ."""
 
@@ -39,12 +39,12 @@ class IDifference(Interface):
     newValue: Incomplete
     oldFilename: Incomplete
     newFilename: Incomplete
-    def testChanges(ob) -> None:
+    def testChanges(self, ob) -> None:
         """Test the specified object to determine if the change set will apply cleanly.
 
         Returns None if there would be no errors
         """
-    def applyChanges(ob) -> None:
+    def applyChanges(self, ob) -> None:
         """Update the specified object with the difference"""
     def filenameTitle(self, filename) -> None:
         """Translate the filename leading text"""
@@ -52,7 +52,7 @@ class IDifference(Interface):
 class IStringDifference(IDifference):
     """An anterface for interacting with the difference between two
     string (text) objects"""
-    def getLineDiffs() -> None:
+    def getLineDiffs(self) -> None:
         """Return a list of differences between the two objects on a
         line-by-line basis
 
@@ -65,7 +65,7 @@ class IChangeSet(Interface):
     """And interface representing all of the differences between two objects"""
 
     same: Incomplete
-    def computeDiff(ob1, ob2, recursive: int = 1, exclude=None) -> None:
+    def computeDiff(self, ob1, ob2, recursive: int = 1, exclude=None) -> None:
         """Compute the differences from ob1 to ob2 (ie. ob2 - ob1).
 
         If recursive is 1, compute differences between subobjects of
@@ -73,31 +73,31 @@ class IChangeSet(Interface):
         listed in exclude
 
         The results can be accessed through getDiffs()"""
-    def testChanges(ob) -> None:
+    def testChanges(self, ob) -> None:
         """Test the specified object to determine if the change set will apply cleanly.
 
         Returns None if there would be no errors
         """
-    def applyChanges(ob) -> None:
+    def applyChanges(self, ob) -> None:
         """Apply the computed changes to the specified object"""
-    def getDiffs() -> None:
+    def getDiffs(self) -> None:
         """Returns the list of differences between the two objects.
 
         Each difference is a single object implementing the
         IDifference interface"""
-    def getSubDiffs() -> None:
+    def getSubDiffs(self) -> None:
         """If the ChangeSet was computed recursively, returns a list
         of ChangeSet objects representing subobject differences
 
         Each ChangeSet will have the same ID as the objects whose
         difference it represents.
         """
-    def getAddedItems() -> None:
+    def getAddedItems(self) -> None:
         """If the ChangeSet was computed recursively, returns the list
         of IDs of items that were added.
 
         A copy of these items is available as a cubject of the ChangeSet
         """
-    def getRemovedItems() -> None:
+    def getRemovedItems(self) -> None:
         """If the ChangeSet was computed recursively, returns the list
         of IDs of items that were removed"""

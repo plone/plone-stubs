@@ -21,16 +21,20 @@ class IMessageAPI(Interface):
 
     from plone.rfc822 import constructMessage
     """
-    def constructMessageFromSchema(context, schema, charset: str = "utf-8") -> None:
+    def constructMessageFromSchema(
+        self, context, schema, charset: str = "utf-8"
+    ) -> None:
         """Convenience method which calls ``constructMessage()`` with all the
         fields, in order, of the given schema interface
         """
-    def constructMessageFromSchemata(context, schemata, charset: str = "utf-8") -> None:
+    def constructMessageFromSchemata(
+        self, context, schemata, charset: str = "utf-8"
+    ) -> None:
         """Convenience method which calls ``constructMessage()`` with all the
         fields, in order, of all the given schemata (a sequence of schema
         interfaces).
         """
-    def constructMessage(context, fields, charset: str = "utf-8") -> None:
+    def constructMessage(self, context, fields, charset: str = "utf-8") -> None:
         """Helper method to construct a message.
 
         ``context`` is a content object.
@@ -50,26 +54,26 @@ class IMessageAPI(Interface):
         A field will be ignored if ``(context, field)`` cannot be multi-adapted
         to ``IFieldMarshaler``, or if the ``marshal()`` method returns None.
         """
-    def renderMessage(message, mangleFromHeader: bool = False) -> None:
+    def renderMessage(self, message, mangleFromHeader: bool = False) -> None:
         """Render a message to a string
 
         DEPRECATED. Use 'message.as_string()' instead.
         """
     def initializeObjectFromSchema(
-        context, schema, message, defaultCharset: str = "utf-8"
+        self, context, schema, message, defaultCharset: str = "utf-8"
     ) -> None:
         """Convenience method which calls ``initializeObject()`` with all the
         fields, in order, of the given schema interface
         """
     def initializeObjectFromSchemata(
-        context, schemata, message, defaultCharset: str = "utf-8"
+        self, context, schemata, message, defaultCharset: str = "utf-8"
     ) -> None:
         """Convenience method which calls ``initializeObject()`` with all the
         fields in order, of all the given schemata (a sequence of schema
         interfaces).
         """
     def initializeObject(
-        context, fields, message, defaultCharset: str = "utf-8"
+        self, context, fields, message, defaultCharset: str = "utf-8"
     ) -> None:
         """Initialise an object from a message.
 
@@ -96,7 +100,7 @@ class IFieldMarshaler(Interface):
     """
 
     ascii: Incomplete
-    def marshal(charset: str = "utf-8", primary: bool = False) -> None:
+    def marshal(self, charset: str = "utf-8", primary: bool = False) -> None:
         """Return the value of the adapted field on the adapted context.
 
         Note: It may be necessary to adapt the context to the field's
@@ -116,6 +120,7 @@ class IFieldMarshaler(Interface):
         skipped.
         """
     def demarshal(
+        self,
         value,
         message=None,
         charset: str = "utf-8",
@@ -144,7 +149,7 @@ class IFieldMarshaler(Interface):
 
         Raise ``ValueError`` if the demarshalling cannot be completed.
         """
-    def encode(value, charset: str = "utf-8", primary: bool = False) -> None:
+    def encode(self, value, charset: str = "utf-8", primary: bool = False) -> None:
         """Like marshal(), but acts on the passed-in ``value`` instead of
         reading it from the field.
 
@@ -154,6 +159,7 @@ class IFieldMarshaler(Interface):
         Return None if the value cannot be encoded.
         """
     def decode(
+        self,
         value,
         message=None,
         charset: str = "utf-8",
@@ -167,14 +173,14 @@ class IFieldMarshaler(Interface):
 
         Raise ValueError if the value cannot be extracted.
         """
-    def getContentType() -> None:
+    def getContentType(self) -> None:
         """Return the MIME type of the field. The value should be appropriate
         for the Content-Type HTTP header. This is mainly used for marshalling
         the primary field to the message body.
 
         May return None if a content type does not make sense.
         """
-    def getCharset(default: str = "utf-8") -> None:
+    def getCharset(self, default: str = "utf-8") -> None:
         """Return the charset of the field. The value should be appropriate
         for the 'charset' parameter to the Content-Type HTTP header. This is
         mainly used for marshalling
@@ -184,7 +190,7 @@ class IFieldMarshaler(Interface):
         Must return None if the message should not have a charset, i.e. it
         is not text data.
         """
-    def postProcessMessage(message) -> None:
+    def postProcessMessage(self, message) -> None:
         """This is a chance to perform any post-processing of the message.
 
         It is only called for primary fields.

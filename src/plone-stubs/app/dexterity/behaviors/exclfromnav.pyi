@@ -3,7 +3,7 @@ from plone.supermodel import model
 from zope.interface import Interface
 
 class IExcludeFromNavigationDefault(Interface):
-    def __call__() -> None:
+    def __call__(self) -> None:
         """boolean if item is by default excluded from navigation or not."""
 
 def default_exclude_false(context):

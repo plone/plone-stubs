@@ -21,21 +21,21 @@ class IClassifier(Interface):
     """Optional mixin interface for imimetype, code to test if the
     mimetype is present in data
     """
-    def classify(data) -> None:
+    def classify(self, data) -> None:
         """boolean indicating if the data fits the mimetype"""
 
 class ISourceAdapter(Interface):
-    def __call__(data, **kwargs) -> None:
+    def __call__(self, data, **kwargs) -> None:
         """convert data to unicode, may take optional kwargs to aid in
         conversion"""
 
 class IMimetypesRegistry(Interface):
-    def classify(data, mimetype=None, filename=None) -> None:
+    def classify(self, data, mimetype=None, filename=None) -> None:
         """return a content type for this data or None
         None should rarely be returned as application/octet can be
         used to represent most types
         """
-    def lookup(mimetypestring) -> None:
+    def lookup(self, mimetypestring) -> None:
         """Lookup for imimetypes object matching mimetypestring
 
         mimetypestring may have an empty minor part or containing a
@@ -45,16 +45,16 @@ class IMimetypesRegistry(Interface):
         return a list of mimetypes objects associated with the RFC-2046 name
         return an empty list if no one is known.
         """
-    def lookupExtension(filename) -> None:
+    def lookupExtension(self, filename) -> None:
         """return the mimetypes object associated with the file's extension
         return None if it is not known.
 
         filename maybe a file name like 'content.txt' or an extension like
         'rest'
         """
-    def mimetypes() -> None:
+    def mimetypes(self) -> None:
         """return all defined mime types, each one implements at least imimetype"""
-    def list_mimetypes() -> None:
+    def list_mimetypes(self) -> None:
         """return all defined mime types, as string"""
 
 class IMimetypesRegistryTool(Interface):

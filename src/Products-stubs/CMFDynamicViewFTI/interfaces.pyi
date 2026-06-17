@@ -6,16 +6,16 @@ class IDynamicViewTypeInformation(ITypeInformation):
 
     A value of (dynamic view) as alias is replaced by the output of getLayout()
     """
-    def getAvailableViewMethods(context) -> None:
+    def getAvailableViewMethods(self, context) -> None:
         """Get a list of registered view methods"""
-    def getViewMethod(context, enforce_available: bool = True) -> None:
+    def getViewMethod(self, context, enforce_available: bool = True) -> None:
         """Get view method name from context
 
         Return -- view method from context or default view name
         """
-    def getDefaultViewMethod(context) -> None:
+    def getDefaultViewMethod(self, context) -> None:
         """Get the default view method from the FTI"""
-    def getDefaultPage(context, check_exists: bool = False) -> None:
+    def getDefaultPage(self, context, check_exists: bool = False) -> None:
         """Get the default page from a folderish object
 
         Non folderish objects don't have a default view.
@@ -25,7 +25,7 @@ class IDynamicViewTypeInformation(ITypeInformation):
 
         Return -- None for no default page or a string
         """
-    def defaultView(context) -> None:
+    def defaultView(self, context) -> None:
         """Get the layout for an object
 
         At first it tries to get the default page from the context.
@@ -42,41 +42,41 @@ class IBrowserDefault(Interface):
     This can be either as a page template (a layout), or as the id of a
     contained object (aka a default page, set inside a folderish item only).
     """
-    def defaultView(request=None) -> None:
+    def defaultView(self, request=None) -> None:
         """Get the actual view to use.
 
         If a default page is set, its id will
         be returned. Else, the current layout's page template id is returned.
         """
-    def __call__() -> None:
+    def __call__(self) -> None:
         """Resolve and return the selected view template applied to the object.
 
         This should not consider any default page set.
         """
-    def getDefaultPage() -> None:
+    def getDefaultPage(self) -> None:
         """Return the id of the default page, or None if none is set.
 
         The default page must be contained within this (folderish) item.
         """
-    def getLayout(**kw) -> None:
+    def getLayout(self, **kw) -> None:
         """Get the selected layout template.
 
         Note that a selected default page will override the layout template.
         """
-    def getDefaultLayout() -> None:
+    def getDefaultLayout(self) -> None:
         """Get the default layout template."""
 
 class ISelectableBrowserDefault(IBrowserDefault):
     """Content supporting operations to explicitly set the default layout
     template or default page object.
     """
-    def canSetDefaultPage() -> None:
+    def canSetDefaultPage(self) -> None:
         """Can a default page be set?
 
         Return True if the user has permission to select a default page on this
         (folderish) item, and the item is folderish.
         """
-    def setDefaultPage(objectId) -> None:
+    def setDefaultPage(self, objectId) -> None:
         """Set the default page to display in this (folderish) object.
 
         The objectId must be a value found in self.objectIds() (i.e. a
@@ -86,18 +86,18 @@ class ISelectableBrowserDefault(IBrowserDefault):
         for objectId to turn off the default page and return to using the
         selected layout template.
         """
-    def canSetLayout() -> None:
+    def canSetLayout(self) -> None:
         """Return True if the current authenticated user is permitted to select
         a layout.
         """
-    def setLayout(layout) -> None:
+    def setLayout(self, layout) -> None:
         """Set the layout as the current view.
 
         'layout' should be one of the list returned by getAvailableLayouts().
         If a default page has been set with setDefaultPage(), it is turned off
         by calling setDefaultPage(None).
         """
-    def getAvailableLayouts() -> None:
+    def getAvailableLayouts(self) -> None:
         """Get the layouts registered for this object.
 
         This should return a list of tuples: (id, title), where id is the id

@@ -5,9 +5,9 @@ class UniqueIdError(Exception): ...
 
 class IUniqueIdGenerator(Interface):
     """Generate a unique id."""
-    def __call__() -> None:
+    def __call__(self) -> None:
         """Return a unique id value."""
-    def convert(uid) -> None:
+    def convert(self, uid) -> None:
         """Converts the unique id from string type to the appropriate
            uid type.
 
@@ -17,7 +17,7 @@ class IUniqueIdGenerator(Interface):
 
 class IUniqueIdAnnotationManagement(Interface):
     """Manage unique id annotations."""
-    def __call__(obj, id) -> None:
+    def __call__(self, obj, id) -> None:
         """Attach an unique id attribute of 'id' to the passed object.
 
         Return a unique id object implementing 'IUniqueIdAnnotation'.
@@ -25,24 +25,24 @@ class IUniqueIdAnnotationManagement(Interface):
 
 class IUniqueIdAnnotation(ICallableOpaqueItem):
     """Opaque unique id item handling adding, copying, and deletion events."""
-    def setUid(uid) -> None:
+    def setUid(self, uid) -> None:
         """Set the uid value the unique id annotation shall return."""
 
 class IUniqueIdSet(Interface):
     """(Un)register unique ids on objects."""
-    def register(obj) -> None:
+    def register(self, obj) -> None:
         """Register the object and return the unique id generated for it.
 
         If the object is already registered, its unique id is returned anyway.
 
         UniqueIdError is raised if object can not be registered a unique id.
         """
-    def unregister(obj) -> None:
+    def unregister(self, obj) -> None:
         """Remove the object from the indexes.
 
         UniqueIdError is raised if object was not registered previously.
         """
-    def setUid(obj, uid, check_uniqueness: bool = True) -> None:
+    def setUid(self, obj, uid, check_uniqueness: bool = True) -> None:
         """Set the unique id of an object.
 
         By default a check ensuring uniqueness is enabled. Be aware when
@@ -51,23 +51,23 @@ class IUniqueIdSet(Interface):
 
 class IUniqueIdQuery(Interface):
     """Querying unique ids."""
-    def queryUid(obj, default=None) -> None:
+    def queryUid(self, obj, default=None) -> None:
         """Return the unique id of the object.
 
         If the object doesn't have a unique, the default value is returned.
         """
-    def getUid(obj) -> None:
+    def getUid(self, obj) -> None:
         """Return the unique id of the object.
 
         If the object doesn't have a unique, a UniqueIdError is raised.
         """
-    def queryObject(uid, default=None) -> None:
+    def queryObject(self, uid, default=None) -> None:
         """Return the object with the given uid.
 
         If no object exist with the given unique id, the default value is
         returned.
         """
-    def getObject(uid) -> None:
+    def getObject(self, uid) -> None:
         """Return the object with the given uid.
 
         If no object exist with the given unique id, a UniqueIdError is raised.
@@ -86,13 +86,13 @@ class IUniqueIdBrainQuery(Interface):
     fallback to return the object. To be entirely compatible it must implement
     the (non existing) interface catalog brains implement.
     """
-    def queryBrain(uid, default=None) -> None:
+    def queryBrain(self, uid, default=None) -> None:
         """Return the brain of object with the given uid.
 
         If no object exist with the given unique id, the default value
         is returned.
         """
-    def getBrain(uid) -> None:
+    def getBrain(self, uid) -> None:
         """Return a brain of the object with the given uid.
 
         If no object exist with the given unique id, a UniqueIdError is
@@ -120,25 +120,25 @@ class IUniqueIdUnrestrictedQuery(Interface):
     compatible it must implement the (non existing) interface
     catalog brains implement.
     """
-    def unrestrictedQueryObject(uid, default=None) -> None:
+    def unrestrictedQueryObject(self, uid, default=None) -> None:
         """Return the object with the given uid.
 
         If no object exist with the given unique id, the default value
         is returned.
         """
-    def unrestrictedGetObject(uid) -> None:
+    def unrestrictedGetObject(self, uid) -> None:
         """Return a brain of the object with the given uid.
 
         If no object exist with the given unique id, a UniqueIdError
         is raised.
         """
-    def unrestrictedQueryBrain(uid, default=None) -> None:
+    def unrestrictedQueryBrain(self, uid, default=None) -> None:
         """Return the brain of the object with the given uid.
 
         If no object exist with the given unique id, the default value
         is returned.
         """
-    def unrestrictedGetBrain(uid) -> None:
+    def unrestrictedGetBrain(self, uid) -> None:
         """Return a brain of the object with the given uid.
 
         If no object exist with the given unique id, a UniqueIdError

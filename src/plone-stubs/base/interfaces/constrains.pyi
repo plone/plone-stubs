@@ -9,7 +9,7 @@ class IConstrainTypes(Interface):
     Interface for folderish content types supporting restricting addable types
     on a per-instance basis.
     """
-    def getConstrainTypesMode() -> None:
+    def getConstrainTypesMode(self) -> None:
         """
         Find out if add-restrictions are enabled. Returns 0 if they are
         disabled (the type's default FTI-set allowable types is in effect),
@@ -19,23 +19,23 @@ class IConstrainTypes(Interface):
         same as the portal type of this object, fall back on the default (same
         as 0)
         """
-    def getLocallyAllowedTypes() -> None:
+    def getLocallyAllowedTypes(self) -> None:
         """
         Get the list of FTI ids for the types which should be allowed to be
         added in this container.
         """
-    def getImmediatelyAddableTypes() -> None:
+    def getImmediatelyAddableTypes(self) -> None:
         """
         Return a subset of the FTI ids from getLocallyAllowedTypes() which
         should be made most easily available.
         """
-    def getDefaultAddableTypes() -> None:
+    def getDefaultAddableTypes(self) -> None:
         """
         Return a list of FTIs which correspond to the list of FTIs available
         when the constraint mode = 0 (that is, the types addable without any
         setLocallyAllowedTypes trickery involved)
         """
-    def allowedContentTypes() -> None:
+    def allowedContentTypes(self) -> None:
         """
         Return the list of currently permitted FTIs.
         """
@@ -46,7 +46,7 @@ class ISelectableConstrainTypes(IConstrainTypes):
     the user to set the allowable content types and immediately available
     types.
     """
-    def setConstrainTypesMode(mode) -> None:
+    def setConstrainTypesMode(self, mode) -> None:
         """
         Set how addable types is controlled in this class. If mode is 0, use
         the type's default FTI-set allowable types). If mode is 1, use only
@@ -55,19 +55,19 @@ class ISelectableConstrainTypes(IConstrainTypes):
         portal type is not the same as this object's type, fall back on the
         behaviour obtained if mode == 0.
         """
-    def setLocallyAllowedTypes(types) -> None:
+    def setLocallyAllowedTypes(self, types) -> None:
         """
         Set a list of type ids which should be allowed. This must be a
         subset of the type's FTI-set allowable types. This list only comes
         into effect when the restrictions mode is 1 (enabled).
         """
-    def setImmediatelyAddableTypes(types) -> None:
+    def setImmediatelyAddableTypes(self, types) -> None:
         """
         Set the list of type ids which should be immediately/most easily
         addable. This list must be a subset of any types set in
         setLocallyAllowedTypes.
         """
-    def canSetConstrainTypes() -> None:
+    def canSetConstrainTypes(self) -> None:
         """
         Return True if the current user is permitted to constrain addable
         types in this folderish object.

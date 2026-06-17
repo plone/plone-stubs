@@ -6,12 +6,12 @@ class IAttributeModifier(Interface):
     by reference.
 
     """
-    def getReferencedAttributes(obj) -> None:
+    def getReferencedAttributes(self, obj) -> None:
         """Returns attributes which should be passe dto the storage by reference.
 
         Returns a dict of the format ``name:attribute``.
         """
-    def reattachReferencedAttributes(obj, attrs_dict) -> None:
+    def reattachReferencedAttributes(self, obj, attrs_dict) -> None:
         """Giving an obj and and an attribute dict composed by
         attribute names and values, reattach them to the obj.
         """
@@ -23,7 +23,7 @@ class ICloneModifier(Interface):
     on save to and on retrieval from the repositories storage.
 
     """
-    def getOnCloneModifiers(obj) -> None:
+    def getOnCloneModifiers(self, obj) -> None:
         """Returns modifier callbacks being called during clone.
 
         Use this to manipulate objects during cloning to avoid excessive
@@ -46,7 +46,7 @@ class ISaveRetrieveModifier(Interface):
     on save to and on retrieval from the repositories storage.
 
     """
-    def beforeSaveModifier(obj, obj_clone) -> None:
+    def beforeSaveModifier(self, obj, obj_clone) -> None:
         """Modifies the object before being saved to the repos storage.
 
         Preprocesses the objects clone before it gets saved to
@@ -68,7 +68,7 @@ class ISaveRetrieveModifier(Interface):
 
         XXX Argh, this description is shit!
         """
-    def afterRetrieveModifier(obj, repo_clone, preserve=()) -> None:
+    def afterRetrieveModifier(self, obj, repo_clone, preserve=()) -> None:
         """Modifies the object after being retrieved from the repos storage.
 
         Postprocesses the copy of an objects version after it has been
@@ -104,24 +104,24 @@ class IReferenceAdapter(Interface):
     Currently used to be able to remove a reference without having to
     know how.
     """
-    def remove() -> None:
+    def remove(self) -> None:
         """Removes the reference adapted to."""
 
 class IModifierRegistrySet(Interface):
     """Registering and editing a modifier registry."""
-    def register(id, modifier, pos: int = -1) -> None:
+    def register(self, id, modifier, pos: int = -1) -> None:
         """Registers a before save and after retrieve modifier.
 
         If no 'pos' argument is passed the modifier gets added at the
         end of the registry.
         """
-    def unregister(id) -> None:
+    def unregister(self, id) -> None:
         """Unregisters a before save and after retrieve modifier.
 
         Unregistering can be done by passing the method the id or
         the position.
         """
-    def edit(id, enabled=None, condition=None) -> None:
+    def edit(self, id, enabled=None, condition=None) -> None:
         """Edits a before save and after retrieve modifier.
 
         None values leave the respective parameter unchanged.
@@ -132,14 +132,14 @@ class IModifierRegistrySet(Interface):
 
 class IModifierRegistryQuery(Interface):
     """Querying a modifier registry."""
-    def get(id) -> None:
+    def get(self, id) -> None:
         """Returns the conditional modifier with the given id.
 
         Returns a 'IConditionalModifier' object.
 
         Raises an exception if the item doesn't exist.
         """
-    def query(id, default=None) -> None:
+    def query(self, id, default=None) -> None:
         """Returns the condition and the modifier with the given id.
 
         Returns the default value if the item does not exist..
@@ -151,25 +151,25 @@ class IConditionalModifier(Interface):
     The modifiers get only called if it is enabled and if a possibly
     existing implicit condition evaluates to a true value.
     """
-    def __init__(id, modifier, title: str = "") -> None:
+    def __init__(self, id, modifier, title: str = "") -> None:
         """Initialize with a modifier.
 
         The conditional modifier is disabled by default.
         """
-    def edit(enabled=None) -> None:
+    def edit(self, enabled=None) -> None:
         """Modifies an existing conditional modifier.
 
         None values leave the respective parameter unchanged.
         """
-    def isApplicable(obj, portal=None) -> None:
+    def isApplicable(self, obj, portal=None) -> None:
         """Returns True if the modifier is applicable.
 
         A modifier is applicable if it is enabled and if an additional
         condition evaluates to a true value.
         """
-    def isEnabled() -> None:
+    def isEnabled(self) -> None:
         """Returns the enable status."""
-    def getModifier() -> None:
+    def getModifier(self) -> None:
         """Returns the modifier."""
 
 class IConditionalTalesModifier(IConditionalModifier):
@@ -178,14 +178,14 @@ class IConditionalTalesModifier(IConditionalModifier):
     The modifiers get only called if it is enabled and if the TALES
     condition evaluates to a true value.
     """
-    def edit(enabled=None, condition=None) -> None:
+    def edit(self, enabled=None, condition=None) -> None:
         """Modifies an existing conditional TALES modifier.
 
         'condition' is a TALES expression.
 
         None values leave the respective parameter unchanged.
         """
-    def getTalesCondition() -> None:
+    def getTalesCondition(self) -> None:
         """Returns the TALES expression."""
 
 class IBulkEditableModifierRegistry(Interface):
@@ -193,7 +193,7 @@ class IBulkEditableModifierRegistry(Interface):
 
     Used for management screens.
     """
-    def listModifiers() -> None:
+    def listModifiers(self) -> None:
         """Returns the subscribers in string format for use in forms.
 
         Returns a list of dictionaries with the following keys:
@@ -209,7 +209,7 @@ class IBulkEditableModifierRegistry(Interface):
             editable -- A flag signalizing if the subscribers are
                         editable
         """
-    def setModifiers(ids, pos, before_save, after_retrieve, on_clone) -> None:
+    def setModifiers(self, ids, pos, before_save, after_retrieve, on_clone) -> None:
         """Replaces all the subscribers passed
 
         Use this to set all subscribers at once from a form.

@@ -1,14 +1,14 @@
 from zope.interface import Interface
 
 class IAuthenticatorView(Interface):
-    def token() -> None:
+    def token(self) -> None:
         """return token value"""
-    def authenticator() -> None:
+    def authenticator(self) -> None:
         """Return an xhtml snippet which sets an authenticator.
 
         This must be included inside a <form> element.
         """
-    def verify() -> None:
+    def verify(self) -> None:
         """
         Verify if the request contains a valid authenticator.
         """

@@ -11,10 +11,10 @@ class IFilter(Interface):
     positive or negative."""
 
     order: Incomplete
-    def is_enabled() -> None:
+    def is_enabled(self) -> None:
         """Returns a boolean indicating whether the filter should be
         applied."""
-    def __call__(data) -> None:
+    def __call__(self, data) -> None:
         """Apply the filter.
 
         ``data`` is a UTF-8-encoded string.

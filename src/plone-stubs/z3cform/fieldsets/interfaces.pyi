@@ -9,7 +9,7 @@ class IFormExtender(Interface):
     """
 
     order: Incomplete
-    def update() -> None:
+    def update(self) -> None:
         """Modify the form in place. Supported operations include:
 
         - modify the 'fields' object to change the default fieldset
@@ -39,7 +39,7 @@ class IExtensibleForm(Interface):
 
     groups: Incomplete
     default_fieldset_label: Incomplete
-    def updateFields() -> None:
+    def updateFields(self) -> None:
         """Called during form update to allow updating of self.fields
         and self.groups.
         """

@@ -8,7 +8,7 @@ class IStringSubstitution(Interface):
     in lists, provide name, description and category
     class attributes
     """
-    def __call__() -> None:
+    def __call__(self) -> None:
         """
         return substitution
         """
@@ -18,7 +18,7 @@ class IStringInterpolator(Interface):
     provides callable returning
     interpolated string
     """
-    def __call__() -> None:
+    def __call__(self) -> None:
         """
         return interpolated string
         """
@@ -27,7 +27,7 @@ class IStringSubstitutionInfo(Interface):
     """
     provides information on available IStringSubstitution adapters
     """
-    def substitutionList() -> None:
+    def substitutionList(self) -> None:
         """
         returns sequence:
         [ (categoryTitle,
@@ -44,6 +44,6 @@ class IContextWrapper(Interface):
     wrapper = IContextWrapper(obj)(m1=\'A message\', m2="Another one")
     notify(CustomEvent(wrapper))
     """
-    def __call__(kwargs) -> None:
+    def __call__(self, kwargs) -> None:
         """ "
         Return wrapped context"""

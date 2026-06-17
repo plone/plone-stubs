@@ -3,7 +3,7 @@ from zope.interface import Interface
 
 class IQuerystringRegistryReader(Interface):
     """Adapts a registry object to parse the querystring data"""
-    def __call__() -> None:
+    def __call__(self) -> None:
         """Return query string in dict-format."""
 
 class IQueryOperation(Interface):
@@ -24,7 +24,7 @@ class IQueryField(Interface):
 
 class IParsedQueryIndexModifier(Interface):
     """Transform a parsed query index in something different"""
-    def __call__(value) -> None:
+    def __call__(self, value) -> None:
         """
         Return a tuple with a new index name and a new value.
         if the index name returned is different from the native one, caller
@@ -33,7 +33,7 @@ class IParsedQueryIndexModifier(Interface):
 
 class IQueryModifier(Interface):
     """Modifies a query in order to inject specific or change given criteria."""
-    def __call__(query) -> None:
+    def __call__(self, query) -> None:
         """
         modify the query and return an new one.
         """

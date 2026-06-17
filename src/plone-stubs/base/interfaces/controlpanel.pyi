@@ -13,6 +13,7 @@ def validate_json(value): ...
 class IControlPanel(IPloneBaseTool):
     """Interface for the ControlPanel"""
     def registerConfiglet(
+        self,
         id,
         name,
         action,
@@ -26,15 +27,15 @@ class IControlPanel(IPloneBaseTool):
         REQUEST=None,
     ) -> None:
         """Registration of a Configlet"""
-    def unregisterConfiglet(id) -> None:
+    def unregisterConfiglet(self, id) -> None:
         """unregister Configlet"""
-    def unregisterApplication(appId) -> None:
+    def unregisterApplication(self, appId) -> None:
         """unregister Application with all configlets"""
-    def getGroupIds() -> None:
+    def getGroupIds(self) -> None:
         """list of the group ids"""
-    def getGroups() -> None:
+    def getGroups(self) -> None:
         """list of groups as dicts with id and title"""
-    def enumConfiglets(group=None) -> None:
+    def enumConfiglets(self, group=None) -> None:
         """lists the Configlets of a group, returns them as dicts by
         calling .getAction() on each of them"""
 
@@ -249,7 +250,7 @@ class INewActionSchema(Interface):
     category: Incomplete
     id: Incomplete
     @invariant
-    def validate_category_id(data) -> None: ...
+    def validate_category_id(self, data) -> None: ...
 
 class IPloneControlPanelView(Interface):
     """A marker interface for views showing a controlpanel."""

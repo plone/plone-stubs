@@ -1,0 +1,1 @@
+Dropped the dependency on ``mypy-zope`` and removed the mypy plugin configuration. The stubs no longer require a checker-specific plugin. @ericof

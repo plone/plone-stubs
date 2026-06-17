@@ -78,29 +78,29 @@ class IRegistry(Interface):
     """The configuration registry"""
 
     records: Incomplete
-    def __getitem__(key) -> None:
+    def __getitem__(self, key) -> None:
         """Get the value under the given key. A record must have been
         installed for this key for this to be valid. Otherwise, a KeyError is
         raised.
         """
-    def get(key, default=None) -> None:
+    def get(self, key, default=None) -> None:
         """Attempt to get the value under the given key. If it does not
         exist, return the given default.
         """
-    def __setitem__(key, value) -> None:
+    def __setitem__(self, key, value) -> None:
         """Set the value under the given key. A record must have been
         installed for this key for this to be valid. Otherwise, a KeyError is
         raised. If value is not of a type that's allowed by the record, a
         ValidationError is raised.
         """
-    def __contains__(key) -> bool:
+    def __contains__(self, key) -> bool:
         """Determine if the registry contains a record for the given key."""
-    def forInterface(interface, check: bool = True, omit=(), prefix=None) -> None:
+    def forInterface(self, interface, check: bool = True, omit=(), prefix=None) -> None:
         """Get an IRecordsProxy for the given interface. If `check` is True,
         an error will be raised if one or more fields in the interface does
         not have an equivalent setting.
         """
-    def registerInterface(interface, omit=(), prefix=None) -> None:
+    def registerInterface(self, interface, omit=(), prefix=None) -> None:
         """Create a set of records based on the given interface. For each
         schema field in the interface, a record will be inserted with a
         name like `${interface.__identifier__}.${field.__name__}`, and a
