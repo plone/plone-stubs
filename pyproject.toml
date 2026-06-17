@@ -44,7 +44,7 @@ test = [
     "zest-releaser[recommended]>=9.5.0",
     "zestreleaser-towncrier>=1.3.0",
     "Plone==6.1.4",
-    "pytest-plone",
+    "pytest-plone>=1.0.0",
     "zope.pytestlayer",
 ]
 

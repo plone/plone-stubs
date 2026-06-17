@@ -706,18 +706,6 @@ wheels = [
 ]
 
 [[package]]
-name = "gocept-pytestlayer"
-version = "8.1.1"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "setuptools" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/86/6c/302895d16033f2c0fc0aa43f9575e98f1e4897f6d22a9520dbec923a6a34/gocept.pytestlayer-8.1.1.tar.gz", hash = "sha256:95f42615b59b50d5c6636b2a7d3ca21a388fbf0a83a9a7e7a1288873561bfcc8", size = 3910, upload-time = "2024-05-17T06:37:58.259Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/4a/d0/0062a02df0a7cc8e1974ff8defd1b01d44c5ba5e547e29c4347ef688e8cf/gocept.pytestlayer-8.1.1-py3-none-any.whl", hash = "sha256:0411e75268e4a6151449c5ae29d4b0122ca4bb912145dfd1af4cfc43b996368a", size = 5430, upload-time = "2024-05-17T06:37:56.979Z" },
-]
-
-[[package]]
 name = "grpcio"
 version = "1.75.1"
 source = { registry = "https://pypi.org/simple" }
@@ -799,6 +787,18 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/6f/f3/b2613e81da2085f40a989c0601ec9efc11e8b32fcb71b1234b64a18af830/grpcio_tools-1.75.1-cp314-cp314-musllinux_1_2_x86_64.whl", hash = "sha256:14a78b1e36310cdb3516cdf9ee2726107875e0b247e2439d62fc8dc38cf793c1", size = 3324513, upload-time = "2025-09-26T09:09:37.44Z" },
     { url = "https://files.pythonhosted.org/packages/9a/1f/2df4fa8634542524bc22442ffe045d41905dae62cc5dd14408b80c5ac1b8/grpcio_tools-1.75.1-cp314-cp314-win32.whl", hash = "sha256:0e6f916daf222002fb98f9a6f22de0751959e7e76a24941985cc8e43cea77b50", size = 1015283, upload-time = "2025-09-26T09:09:39.461Z" },
     { url = "https://files.pythonhosted.org/packages/23/4f/f27c973ff50486a70be53a3978b6b0244398ca170a4e19d91988b5295d92/grpcio_tools-1.75.1-cp314-cp314-win_amd64.whl", hash = "sha256:878c3b362264588c45eba57ce088755f8b2b54893d41cc4a68cdeea62996da5c", size = 1189364, upload-time = "2025-09-26T09:09:42.036Z" },
+]
+
+[[package]]
+name = "gunicorn"
+version = "26.0.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "packaging" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/6d/b7/a4a3f632f823e432ce6bc65f62961b7980c898c77f075a2f7118cb3846fe/gunicorn-26.0.0.tar.gz", hash = "sha256:ca9346f85e3a4aeeb64d491045c16b9a35647abd37ea15efe53080eb8b090baf", size = 727286, upload-time = "2026-05-05T06:38:25.529Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/e6/40/9c2384fc2be4ad25dd4a49decd5ad9ea5a3639814c11bd40ab77cb9f0a14/gunicorn-26.0.0-py3-none-any.whl", hash = "sha256:40233d26a5f0d1872916188c276e21641155111c2853f0c2cd55260aec0d24fc", size = 212009, upload-time = "2026-05-05T06:38:23.007Z" },
 ]
 
 [[package]]
@@ -3353,7 +3353,7 @@ test = [
     { name = "plone", specifier = "==6.1.4" },
     { name = "pytest", specifier = ">=8.3.4" },
     { name = "pytest-cov", specifier = ">=6.0.0" },
-    { name = "pytest-plone" },
+    { name = "pytest-plone", specifier = ">=1.0.0" },
     { name = "pyyaml", specifier = ">=6.0.2" },
     { name = "zest-releaser", extras = ["recommended"], specifier = ">=9.5.0" },
     { name = "zestreleaser-towncrier", specifier = ">=1.3.0" },
@@ -3727,6 +3727,17 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/53/d9/abd97f96269350ad358489364d9425da38ed465327ad21c191ce60c5b8b2/products_cmfplone-6.1.3-py3-none-any.whl", hash = "sha256:cadab32ff3618e309ba582a0d2454791942982748086ebbadad3633953135484", size = 874011, upload-time = "2025-10-02T14:34:57.221Z" },
 ]
 
+[package.optional-dependencies]
+test = [
+    { name = "gunicorn" },
+    { name = "lxml" },
+    { name = "plone-app-robotframework" },
+    { name = "plone-app-testing" },
+    { name = "robotframework-debuglibrary" },
+    { name = "zope-globalrequest" },
+    { name = "zope-testing" },
+]
+
 [[package]]
 name = "products-cmfuid"
 version = "4.2"
@@ -4098,6 +4109,18 @@ wheels = [
 ]
 
 [[package]]
+name = "prompt-toolkit"
+version = "3.0.52"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "wcwidth" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/a1/96/06e01a7b38dce6fe1db213e061a4602dd6032a8a97ef6c1a862537732421/prompt_toolkit-3.0.52.tar.gz", hash = "sha256:28cde192929c8e7321de85de1ddbe736f1375148b02f2e17edd840042b1be855", size = 434198, upload-time = "2025-08-27T15:24:02.057Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/84/03/0d3ce49e2505ae70cf43bc5bb3033955d2fc9f932163e84dc0779cc47f48/prompt_toolkit-3.0.52-py3-none-any.whl", hash = "sha256:9aac639a3bbd33284347de5ad8d68ecc044b91a762dc39b7c21095fcd6a19955", size = 391431, upload-time = "2025-08-27T15:23:59.498Z" },
+]
+
+[[package]]
 name = "protobuf"
 version = "6.32.1"
 source = { registry = "https://pypi.org/simple" }
@@ -4232,19 +4255,24 @@ wheels = [
 
 [[package]]
 name = "pytest-plone"
-version = "0.2.0"
+version = "1.0.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "gocept-pytestlayer" },
-    { name = "plone" },
-    { name = "plone-app-robotframework" },
+    { name = "plone-api" },
     { name = "plone-app-testing" },
+    { name = "plone-base" },
+    { name = "plone-browserlayer" },
+    { name = "plone-dexterity" },
+    { name = "products-cmfplone", extra = ["test"] },
     { name = "pytest" },
-    { name = "setuptools" },
+    { name = "requests" },
+    { name = "zope-component" },
+    { name = "zope-pytestlayer" },
+    { name = "zope-schema" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/df/c9/628915a852df6d806d1052fb312af1beac207792331593c6731978649289/pytest-plone-0.2.0.tar.gz", hash = "sha256:b61f45679627b56e60c7d8c28cef841463e6b1aa8e7c5bfbbc92ee2291f32e7a", size = 17942, upload-time = "2023-01-05T19:43:22.243Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/44/57/3b6cac92b5554e1c7f124dcb2b8cf25bc3de63668d264fee2c43ab4240ca/pytest_plone-1.0.0.tar.gz", hash = "sha256:3c60b893edc9a1dadf2a21b090b1ca389a2787dc754105ee7b6b35721361a822", size = 28120, upload-time = "2026-05-18T22:12:42.902Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/9c/ae/b5510ea5f3feb50df6082f78eddf578cabaf03c14925e070acbbbd79ed2c/pytest_plone-0.2.0-py3-none-any.whl", hash = "sha256:9e0cbeeaadf4265e800e5cd6c5d3d1e429a5ed8acf9c3e819a57b695efb86be1", size = 13802, upload-time = "2023-01-05T19:43:20.555Z" },
+    { url = "https://files.pythonhosted.org/packages/eb/a8/01780c4ded556b57e617e88e0cd0c2eb11c6f41f0f27aec3d5b3e4c1885d/pytest_plone-1.0.0-py3-none-any.whl", hash = "sha256:51533c8df40947fcf7eae865483bae6e7ac4b94481c55724846cdd86868ef058", size = 23434, upload-time = "2026-05-18T22:12:41.303Z" },
 ]
 
 [[package]]
@@ -4506,6 +4534,19 @@ dependencies = [
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/40/d2/ab58db809d98d24d63121975929a9e12b9e73b92d88af0c7f48f5958f0b3/robotframework_browser-19.10.1-py3-none-any.whl", hash = "sha256:8fe3fda001972edac9ae7e4f81795344032ce99d72d41baf7f653fe605c7c592", size = 375584, upload-time = "2025-10-16T15:11:27.865Z" },
+]
+
+[[package]]
+name = "robotframework-debuglibrary"
+version = "2.5.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "prompt-toolkit" },
+    { name = "robotframework" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/fd/b3/c5fa5fb8e0786efacc30a16f9ae62d90d838516c2dea08ad2733d679bd66/robotframework-debuglibrary-2.5.0.tar.gz", hash = "sha256:c8e135c7561721d36210d6f59a09b7538064367e82d8a3be67cb87088cf9cba7", size = 18407, upload-time = "2024-01-12T09:29:09.718Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/73/32/94f7b214f9bbbbf4d461e44a58533a7bf144477df43d3d741fe57f5a5143/robotframework_debuglibrary-2.5.0-py3-none-any.whl", hash = "sha256:a2bfb2636ead7be440c224317891b4b406a9a71d84b26924031ccf3791a00b96", size = 19245, upload-time = "2024-01-12T09:29:08.425Z" },
 ]
 
 [[package]]
@@ -4964,6 +5005,15 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/bf/cb/04ddb054f45faa306a230769e868c28b8065ea196891f09004ebace5b184/waitress-3.0.2.tar.gz", hash = "sha256:682aaaf2af0c44ada4abfb70ded36393f0e307f4ab9456a215ce0020baefc31f", size = 179901, upload-time = "2024-11-16T20:02:35.195Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/8d/57/a27182528c90ef38d82b636a11f606b0cbb0e17588ed205435f8affe3368/waitress-3.0.2-py3-none-any.whl", hash = "sha256:c56d67fd6e87c2ee598b76abdd4e96cfad1f24cacdea5078d382b1f9d7b5ed2e", size = 56232, upload-time = "2024-11-16T20:02:33.858Z" },
+]
+
+[[package]]
+name = "wcwidth"
+version = "0.8.1"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/49/b4/51fe890511f0f242d07cb1ebe6a5b6db417262b9d2568b460347c57d95cc/wcwidth-0.8.1.tar.gz", hash = "sha256:faf5b4a5366a72dc49cad48cdf21f52bdf63bdda995178e483ba247ff79089b9", size = 1466072, upload-time = "2026-06-08T05:57:23.146Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/bd/6e/95b0e537de1f4d4301f76f944642c6da50d1511cc7b3d64dc418a66c7509/wcwidth-0.8.1-py3-none-any.whl", hash = "sha256:f453740b1e4a4f3291faa37944c555d71056c4da08d59809b307ef4feba695c8", size = 323092, upload-time = "2026-06-08T05:57:21.413Z" },
 ]
 
 [[package]]
