@@ -1,0 +1,6 @@
+"""Partial stubs for :mod:`zope.interface.verify`."""
+
+from typing import Any
+
+def verifyClass(iface: Any, candidate: type, tentative: bool = ...) -> bool: ...
+def verifyObject(iface: Any, candidate: Any, tentative: bool = ...) -> bool: ...
