@@ -50,7 +50,7 @@ class ITransformer(Interface):
     This interface will be implemented by an adapter onto the context where
     the value is stored.
     """
-    def __call__(value, mimeType) -> None:
+    def __call__(self, value, mimeType) -> None:
         """Transform the IRichTextValue 'value' to the given MIME type.
         Return a unicode string. Raises TransformError if something went
         wrong.

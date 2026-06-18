@@ -10,12 +10,12 @@ class ITyped(Interface):
 
 class IFile(Interface):
     data: Incomplete
-    def getSize() -> None:
+    def getSize(self) -> None:
         """Return the byte-size of the data of the object."""
 
 class IImage(IFile):
     """This interface defines an Image that can be displayed."""
-    def getImageSize() -> None:
+    def getImageSize(self) -> None:
         """Return a tuple (x, y) that describes the dimensions of
         the object.
         """
@@ -34,7 +34,7 @@ class IStableImageScale(Interface):
     """
 
 class IPluggableBinaryFieldValidation(Interface):
-    def __call__(field, value) -> None:
+    def __call__(self, field, value) -> None:
         """validates field and value.
 
         raises zope.schema.ValidationError
@@ -76,7 +76,7 @@ class INamedImageField(INamedField):
 
 class IStorage(Interface):
     """Store file data"""
-    def store(data, blob) -> None:
+    def store(self, data, blob) -> None:
         """Store the data into the blob
         Raises NonStorable if data is not storable.
         """

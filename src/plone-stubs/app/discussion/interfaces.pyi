@@ -32,14 +32,14 @@ class IConversation(IIterableMapping):
     last_comment_date: Incomplete
     commentators: Incomplete
     public_commentators: Incomplete
-    def addComment(comment) -> None:
+    def addComment(self, comment) -> None:
         """Adds a new comment to the list of comments, and returns the
         comment id that was assigned. The comment_id property on the comment
         will be set accordingly.
         """
-    def __delitem__(key) -> None:
+    def __delitem__(self, key) -> None:
         """Delete the comment with the given key. The key is a long id."""
-    def getComments(start: int = 0, size=None) -> None:
+    def getComments(self, start: int = 0, size=None) -> None:
         """Return an iterator of comment objects for rendering.
 
         The 'start' parameter is the id of the comment from which to start the
@@ -52,7 +52,7 @@ class IConversation(IIterableMapping):
         The comments are returned in creation date order, in the exact batch
         size specified.
         """
-    def getThreads(start: int = 0, size=None, root: int = 0, depth=None) -> None:
+    def getThreads(self, start: int = 0, size=None, root: int = 0, depth=None) -> None:
         """Return a batch of comment objects for rendering.
 
         The 'start' parameter is the id of the comment from which to start
@@ -84,12 +84,12 @@ class IReplies(IIterableMapping):
     Adapt a conversation or another comment to this interface to obtain the
     direct replies.
     """
-    def addComment(comment) -> None:
+    def addComment(self, comment) -> None:
         """Adds a new comment as a child of this comment, and returns the
         comment id that was assigned. The comment_id property on the comment
         will be set accordingly.
         """
-    def __delitem__(key) -> None:
+    def __delitem__(self, key) -> None:
         """Delete the comment with the given key. The key is a long id."""
 
 class IComment(Interface):

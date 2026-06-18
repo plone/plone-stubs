@@ -1,0 +1,1 @@
+Update .gitnore to exclude cache folders (.mypy_cache, .ruff_cache) from git. @ericof

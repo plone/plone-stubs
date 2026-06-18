@@ -10,7 +10,7 @@ class ICrudForm(interface.Interface):
     editform_factory: Incomplete
     addform_factory: Incomplete
     batch_size: Incomplete
-    def get_items() -> None:
+    def get_items(self) -> None:
         """Subclasses must a list of all items to edit.
 
         This list contains tuples of the form ``(id, item)``, where
@@ -18,7 +18,7 @@ class ICrudForm(interface.Interface):
         be adaptable to the schema returned by ``update_schema`` and
         ``view_schema`` methods.
         """
-    def add(data) -> None:
+    def add(self, data) -> None:
         """Subclasses must implement this method to create an item for
         the given `data` *and* add it to a container, and return it.
 
@@ -28,16 +28,16 @@ class ICrudForm(interface.Interface):
         May raise zope.schema.ValidationError to indicate that there's
         a problem with the add form data.
         """
-    def remove(id_item) -> None:
+    def remove(self, id_item) -> None:
         """Subclasses must implement this method to remove the given
         item from the site.
 
         It's left to the implementing class to notify of
         ``zope.app.container.contained.ObjectRemovedEvent``.
         """
-    def before_update(item, data) -> None:
+    def before_update(self, item, data) -> None:
         """A hook that gets called before an item is updated."""
-    def link(item, field) -> None:
+    def link(self, item, field) -> None:
         """Return a URL for this item's field or None."""
 
 class AbstractCrudForm:

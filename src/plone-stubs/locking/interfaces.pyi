@@ -36,23 +36,23 @@ class ILockable(Interface):
     Most operations take the type as a parameter and operate on the lock token
     associated with a particular type.
     """
-    def lock(lock_type=..., children: bool = False) -> None:
+    def lock(self, lock_type=..., children: bool = False) -> None:
         """Lock the object using the given key.
 
         If children is True, child objects will be locked as well.
         """
-    def unlock(lock_type=..., stealable_only: bool = True) -> None:
+    def unlock(self, lock_type=..., stealable_only: bool = True) -> None:
         """Unlock the object using the given key.
 
         If stealable_only is true, the operation will only have an effect on
         objects that are stealable(). Thus, non-stealable locks will need
         to pass stealable_only=False to actually get unlocked.
         """
-    def clear_locks() -> None:
+    def clear_locks(self) -> None:
         """Clear all locks on the object"""
-    def locked() -> None:
+    def locked(self) -> None:
         """True if the object is locked with any lock."""
-    def can_safely_unlock(lock_type=...) -> None:
+    def can_safely_unlock(self, lock_type=...) -> None:
         """Determine if the current user can safely attempt to unlock the
         object.
 
@@ -64,7 +64,7 @@ class ILockable(Interface):
          - the object is only locked with the given lock_type, for the
            current user;
         """
-    def stealable(lock_type=...) -> None:
+    def stealable(self, lock_type=...) -> None:
         """Find out if the lock can be stolen.
 
         This means:
@@ -75,7 +75,7 @@ class ILockable(Interface):
          - can_safely_unlock() is true.
 
         """
-    def lock_info() -> None:
+    def lock_info(self) -> None:
         """Get information about locks on object.
 
         Returns a list containing the following dict for each valid lock:
@@ -88,7 +88,7 @@ class ILockable(Interface):
 
 class IRefreshableLockable(ILockable):
     """A component that is lockable and whose locks can be refreshed."""
-    def refresh_lock(lock_type=...) -> None:
+    def refresh_lock(self, lock_type=...) -> None:
         """Refresh the lock so it expires later."""
 
 class ILockSettings(Interface):

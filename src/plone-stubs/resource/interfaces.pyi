@@ -10,45 +10,45 @@ class IResourceDirectory(IPublishTraverse):
     regardless of whether they are stored on the filesystem or in the
     ZODB.
     """
-    def __contains__(name) -> bool:
+    def __contains__(self, name) -> bool:
         """Return true if the given file or directory exists"""
-    def __getitem__(name) -> None:
+    def __getitem__(self, name) -> None:
         """Return the file or resource directory with the given name
         as an object
         """
-    def openFile(path) -> None:
+    def openFile(self, path) -> None:
         """Returns the file or filelike object identified by the given path
         (relative to this directory).
 
         Raises IOError if the file cannot be opened.
         """
-    def readFile(path) -> None:
+    def readFile(self, path) -> None:
         """Returns the contents of the file identified by the given path.
 
         Raises IOError if the file cannot be read.
         """
-    def listDirectory() -> None:
+    def listDirectory(self) -> None:
         """Lists the contents of this directory.
 
         Raises OSError if the directory cannot be read.
         """
-    def isDirectory(path) -> None:
+    def isDirectory(self, path) -> None:
         """Returns True if the given path (relative to this directory) is a
         directory (as opposed to a file).
         """
-    def isFile(path) -> None:
+    def isFile(self, path) -> None:
         """Returns True if the given path is a file."""
-    def exportZip(out) -> None:
+    def exportZip(self, out) -> None:
         """Exports the contents of this directory as a zip file, which will
         be written to the open file handle ``out``.
         """
 
 class IWritableResourceDirectory(IResourceDirectory):
-    def makeDirectory(path) -> None:
+    def makeDirectory(self, path) -> None:
         """Create the given path as a directory. (Returns successfully without
         doing anything if the directory already exists.)
         """
-    def writeFile(path, data) -> None:
+    def writeFile(self, path, data) -> None:
         """Write a file at the specified path.
 
         Parent directories will be added if necessary. The final path component
@@ -56,17 +56,17 @@ class IWritableResourceDirectory(IResourceDirectory):
 
         ``data`` may be a string or file-like object.
         """
-    def importZip(file) -> None:
+    def importZip(self, file) -> None:
         """Imports the contents of a zip file into this directory.
 
         ``file`` may be a filename, file-like object, or instance of
         zipfile.ZipFile. The file data must be a ZIP archive.
         """
-    def __delitem__(name) -> None:
+    def __delitem__(self, name) -> None:
         """Delete a file or directory inside this directory"""
-    def __setitem__(name, item) -> None:
+    def __setitem__(self, name, item) -> None:
         """Add a file or directory as returned by ``__getitem__()``"""
-    def rename(oldName, newName) -> None:
+    def rename(self, oldName, newName) -> None:
         """Rename a child file or folder"""
 
 class IUniqueResourceRequest(Interface):

@@ -32,7 +32,7 @@ class IReindexOnModify(Interface):
 
 class IStructureAction(Interface):
     order: Incomplete
-    def get_options() -> None:
+    def get_options(self) -> None:
         """
         Return a dict of action widget options.
 

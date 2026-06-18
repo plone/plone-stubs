@@ -8,9 +8,9 @@ class IContentMenuView(IContentProvider):
 
     This will construct a menu by finding an adapter to IContentMenu.
     """
-    def available() -> None:
+    def available(self) -> None:
         """Determine whether the menu should be displayed at all."""
-    def menu() -> None:
+    def menu(self) -> None:
         """Create a list of dicts that can be used to render a menu.
 
         The keys in this dict are: title, description, action (a URL),
@@ -75,5 +75,5 @@ class IDisplayViewsMenu(IBrowserMenu):
 
     Currently used only to register user-visible titles.
     """
-    def getMenuItemByAction(object, request, action) -> None:
+    def getMenuItemByAction(self, object, request, action) -> None:
         """Return the first IBrowserMenuItem for the given action"""

@@ -48,7 +48,7 @@ class IZCatalog(Interface):
     URL, this is an excellent unique qualifier in Zope).
     """
     def catalog_object(
-        obj, uid, idxs=None, update_metadata: int = 1, pghandler=None
+        self, obj, uid, idxs=None, update_metadata: int = 1, pghandler=None
     ) -> None:
         """Catalogs the object 'obj' with the unique identifier 'uid'.
 
@@ -62,37 +62,37 @@ class IZCatalog(Interface):
         flag has no effect if the object is not yet cataloged (metadata
         is always added for new objects).
         """
-    def uncatalog_object(uid) -> None:
+    def uncatalog_object(self, uid) -> None:
         """Uncatalogs the object with the unique identifier 'uid'.
 
         The uid must be a physical path, either absolute or relative to
         the catalog.
         """
-    def uniqueValuesFor(name) -> None:
+    def uniqueValuesFor(self, name) -> None:
         """returns the unique values for a given FieldIndex named 'name'."""
-    def getpath(rid) -> None:
+    def getpath(self, rid) -> None:
         """Return the path to a cataloged object given a 'data_record_id_'"""
-    def getrid(rid) -> None:
+    def getrid(self, rid) -> None:
         """Return the 'data_record_id_' to a cataloged object given a path"""
-    def getobject(rid, REQUEST=None) -> None:
+    def getobject(self, rid, REQUEST=None) -> None:
         """Return a cataloged object given a 'data_record_id_'"""
-    def schema() -> None:
+    def schema(self) -> None:
         """Get the meta-data schema
 
         Returns a sequence of names that correspond to columns in the
         meta-data table.
         """
-    def indexes() -> None:
+    def indexes(self) -> None:
         """Returns a sequence of names that correspond to indexes."""
-    def index_objects() -> None:
+    def index_objects(self) -> None:
         """Returns a sequence of actual index objects.
 
         NOTE: This returns unwrapped indexes! You should probably use
         getIndexObjects instead. Some indexes expect to be wrapped.
         """
-    def getIndexObjects() -> None:
+    def getIndexObjects(self) -> None:
         """Returns a list of acquisition wrapped index objects"""
-    def searchResults(query=None, **kw) -> None:
+    def searchResults(self, query=None, **kw) -> None:
         """Search the catalog.
 
         Search terms can be passed in the query or as keyword
@@ -160,10 +160,10 @@ class IZCatalog(Interface):
         able to provide more advanced search parameters that can
         specify range searches or wildcards.
         """
-    def __call__(query=None, **kw) -> None:
+    def __call__(self, query=None, **kw) -> None:
         """Search the catalog, the same way as 'searchResults'."""
     def search(
-        query, sort_index=None, reverse: int = 0, limit=None, merge: int = 1
+        self, query, sort_index=None, reverse: int = 0, limit=None, merge: int = 1
     ) -> None:
         """Programmatic search interface, use for searching the catalog from
         scripts.
@@ -189,11 +189,11 @@ class IZCatalog(Interface):
         results for later merging. This can be used to perform multiple
         queries (even across catalogs) and merge and sort the combined results.
         """
-    def searchAll() -> None:
+    def searchAll(self) -> None:
         """the result of a search for all documents as a sequence."""
-    def getAllBrains() -> None:
+    def getAllBrains(self) -> None:
         """the result of a search for all documents as an iterator."""
-    def refreshCatalog(clear: int = 0, pghandler=None) -> None:
+    def refreshCatalog(self, clear: int = 0, pghandler=None) -> None:
         """Reindex every object we can find, removing the unreachable
         ones from the index.
 
@@ -202,7 +202,7 @@ class IZCatalog(Interface):
         pghandler -- optional Progresshandler as defined in ProgressHandler.py
         (see also README.txt)
         """
-    def reindexIndex(name, REQUEST, pghandler=None) -> None:
+    def reindexIndex(self, name, REQUEST, pghandler=None) -> None:
         """Reindex a single index.
 
         name -- id of index
@@ -218,43 +218,43 @@ class ICatalogBrain(Interface):
     required, and provides just enough smarts to let us get the URL, path,
     and cataloged object without having to ask the catalog directly.
     """
-    def has_key(key) -> None:
+    def has_key(self, key) -> None:
         """Record has this field"""
     def __contains__(self, name) -> bool:
         """Record has this field"""
-    def getPath() -> None:
+    def getPath(self) -> None:
         """Get the physical path for this record"""
-    def getURL(relative: int = 0) -> None:
+    def getURL(self, relative: int = 0) -> None:
         """Generate a URL for this record"""
-    def getObject() -> None:
+    def getObject(self) -> None:
         """Return the object for this record
 
         Will return None if the object cannot be found via its cataloged path
         (i.e., it was deleted or moved without recataloging), or if the user is
         not authorized to access the object.
         """
-    def getRID() -> None:
+    def getRID(self) -> None:
         """Return the record ID for this object."""
 
 class IProgressHandler(Interface):
     """A handler to log progress information for long running
     operations.
     """
-    def init(ident, max) -> None:
+    def init(self, ident, max) -> None:
         """Called at the start of the long running process.
 
         'ident' -- a string identifying the operation
         'max' -- maximum number of objects to be processed (int)
         """
-    def info(text) -> None:
+    def info(self, text) -> None:
         """Log some 'text'"""
-    def finish() -> None:
+    def finish(self) -> None:
         """Called up termination"""
-    def report(current, *args, **kw) -> None:
+    def report(self, current, *args, **kw) -> None:
         """Called for every iteration.
 
         'current' -- an integer representing the number of objects
                      processed so far.
         """
-    def output(text) -> None:
+    def output(self, text) -> None:
         """Log 'text' to some output channel"""

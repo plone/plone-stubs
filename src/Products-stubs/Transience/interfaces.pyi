@@ -1,31 +1,31 @@
 from zope.interface import Interface
 
 class ITransient(Interface):
-    def invalidate() -> None:
+    def invalidate(self) -> None:
         """
         Invalidate (expire) the transient object.
 
         Causes the transient object container\'s "before destruct" method
         related to this object to be called as a side effect.
         """
-    def isValid() -> None:
+    def isValid(self) -> None:
         """
         Return true if transient object is still valid, false if not.
         A transient object is valid if its invalidate method has not been
         called.
         """
-    def getLastAccessed() -> None:
+    def getLastAccessed(self) -> None:
         """
         Return the time the transient object was last accessed in
         integer seconds-since-the-epoch form.  Last accessed time
         is defined as the last time the transient object\'s container
         "asked about" this transient object.
         """
-    def setLastAccessed() -> None:
+    def setLastAccessed(self) -> None:
         """
         Cause the last accessed time to be set to now.
         """
-    def getLastModified() -> None:
+    def getLastModified(self) -> None:
         """
         Return the time the transient object was last modified in
         integer seconds-since-the-epoch form.  Modification generally implies
@@ -33,72 +33,72 @@ class ITransient(Interface):
         methods, directly or indirectly as a result of a call to
         update, clear, or other mutating data access methods.
         """
-    def setLastModified() -> None:
+    def setLastModified(self) -> None:
         """
         Cause the last modified time to be set to now.
         """
-    def getCreated() -> None:
+    def getCreated(self) -> None:
         """
         Return the time the transient object was created in integer
         seconds-since-the-epoch form.
         """
-    def getContainerKey() -> None:
+    def getContainerKey(self) -> None:
         """
         Return the key under which the object was placed in its
         container.
         """
 
 class IDictionaryLike(Interface):
-    def keys() -> None:
+    def keys(self) -> None:
         """Return sequence of key elements."""
-    def values() -> None:
+    def values(self) -> None:
         """Return sequence of value elements."""
-    def items() -> None:
+    def items(self) -> None:
         """Return sequence of (key, value) elements."""
-    def get(k, default: str = "marker") -> None:
+    def get(self, k, default: str = "marker") -> None:
         """
         Return value associated with key k.  Return None or default if k
         does not exist.
         """
-    def has_key(k) -> None:
+    def has_key(self, k) -> None:
         """Return true if item referenced by key k exists."""
-    def __contains__(key) -> bool:
+    def __contains__(self, key) -> bool:
         """Return true if item referenced by key k exists."""
-    def clear() -> None:
+    def clear(self) -> None:
         """Remove all key/value pairs."""
-    def update(d) -> None:
+    def update(self, d) -> None:
         """
         Merge dictionary d into ourselves.
         """
 
 class IItemWithId(Interface):
-    def getId() -> None:
+    def getId(self) -> None:
         """
         Returns a meaningful unique id for the object.  Note that this id
         need not the key under which the object is stored in its container.
         """
 
 class ITTWDictionary(IDictionaryLike, IItemWithId):
-    def set(k, v) -> None:
+    def set(self, k, v) -> None:
         """
         Call __setitem__ with key k, value v.
         """
-    def delete(k) -> None:
+    def delete(self, k) -> None:
         """
         Call __delitem__ with key k.
         """
-    def __guarded_setitem__(k, v) -> None:
+    def __guarded_setitem__(self, k, v) -> None:
         """
         Call __setitem__ with key k, value v.
         """
 
 class IImmutablyValuedMappingOfPickleableObjects(Interface):
-    def __setitem__(k, v) -> None:
+    def __setitem__(self, k, v) -> None:
         """
         Sets key k to value v, if k is both hashable and pickleable and
         v is pickleable, else raise TypeError.
         """
-    def __getitem__(k) -> None:
+    def __getitem__(self, k) -> None:
         """
         Returns the value associated with key k.
 
@@ -108,7 +108,7 @@ class IImmutablyValuedMappingOfPickleableObjects(Interface):
         values are persisted, you need to explicitly put the value back in
         to the mapping via __setitem__.
         """
-    def __delitem__(k) -> None:
+    def __delitem__(self, k) -> None:
         """
         Remove the key/value pair related to key k.
         """
@@ -120,7 +120,7 @@ class IHomogeneousItemContainer(Interface):
      2.  Is responsible for the creation of its subobjects.
      3.  Allows for the access of a subobject by key.
     """
-    def get(k, default=None) -> None:
+    def get(self, k, default=None) -> None:
         """
         Return value associated with key k via __getitem__.  If value
         associated with k does not exist, return default.
@@ -128,14 +128,14 @@ class IHomogeneousItemContainer(Interface):
         Returned item is acquisition-wrapped in self unless a default
         is passed in and returned.
         """
-    def has_key(k) -> None:
+    def has_key(self, k) -> None:
         """
         Return true if container has value associated with key k, else
         return false.
         """
 
 class IStringKeyedHomogeneousItemContainer(IHomogeneousItemContainer):
-    def new(k) -> None:
+    def new(self, k) -> None:
         """
         Creates a new subobject of the type supported by this container
         with key "k" and returns it.
@@ -150,7 +150,7 @@ class IStringKeyedHomogeneousItemContainer(IHomogeneousItemContainer):
 
         Returned object is acquisition-wrapped in self.
         """
-    def new_or_existing(k) -> None:
+    def new_or_existing(self, k) -> None:
         """
         If an object already exists in the container with key "k", it
         is returned.
@@ -167,21 +167,21 @@ class IStringKeyedHomogeneousItemContainer(IHomogeneousItemContainer):
         """
 
 class ITransientItemContainer(Interface):
-    def setTimeoutMinutes(timeout_mins) -> None:
+    def setTimeoutMinutes(self, timeout_mins) -> None:
         """
         Set the number of minutes of inactivity allowable for subobjects
         before they expire.
         """
-    def getTimeoutMinutes() -> None:
+    def getTimeoutMinutes(self) -> None:
         """
         Return the number of minutes allowed for subobject inactivity
         before expiration.
         """
-    def getAddNotificationTarget() -> None:
+    def getAddNotificationTarget(self) -> None:
         """
         Returns the currently registered 'add notification' value, or None.
         """
-    def setAddNotificationTarget(f) -> None:
+    def setAddNotificationTarget(self, f) -> None:
         """
         Cause the \'add notification\' function to be \'f\'.
 
@@ -197,12 +197,12 @@ class ITransientItemContainer(Interface):
           def addNotify(item, container):
               print("id of \'item\' arg was %s" % item.getId())
         """
-    def getDelNotificationTarget() -> None:
+    def getDelNotificationTarget(self) -> None:
         """
         Returns the currently registered 'delete notification' value, or
         None.
         """
-    def setDelNotificationTarget(f) -> None:
+    def setDelNotificationTarget(self, f) -> None:
         """
         Cause the \'delete notification\' function to be \'f\'.
 

@@ -45,15 +45,15 @@ class IFieldFactory(IField):
 
 class IEditableSchema(Interface):
     """Interface for adding/removing fields to/from a schema."""
-    def addField(field, name=None) -> None:
+    def addField(self, field, name=None) -> None:
         """Add a field to a schema
 
         If not provided, the field's name will be taken from its __name__
         attribute.
         """
-    def removeField(field_name) -> None:
+    def removeField(self, field_name) -> None:
         """Remove a field from a schema"""
-    def moveField(field_name, new_pos) -> None:
+    def moveField(self, field_name, new_pos) -> None:
         """Move a field to the (new_pos)th position in the schema's sort ç
         order (indexed beginning at 0).
 
@@ -62,7 +62,7 @@ class IEditableSchema(Interface):
         We shuffle these around in case it matters anywhere that they're
         unique.
         """
-    def changeFieldFieldset(field_name, next_fieldset) -> None:
+    def changeFieldFieldset(self, field_name, next_fieldset) -> None:
         """Move a field from a fieldset to another,
         next_fieldset is a fieldset object, or None for default fieldset
         """
@@ -85,7 +85,7 @@ class INewField(Interface):
     factory: Incomplete
     required: Incomplete
     @invariant
-    def checkTitleAndDescriptionTypes(data) -> None: ...
+    def checkTitleAndDescriptionTypes(self, data) -> None: ...
 
 class INewFieldset(Interface):
     label: Incomplete

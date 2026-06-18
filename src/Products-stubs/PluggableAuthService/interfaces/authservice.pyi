@@ -5,29 +5,29 @@ class IBasicUser(Interface):
     as the "Public User object interface", except that \'_getPassword\'
     is *not* part of the contract!
     """
-    def getId() -> None:
+    def getId(self) -> None:
         """Get the ID of the user.
 
         o The ID can be used, at least from Python, to get the user from
           the user's UserDatabase
         """
-    def getUserName() -> None:
+    def getUserName(self) -> None:
         """Return the name used by the user to log into the system.
 
         o Note that this may not be identical to the user's 'getId'
           (to allow users to change their login names without changing
           their identity).
         """
-    def getRoles() -> None:
+    def getRoles(self) -> None:
         """Return the roles assigned to a user "globally"."""
-    def getRolesInContext(object) -> None:
+    def getRolesInContext(self, object) -> None:
         """Return the roles assigned to the user in context of 'object'.
 
         o Roles include both global roles (ones assigned to the user
           directly inside the user folder) and local roles (assigned
           in context of the passed in object.
         """
-    def getDomains() -> None:
+    def getDomains(self) -> None:
         """Return the list of domain restrictions for a user."""
 
 class IPropertiedUser(IBasicUser):
@@ -35,18 +35,18 @@ class IPropertiedUser(IBasicUser):
     i.e. a mapping from strings (property sheet ids)
     to objects implementing IPropertySheet
     """
-    def addPropertysheet(id, data) -> None:
+    def addPropertysheet(self, id, data) -> None:
         """Add a new property sheet to the user.
 
         The property sheet has to be a map or an IPropertySheet instance.
         """
-    def listPropertysheets() -> None:
+    def listPropertysheets(self) -> None:
         """Return a sequence of property sheet ids
 
         o for each id in the list getPropertysheet(id)
           returns a IPropertySheet
         """
-    def getPropertysheet(id) -> None:
+    def getPropertysheet(self, id) -> None:
         """Return a property sheet for the given id
 
         o the returned object implements IPropertySheet
@@ -66,14 +66,14 @@ class IUserFolder(Interface):
     o N.B: "enumeration" methods (\'getUserNames\', \'getUsers\') are *not*
            part of the contract!  See IEnumerableUserFolder.
     """
-    def getUser(name) -> None:
+    def getUser(self, name) -> None:
         """Return the named user object or None."""
-    def getUserById(id, default=None) -> None:
+    def getUserById(self, id, default=None) -> None:
         """Return the user corresponding to the given id.
 
         o If no such user can be found, return 'default'.
         """
-    def validate(request, auth: str = "", roles=...) -> None:
+    def validate(self, request, auth: str = "", roles=...) -> None:
         """Perform identification, authentication, and authorization.
 
         o Return an IUser-conformant user object, or None if we can't
@@ -89,7 +89,7 @@ class IUserFolder(Interface):
 
 class IPluggableAuthService(IUserFolder):
     """The full, default contract for the pluggable authentication service."""
-    def searchUsers(**kw) -> None:
+    def searchUsers(self, **kw) -> None:
         """Search for users.  Returns a sequence of dicts, each dict
         representing a user matching the query, with the keys
         'userid','id', 'login', 'title', and 'principal_type',
@@ -109,7 +109,7 @@ class IPluggableAuthService(IUserFolder):
 
         o login: user login
         """
-    def searchGroups(**kw) -> None:
+    def searchGroups(self, **kw) -> None:
         """Search for groups.  Returns a sequence of dicts, each dict
         representing a group matching the query, with the keys
         'groupid','id', 'title', and 'principal_type', possibly among
@@ -127,7 +127,7 @@ class IPluggableAuthService(IUserFolder):
         o sort_by: the key in the user dictionary that should be used
           to sort the results
         """
-    def searchPrincipals(groups_first: bool = False, **kw) -> None:
+    def searchPrincipals(self, groups_first: bool = False, **kw) -> None:
         """Search for principals (users, groups, or both).  Returns a
         sequence of dicts, each dict representing a principal (group
         or user) matching the query.  groups will be represented with
@@ -135,7 +135,7 @@ class IPluggableAuthService(IUserFolder):
         described in searchUsers.  Possible keywords include id, name,
         max_results, sort_by, and login.
         """
-    def updateCredentials(request, response, login, new_password) -> None:
+    def updateCredentials(self, request, response, login, new_password) -> None:
         """Central updateCredentials method
 
         This method is needed for cases where the credentials storage
@@ -146,20 +146,20 @@ class IPluggableAuthService(IUserFolder):
         the CookieAuthHelper cookie but somewhere else, like in a
         Session.
         """
-    def logout(REQUEST) -> None:
+    def logout(self, REQUEST) -> None:
         """Publicly accessible method to log out a user. A wrapper
         around resetCredentials that may implement some policy (the
         default implementation redirects to HTTP_REFERER).
         """
-    def resetCredentials(request, response) -> None:
+    def resetCredentials(self, request, response) -> None:
         """Reset credentials by informing all active resetCredentials
         plugins
         """
-    def updateLoginName(user_id, login_name) -> None:
+    def updateLoginName(self, user_id, login_name) -> None:
         """Update login name of user."""
-    def updateOwnLoginName(login_name) -> None:
+    def updateOwnLoginName(self, login_name) -> None:
         """Update own login name of authenticated user."""
-    def updateAllLoginNames(quit_on_first_error: bool = True) -> None:
+    def updateAllLoginNames(self, quit_on_first_error: bool = True) -> None:
         """Update login names of all users to their canonical value.
 
         This should be done after changing the login_transform
@@ -178,16 +178,16 @@ class IMutableUserFolder(Interface):
     o N.B: "enumeration" methods (\'getUserNames\', \'getUsers\') are *not*
            part of the contract!  See IEnumerableUserFolder.
     """
-    def userFolderAddUser(name, password, roles, domains, **kw) -> None:
+    def userFolderAddUser(self, name, password, roles, domains, **kw) -> None:
         """Create a new user object."""
-    def userFolderEditUser(name, password, roles, domains, **kw) -> None:
+    def userFolderEditUser(self, name, password, roles, domains, **kw) -> None:
         """Change user object attributes."""
-    def userFolderDelUsers(names) -> None:
+    def userFolderDelUsers(self, names) -> None:
         """Delete one or more user objects."""
 
 class IEnumerableUserFolder(IUserFolder):
     """Interface for user folders which can afford to enumerate their users."""
-    def getUserNames() -> None:
+    def getUserNames(self) -> None:
         """Return a list of usernames."""
-    def getUsers() -> None:
+    def getUsers(self) -> None:
         """Return a list of user objects."""

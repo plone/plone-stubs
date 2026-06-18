@@ -2,7 +2,7 @@ from zope.interface import Interface
 
 class IZopePageTemplate(Interface):
     """Page Templates using TAL, TALES, and METAL."""
-    def read() -> None:
+    def read(self) -> None:
         """Generate a text representation of the Template source."""
-    def write(text) -> None:
+    def write(self, text) -> None:
         """Change the Template by parsing a read()-style source text."""

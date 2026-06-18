@@ -3,27 +3,27 @@ from zope.interface import Interface
 
 class ICcTLDInformation(Interface):
     """A list of country code top level domains their relevant languages."""
-    def getAvailableTLDs() -> None:
+    def getAvailableTLDs(self) -> None:
         """Return a sequence of country code top level domains."""
-    def getTLDs() -> None:
+    def getTLDs(self) -> None:
         """Return a sequence of ccTLDs and their languages."""
-    def getLanguagesForTLD(tld) -> None:
+    def getLanguagesForTLD(self, tld) -> None:
         """Return the relevant languages for a top level domain."""
 
 class ICountryAvailability(Interface):
     """A list of available countries."""
-    def getAvailableCountries() -> None:
+    def getAvailableCountries(self) -> None:
         """Return a sequence of country tags for available countries."""
-    def getCountries() -> None:
+    def getCountries(self) -> None:
         """Return a sequence of Country objects for available countries."""
-    def getCountryListing() -> None:
+    def getCountryListing(self) -> None:
         """Return a sequence of country code and country name tuples."""
 
 class ILanguageAvailability(IBaseLanguageAvailability):
     """A list of available languages."""
-    def getLanguages(combined: bool = False) -> None:
+    def getLanguages(self, combined: bool = False) -> None:
         """Return a sequence of Language objects for available languages."""
-    def getLanguageListing(combined: bool = False) -> None:
+    def getLanguageListing(self, combined: bool = False) -> None:
         """Return a sequence of language code and language name tuples."""
 
 class IContentLanguageAvailability(ILanguageAvailability):
@@ -34,10 +34,10 @@ class IMetadataLanguageAvailability(ILanguageAvailability):
 
 class IModifiableLanguageAvailability(ILanguageAvailability):
     """A modifiable list of available languages."""
-    def setAvailableLanguages(languages, combined: bool = False) -> None:
+    def setAvailableLanguages(self, languages, combined: bool = False) -> None:
         """Set a list of available language tags."""
 
 class IModifiableCountryAvailability(ICountryAvailability):
     """A modifiable list of available countries."""
-    def setAvailableCountries(countries) -> None:
+    def setAvailableCountries(self, countries) -> None:
         """Set a list of available country tags."""

@@ -10,10 +10,10 @@ class IReferenceFactories(Interface):
     - The source parameter will disappear as soon as on save the back
       references are save with the object.
     """
-    def invokeFactory(repo_clone, source, selector=None) -> None:
+    def invokeFactory(self, repo_clone, source, selector=None) -> None:
         """Invokes the right factory for the object in a history.
 
         Returns the attached object and it's id.
         """
-    def hasBeenMoved(obj, source) -> None:
+    def hasBeenMoved(self, obj, source) -> None:
         """Returns True if the object has been moved away from ``source``."""

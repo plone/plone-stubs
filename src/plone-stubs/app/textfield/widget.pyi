@@ -4,7 +4,7 @@ from z3c.form.converter import BaseDataConverter
 from z3c.form.interfaces import ITextAreaWidget
 
 class IRichTextWidget(ITextAreaWidget):
-    def allowedMimeTypes() -> None:
+    def allowedMimeTypes(self) -> None:
         """Get allowed MIME types"""
 
 class RichTextWidget(TextAreaWidget):

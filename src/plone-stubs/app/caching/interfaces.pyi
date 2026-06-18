@@ -44,7 +44,7 @@ class IETagValue(Interface):
     operations will look up such adapters to compose an ETag value. The
     adapter name is used in options configuring those components.
     """
-    def __call__() -> None:
+    def __call__(self) -> None:
         """Return the ETag component, as a string."""
 
 class IRAMCached(Interface):

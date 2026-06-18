@@ -20,7 +20,7 @@ class IPurgePathRewriter(Interface):
 
     The same instance may be reused several times in the same request.
     """
-    def __call__(path) -> None:
+    def __call__(self, path) -> None:
         """Given a relative path, return a list of paths to purge (e.g. if
         there are multiple variants). The returned paths should not have a
         domain component, but should be relative to the domain root, e.g.
@@ -29,11 +29,11 @@ class IPurgePathRewriter(Interface):
 
 class IPurger(Interface):
     """A utility used to manage the purging process."""
-    def purgeAsync(url, httpVerb: str = "PURGE") -> None:
+    def purgeAsync(self, url, httpVerb: str = "PURGE") -> None:
         """Send a PURGE request to a particular URL asynchronously in a
         worker thread.
         """
-    def purgeSync(url, httpVerb: str = "PURGE") -> None:
+    def purgeSync(self, url, httpVerb: str = "PURGE") -> None:
         """Send a PURGE request to a particular URL synchronosly.
 
         Returns a triple ``(status, xcache, xerror)`` where ``status`` is
@@ -42,7 +42,7 @@ class IPurger(Interface):
         of the first header found from the list of headers in
         ``errorHeaders``.
         """
-    def stopThreads(wait: bool = False) -> None:
+    def stopThreads(self, wait: bool = False) -> None:
         """Attempts to stop all threads.  Threads stop immediately after
         the current item is being processed.
 

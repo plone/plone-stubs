@@ -6,12 +6,12 @@ class IStorage(Interface):
 
     Every resource has it's own history.
     """
-    def isRegistered(history_id) -> None:
+    def isRegistered(self, history_id) -> None:
         """Returns True if the object is already registered.
 
         A registered object has a history.
         """
-    def register(history_id, object, referenced_data={}, metadata={}) -> None:
+    def register(self, history_id, object, referenced_data={}, metadata={}) -> None:
         """Sets up a new history for the object and does the first save.
 
         The 'object' and the 'referenced_data' together contain the whole
@@ -33,7 +33,7 @@ class IStorage(Interface):
 
         Returns the value of the newest version(selector).
         """
-    def save(history_id, object, referenced_data={}, metadata={}) -> None:
+    def save(self, history_id, object, referenced_data={}, metadata={}) -> None:
         """Appends an object current state to a history.
 
         The 'object' and the 'referenced_data' together contain the whole
@@ -52,20 +52,20 @@ class IStorage(Interface):
 
         Returns the value of the newest version(selector).
         """
-    def retrieve(history_id, selector) -> None:
+    def retrieve(self, history_id, selector) -> None:
         """Returns a selected version of an object, which has the given
            history id.
 
         Returns a 'IVersionData' object.
         """
-    def getHistory(history_id) -> None:
+    def getHistory(self, history_id) -> None:
         """Return the history of an object by the given history id.
 
         Returns a 'IHistory' object.
         """
-    def getHistoryMetadata(history_id) -> None:
+    def getHistoryMetadata(self, history_id) -> None:
         """Returns the versioning metadata history."""
-    def getModificationDate(history_id, selector=None) -> None:
+    def getModificationDate(self, history_id, selector=None) -> None:
         """Returns the modification date of the selected version of object
             which has the given history id.
 
@@ -107,7 +107,9 @@ class IPurgeSupport(Interface):
         selector:          0, 1, 2, 3, 4, 5, 6, 7, 8, 9
         version retrieved: 0, 1, 2, 5, 6, 7, 8, 9, e, e
     """
-    def purge(history_id, selector, metadata={}, countPurged: bool = True) -> None:
+    def purge(
+        self, history_id, selector, metadata={}, countPurged: bool = True
+    ) -> None:
         """Purge a Version from a Resources History
 
         If ``countPurged`` is ``True`` version numbering counts purged
@@ -119,7 +121,7 @@ class IPurgeSupport(Interface):
         the purging.
         """
     def retrieve(
-        history_id, selector, countPurged: bool = True, substitute: bool = True
+        self, history_id, selector, countPurged: bool = True, substitute: bool = True
     ) -> None:
         """Return the Version of the Resource with the given History Id
 
@@ -133,7 +135,7 @@ class IPurgeSupport(Interface):
         Return a ``IVersionData`` object.
         """
     def getHistory(
-        history_id, countPurged: bool = True, substitute: bool = True
+        self, history_id, countPurged: bool = True, substitute: bool = True
     ) -> None:
         """Return the history of an object by the given history id.
 
@@ -146,7 +148,11 @@ class IPurgeSupport(Interface):
         Return a ``IHistory`` object.
         """
     def getModificationDate(
-        history_id, selector=None, countPurged: bool = True, substitute: bool = True
+        self,
+        history_id,
+        selector=None,
+        countPurged: bool = True,
+        substitute: bool = True,
     ) -> None:
         """Returns the modification date of the selected version of object
             which has the given history id.
@@ -162,14 +168,14 @@ class IPurgeSupport(Interface):
 
 class IHistory(Interface):
     """Iterable version history."""
-    def __len__() -> int:
+    def __len__(self) -> int:
         """Return the length of the history."""
-    def __getattr__(version_id) -> None:
+    def __getattr__(self, version_id) -> None:
         """Return the version of an object corresponding to the version id.
 
         The item returned is of ``IVersionData``.
         """
-    def __iter__():
+    def __iter__(self):
         """Iterator returning the versions.
 
         The iterators ``next`` method returns ``IVersionData`` objects.

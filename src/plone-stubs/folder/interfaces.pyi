@@ -8,9 +8,9 @@ class IFolder(Interface):
 
 class IOrderableFolder(IFolder):
     """A Plone-like folder with ordering support"""
-    def getOrdering() -> None:
+    def getOrdering(self) -> None:
         """return the currently active ordering adapter for this folder"""
-    def setOrdering(ordering: str = "") -> None:
+    def setOrdering(self, ordering: str = "") -> None:
         """(re)set ordering adapter to be used for this folder"""
 
 class IOrdering(Interface):
@@ -24,19 +24,19 @@ class IOrdering(Interface):
     Your adapter (which should still adapt to IOrdered) can
     optionally provide IExplicitOrdering, defined below. This is
     used to support explicit ordering, e.g. through a UI."""
-    def notifyAdded(obj_id) -> None:
+    def notifyAdded(self, obj_id) -> None:
         """Inform the ordering implementation that an item was added"""
-    def notifyRemoved(obj_id) -> None:
+    def notifyRemoved(self, obj_id) -> None:
         """Inform the ordering implementation that an item was removed"""
-    def getObjectPosition(obj_id) -> None:
+    def getObjectPosition(self, obj_id) -> None:
         """Get the position of the given object id"""
-    def idsInOrder() -> None:
+    def idsInOrder(self) -> None:
         """Return all object ids, in the correct order"""
 
 class IExplicitOrdering(IOrdering):
     """An adapter allowing explicit ordering"""
     def moveObjectsByDelta(
-        ids, delta, subset_ids=None, suppress_events: bool = False
+        self, ids, delta, subset_ids=None, suppress_events: bool = False
     ) -> None:
         """Move the specified ids (a sequence, or a single string id)
         by the given delta (a positive or negative number). By
@@ -44,15 +44,17 @@ class IExplicitOrdering(IOrdering):
         sub-items in the context container, but if subset_ids is
         specified, it gives a subset of ids to consider.
         Should return the number of objects that changed position."""
-    def moveObjectsUp(ids, delta: int = 1, subset_ids=None) -> None:
+    def moveObjectsUp(self, ids, delta: int = 1, subset_ids=None) -> None:
         """Move specified sub-objects up by delta in container."""
-    def moveObjectsDown(ids, delta: int = 1, subset_ids=None) -> None:
+    def moveObjectsDown(self, ids, delta: int = 1, subset_ids=None) -> None:
         """Move specified sub-objects down by delta in container."""
-    def moveObjectsToTop(ids, subset_ids=None) -> None:
+    def moveObjectsToTop(self, ids, subset_ids=None) -> None:
         """Move specified sub-objects to top of container."""
-    def moveObjectsToBottom(ids, subset_ids=None) -> None:
+    def moveObjectsToBottom(self, ids, subset_ids=None) -> None:
         """Move specified sub-objects to bottom of container."""
-    def moveObjectToPosition(obj_id, position, suppress_events: bool = False) -> None:
+    def moveObjectToPosition(
+        self, obj_id, position, suppress_events: bool = False
+    ) -> None:
         """Move specified object to absolute position."""
-    def orderObjects(key, reverse=None) -> None:
+    def orderObjects(self, key, reverse=None) -> None:
         """Order sub-objects by key and direction."""

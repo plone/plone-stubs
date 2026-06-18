@@ -18,7 +18,7 @@ class IFieldPermissionChecker(Interface):
     """Adapter factory for checking whether a user has permission to
     edit a specific field on a content object.
     """
-    def validate(field_name, vocabulary_name=None) -> None:
+    def validate(self, field_name, vocabulary_name=None) -> None:
         """Returns True if the current user has permission to edit the
         `field_name` field.  Returns False if the user does not have
         permission.  Raises and AttributeError if the field cannot be
@@ -87,7 +87,7 @@ class ISingleCheckBoxBoolWidget(ISingleCheckBoxWidget):
 
 class IRadioWidget(IRadioWidgetBase):
     """Radio widget."""
-    def renderForValue(value) -> None:
+    def renderForValue(self, value) -> None:
         """Render a single radio button element for a given value.
 
         Here the word ``value`` is used in the HTML sense, in other

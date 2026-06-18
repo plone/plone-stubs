@@ -6,7 +6,7 @@ class IUnicodeEncodingConflictResolver(Interface):
     to figure out a possible encoding - either through the
     calling context, the location or the system environment
     """
-    def resolve(context, text, expression) -> None:
+    def resolve(self, context, text, expression) -> None:
         """Returns 'text' as unicode string.
         'context' is the current context object.
         'expression' is the original expression (can be used for

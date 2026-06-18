@@ -23,24 +23,24 @@ class IJsonCompatible(Interface):
 
 class IContextawareJsonCompatible(IJsonCompatible):
     """Convert a value to a JSON compatible data structure, using a context."""
-    def __init__(value, context) -> None:
+    def __init__(self, value, context) -> None:
         """Adapts value and a context"""
 
 class ISchemaSerializer(Interface):
     """The schema serializer serializes all field values from a schema
     into JSON-compatible Python data."""
-    def __init__(schema, context, request) -> None:
+    def __init__(self, schema, context, request) -> None:
         """Adapts schema, context, and request."""
-    def __call__() -> None:
+    def __call__(self) -> None:
         """Returns JSON-compatible Python data."""
 
 class IFieldSerializer(Interface):
     """The field serializer multi adapter serializes the field value into
     JSON compatible python data.
     """
-    def __init__(field, context, request) -> None:
+    def __init__(self, field, context, request) -> None:
         """Adapts field, context and request."""
-    def __call__() -> None:
+    def __call__(self) -> None:
         """Returns JSON-compatible Python data."""
 
 class IPrimaryFieldTarget(Interface):
@@ -48,18 +48,18 @@ class IPrimaryFieldTarget(Interface):
     Useful e.g. if you want to redirect certain users to a download url
     instead of the item's view.
     """
-    def __init__(field, context, request) -> None:
+    def __init__(self, field, context, request) -> None:
         """Adapts field, context and request."""
-    def __call__() -> None:
+    def __call__(self) -> None:
         """Returns a URL."""
 
 class IObjectPrimaryFieldTarget(Interface):
     """Return a URL to direct the user to if the object has a primary field
     that provides an IPrimaryFieldTarget.
     """
-    def __init__(field, context, request) -> None:
+    def __init__(self, field, context, request) -> None:
         """Adapts field, context and request."""
-    def __call__() -> None:
+    def __call__(self) -> None:
         """Returns a URL."""
 
 class IDeserializeFromJson(Interface):
@@ -67,9 +67,9 @@ class IDeserializeFromJson(Interface):
 
 class IFieldDeserializer(Interface):
     """An adapter to deserialize a JSON value into a field value."""
-    def __init__(field, context, request) -> None:
+    def __init__(self, field, context, request) -> None:
         """Adapts a field, it's context and the request."""
-    def __call__(value) -> None:
+    def __call__(self, value) -> None:
         """Convert the provided JSON value to a field value."""
 
 class IBlockTransformer(Interface):
@@ -85,29 +85,29 @@ class IBlockTransformer(Interface):
     block_type: Incomplete
     order: Incomplete
     disabled: Incomplete
-    def __call__(value) -> None:
+    def __call__(self, value) -> None:
         """Do the transform."""
 
 class IBlockFieldDeserializationTransformer(IBlockTransformer):
     """Convert/adjust raw block deserialized value into block value."""
-    def __call__(value) -> None:
+    def __call__(self, value) -> None:
         """Convert the provided raw Python value to a block value."""
 
 class IBlockFieldSerializationTransformer(IBlockTransformer):
     """Transform block value before final JSON serialization"""
-    def __call__(value) -> None:
+    def __call__(self, value) -> None:
         """Convert the provided raw Python value to a block value."""
 
 class IBlockFieldLinkIntegrityRetriever(Interface):
     """Retrieve internal links set in current block."""
-    def __call__(value) -> None:
+    def __call__(self, value) -> None:
         """Return a list of internal links set in this block."""
 
 class IExpandableElement(Interface):
     """A named adapter that deserializes an element in expanded or collapsed
     form.
     """
-    def __call__(expand: bool = False) -> None:
+    def __call__(self, expand: bool = False) -> None:
         """ """
 
 class IZCatalogCompatibleQuery(Interface):
@@ -122,9 +122,9 @@ class IZCatalogCompatibleQuery(Interface):
     """
 
     global_query_params: Incomplete
-    def __init__(context, request) -> None:
+    def __init__(self, context, request) -> None:
         """Adapts context and request."""
-    def __call__(query) -> None:
+    def __call__(self, query) -> None:
         """Returns a ZCatalog compatible query (Python dictionary)."""
 
 class IIndexQueryParser(Interface):
@@ -146,9 +146,9 @@ class IIndexQueryParser(Interface):
 
     query_value_type: Incomplete
     query_options: Incomplete
-    def __init__(index, context, request) -> None:
+    def __init__(self, index, context, request) -> None:
         """Adapts a ZCatalog index, context and request."""
-    def parse(idx_query) -> None:
+    def parse(self, idx_query) -> None:
         """Takes a query against a single index (the value part of a
         {'index_name': idx_query} pair).
 
@@ -168,20 +168,20 @@ class IBlockSearchableText(Interface):
 
     Register as a named adapter, where the name is the block @type
     """
-    def __init__(field, context, request) -> None:
+    def __init__(self, field, context, request) -> None:
         """Adapts a context and the request."""
-    def __call__(value) -> None:
+    def __call__(self, value) -> None:
         """Extract text from the block value. Returns text"""
 
 class IJSONSummarySerializerMetadata(Interface):
     """Configure JSONSummary serializer."""
-    def default_metadata() -> None:
+    def default_metadata(self) -> None:
         """Returns a set with default metadata to be serialized."""
-    def field_accessors() -> None:
+    def field_accessors(self) -> None:
         """Returns a dictionary with field accessors to be used during serialization."""
-    def non_metadata_attributes() -> None:
+    def non_metadata_attributes(self) -> None:
         """Returns a set with non metadata attributes."""
-    def blocklisted_attributes() -> None:
+    def blocklisted_attributes(self) -> None:
         """Returns a set with attributes blocked during serialization."""
 
 class IBlockVisitor(Interface):
@@ -196,12 +196,12 @@ class ILoginProviders(Interface):
     """An interface needed to be implemented by providers that want to be listed
     in the @login endpoint
     """
-    def get_providers() -> None:
+    def get_providers(self) -> None:
         """
         return a list of login providers, with its id, title, plugin and url
         """
 
 class ISiteEndpointExpander(Interface):
     """An adapter which adds additional data to the @site endpoint."""
-    def __call__(data) -> None:
+    def __call__(self, data) -> None:
         """Add additional key/values to data"""

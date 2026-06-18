@@ -17,7 +17,7 @@ class ITransform(Interface):
     """
 
     order: Incomplete
-    def transformUnicode(result, encoding) -> None:
+    def transformUnicode(self, result, encoding) -> None:
         """Called to allow the transformer to modify the result if the result
         is text string.
 
@@ -25,7 +25,7 @@ class ITransform(Interface):
 
         Return None to indicate that the response should not be modified.
         """
-    def transformBytes(result, encoding) -> None:
+    def transformBytes(self, result, encoding) -> None:
         """Called to allow the transformer to modify the result if the result
         is an encoded string.
 
@@ -33,7 +33,7 @@ class ITransform(Interface):
 
         Return None to indicate that the response should not be modified.
         """
-    def transformIterable(result, encoding) -> None:
+    def transformIterable(self, result, encoding) -> None:
         """Called to allow the transformer to modify the result if the result
         is an iterable of strings (as per the WSGI specification).
 
@@ -48,7 +48,7 @@ class ITransformer(Interface):
     it here. You probably don't want to use this directly; you want to use
     ITransform instead.
     """
-    def __call__(request, result, encoding) -> None:
+    def __call__(self, request, result, encoding) -> None:
         """Return a modified result.
 
         `request` is the Zope request. Response headers may be read or

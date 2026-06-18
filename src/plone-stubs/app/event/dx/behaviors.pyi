@@ -25,7 +25,7 @@ class IEventBasic(model.Schema, IDXEvent):
     open_end: Incomplete
     sync_uid: Incomplete
     @invariant
-    def validate_start_end(data) -> None: ...
+    def validate_start_end(self, data) -> None: ...
 
 class IEventRecurrence(model.Schema, IDXEventRecurrence):
     """Recurring Event Schema."""

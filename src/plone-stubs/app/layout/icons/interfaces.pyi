@@ -9,5 +9,5 @@ class IContentIcon(Interface):
     url: Incomplete
     description: Incomplete
     title: Incomplete
-    def html_tag() -> None:
+    def html_tag(self) -> None:
         """Return a HTML string that is the tag for rendering this icon."""

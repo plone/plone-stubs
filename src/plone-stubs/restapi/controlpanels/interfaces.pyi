@@ -7,13 +7,13 @@ class IControlpanel(Interface):
     schema: Incomplete
     configlet_id: Incomplete
     configlet_category_id: Incomplete
-    def add(names) -> None:
+    def add(self, names) -> None:
         """Create controlpanel children by names"""
-    def get(names) -> None:
+    def get(self, names) -> None:
         """Read controlpanel children by names"""
-    def update(names) -> None:
+    def update(self, names) -> None:
         """Update controlpanel children by names"""
-    def delete(names) -> None:
+    def delete(self, names) -> None:
         """Remove controlpanel children by names"""
 
 class IDexterityTypesControlpanel(IControlpanel):

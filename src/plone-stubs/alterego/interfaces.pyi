@@ -10,7 +10,7 @@ class IDynamicObjectFactory(Interface):
     the dynamic module. Thus, there is a one-to-one mapping between the
     dynamic module as the the
     """
-    def __call__(name, module) -> None:
+    def __call__(self, name, module) -> None:
         """Create an object with the given name in the given (dynamic) module.
 
         This will only be called once for each name. __module__ is the module

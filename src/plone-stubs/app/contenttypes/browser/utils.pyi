@@ -6,7 +6,7 @@ PREFIX: str
 
 class IUtils(Interface):
     """ """
-    def getMimeTypeIcon(content_file) -> None:
+    def getMimeTypeIcon(self, content_file) -> None:
         """ """
 
 class Utils(BrowserView):

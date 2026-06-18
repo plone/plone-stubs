@@ -6,59 +6,59 @@ class IContentListing(IReadSequence):
 
 class IContentListingObject(IDublinCore):
     """Unified representation of content objects in listings."""
-    def getDataOrigin() -> None:
+    def getDataOrigin(self) -> None:
         """The origin of the data for the object."""
-    def getObject() -> None:
+    def getObject(self) -> None:
         """get the real object (may be expensive)."""
-    def getId() -> None:
+    def getId(self) -> None:
         """get the object id in its container."""
-    def getPath() -> None:
+    def getPath(self) -> None:
         """Path to the object, relative to the portal root."""
-    def getURL(relative: bool = False) -> None:
+    def getURL(self, relative: bool = False) -> None:
         """Full url to the object, including the portal root."""
-    def uuid() -> None:
+    def uuid(self) -> None:
         """Unique content identifier."""
-    def getSize() -> None:
+    def getSize(self) -> None:
         """size in bytes."""
-    def review_state() -> None:
+    def review_state(self) -> None:
         """Workflow review state."""
-    def Title() -> None:
+    def Title(self) -> None:
         """Title."""
-    def Description() -> None:
+    def Description(self) -> None:
         """Description."""
-    def CroppedDescription() -> None:
+    def CroppedDescription(self) -> None:
         """A cropped description."""
-    def Type() -> None:
+    def Type(self) -> None:
         """Type title."""
-    def PortalType() -> None:
+    def PortalType(self) -> None:
         """Content type id of the object."""
-    def listCreators() -> None:
+    def listCreators(self) -> None:
         """List creators of the object."""
-    def getUserData(username) -> None:
+    def getUserData(self, username) -> None:
         """Get some data of a given user."""
-    def Creator() -> None:
+    def Creator(self) -> None:
         """Creator of the object."""
-    def Author() -> None:
+    def Author(self) -> None:
         """Author of the object."""
-    def Subject() -> None:
+    def Subject(self) -> None:
         """Subject(s) of the object."""
-    def Date() -> None:
+    def Date(self) -> None:
         """Date of the object."""
-    def CreationDate() -> None:
+    def CreationDate(self) -> None:
         """Creation date of the object."""
-    def EffectiveDate() -> None:
+    def EffectiveDate(self) -> None:
         """Date, when content will be shown in listings."""
-    def ExpirationDate() -> None:
+    def ExpirationDate(self) -> None:
         """Date, when content will be removed from listings."""
-    def ModificationDate() -> None:
+    def ModificationDate(self) -> None:
         """Date, when object was last modified."""
-    def Language() -> None:
+    def Language(self) -> None:
         """Language of the object."""
-    def ContentTypeClass() -> None:
+    def ContentTypeClass(self) -> None:
         """The contenttype suitable as a css class name, matching Plone
         conventions.
         """
-    def MimeTypeIcon() -> None:
+    def MimeTypeIcon(self) -> None:
         """return mimetype icon from mimetype registry if contenttype is
         File else None
         """

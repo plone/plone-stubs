@@ -88,7 +88,7 @@ class IExecutable(Interface):
     from (context, element, event),  in order to be executed when the rule that
     contains it is executed.
     """
-    def __call__() -> None:
+    def __call__(self) -> None:
         """Execute the rule or rule element.
 
         If this method returns False, execution will stop. If it returns True,

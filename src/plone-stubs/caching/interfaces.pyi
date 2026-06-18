@@ -18,7 +18,7 @@ class ICachingOperation(Interface):
     Should be registered as a named multi-adapter from a cacheable object
     (e.g. a view, or just Interface for a general operation) and the request.
     """
-    def interceptResponse(ruleset, response) -> None:
+    def interceptResponse(self, ruleset, response) -> None:
         """Intercept the response if appropriate.
 
         May modify the response if required, e.g. by setting headers.
@@ -32,7 +32,7 @@ class ICachingOperation(Interface):
 
         The response body should *not* be modified.
         """
-    def modifyResponse(ruleset, response) -> None:
+    def modifyResponse(self, ruleset, response) -> None:
         """Modify the response. ``rulset`` is the name of the caching ruleset
         that was matched. It may be ``None``. ``response`` is the current
         HTTP response. You may modify its headers and inspect it as required.
@@ -109,7 +109,7 @@ class IRulesetLookup(Interface):
     in this package, and would expect the use of a custom ``IRulesetLookup``
     to be a last resort for integrators.
     """
-    def __call__() -> None:
+    def __call__(self) -> None:
         """Get the ruleset for the adapted published object and request.
 
         Returns a ruleset name (a string) or None.

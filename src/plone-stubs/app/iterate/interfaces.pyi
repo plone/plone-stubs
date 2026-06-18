@@ -80,43 +80,43 @@ class IWCContainerLocator(Interface):
 
     available: Incomplete
     title: Incomplete
-    def __call__() -> None:
+    def __call__(self) -> None:
         """Return a container object, or None if available() is False"""
 
 class ICheckinCheckoutTool(Interface):
-    def allowCheckin(content) -> None:
+    def allowCheckin(self, content) -> None:
         """
         denotes whether a checkin operation can be performed on the content.
         """
-    def allowCheckout(content) -> None:
+    def allowCheckout(self, content) -> None:
         """
         denotes whether a checkout operation can be performed on the content.
         """
-    def allowCancelCheckout(content) -> None:
+    def allowCancelCheckout(self, content) -> None:
         """denotes whether a cancel checkout operation can be performed on the
         content.
         """
-    def checkin(content, checkin_messsage) -> None:
+    def checkin(self, content, checkin_messsage) -> None:
         """check the working copy in, this will merge the working copy with
         the baseline
         """
-    def checkout(container, content) -> None: ...
-    def cancelCheckout(content) -> None: ...
+    def checkout(self, container, content) -> None: ...
+    def cancelCheckout(self, content) -> None: ...
 
 class IObjectCopier(Interface):
     """copies and merges the object state"""
-    def copyTo(container) -> None:
+    def copyTo(self, container) -> None:
         """copy the context to the given container, must also create an AT
         relation using the WorkingCopyRelation.relation name between the
         source and the copy.
         returns the copy.
         """
-    def merge() -> None:
+    def merge(self) -> None:
         """merge/replace the source with the copy, context is the copy."""
 
 class IObjectArchiver(Interface):
     """iterate needs minimal versioning support"""
-    def save(checkin_message) -> None:
+    def save(self, checkin_message) -> None:
         """save a new version of the object"""
     def isVersioned(self) -> None:
         """is this content already versioned"""
@@ -127,14 +127,14 @@ class IObjectArchiver(Interface):
 
 class ICheckinCheckoutPolicy(Interface):
     """Checkin / Checkout Policy"""
-    def checkin(checkin_message) -> None:
+    def checkin(self, checkin_message) -> None:
         """checkin the context, if the target has been deleted then raises a
          checkin exception.
 
         if the object version has changed since the checkout begin (due to
         another checkin) raises a conflict error.
         """
-    def checkout(container) -> None:
+    def checkout(self, container) -> None:
         """
         checkout the content object into the container, iff another object with
         the same id exists the id is amended, the working copy object is
@@ -144,25 +144,25 @@ class ICheckinCheckoutPolicy(Interface):
 
         raises a CheckoutError if the object is already checked out.
         """
-    def cancelCheckout() -> None:
+    def cancelCheckout(self) -> None:
         """coxtent is a checkout (working copy), this method will go ahead and
         delete
         the working copy.
         """
-    def getWorkingCopies() -> None: ...
-    def getBaseline() -> None: ...
-    def getWorkingCopy() -> None: ...
+    def getWorkingCopies(self) -> None: ...
+    def getBaseline(self) -> None: ...
+    def getWorkingCopy(self) -> None: ...
 
 class ICheckinCheckoutReference(Interface):
-    def checkout(baseline, wc, references, storage) -> None:
+    def checkout(self, baseline, wc, references, storage) -> None:
         """
         handle processing of the given references from the baseline
         into the working copy, storage is an annotation for bookkeeping
         information.
         """
-    def checkoutBackReferences(baseline, wc, references, storage) -> None: ...
-    def checkin(baseline, wc, references, storage) -> None: ...
-    def checkinBackReferences(baseline, wc, references, storage) -> None: ...
+    def checkoutBackReferences(self, baseline, wc, references, storage) -> None: ...
+    def checkin(self, baseline, wc, references, storage) -> None: ...
+    def checkinBackReferences(self, baseline, wc, references, storage) -> None: ...
 
 class IIterateSettings(Interface):
     enable_checkout_workflow: Incomplete

@@ -26,9 +26,9 @@ class IManagePortletsView(Interface):
 
     category: Incomplete
     key: Incomplete
-    def getAssignmentMappingUrl(manager) -> None:
+    def getAssignmentMappingUrl(self, manager) -> None:
         """Given a portlet manager, get the URL to its assignment mapping."""
-    def getAssignmentsForManager(manager) -> None:
+    def getAssignmentsForManager(self, manager) -> None:
         """Get the assignments in the current context for the given manager."""
 
 class IManageDashboardPortletsView(IManagePortletsView):

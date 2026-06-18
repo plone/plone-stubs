@@ -4,7 +4,7 @@ ATTRIBUTE_NAME: str
 
 class IUUIDGenerator(Interface):
     """Utility for generating UUIDs"""
-    def __call__() -> None:
+    def __call__(self) -> None:
         """Generate a new UUID."""
 
 class IUUIDAware(Interface):
@@ -33,7 +33,7 @@ class IMutableUUID(Interface):
     Be sure of what you are doing. UUID is supposed to be stable and
     widely used
     """
-    def get() -> None:
+    def get(self) -> None:
         """Return the UUID of the context"""
-    def set(uuid) -> None:
+    def set(self, uuid) -> None:
         """Set the unique id of the context with the uuid value."""

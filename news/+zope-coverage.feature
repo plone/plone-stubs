@@ -1,0 +1,1 @@
+Expanded the bundled ``zope-stubs`` coverage: added stubs for the ``zope.interface``, ``zope.component``, and ``zope.schema`` submodules used across the package (interfaces, declarations, verify, fields, vocabularies, hooks, factory), with generic typing on the component-registry lookups. @ericof

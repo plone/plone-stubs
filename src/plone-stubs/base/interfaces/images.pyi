@@ -2,9 +2,9 @@ from zope.interface import Interface
 
 class IImageScalesAdapter(Interface):
     """Return a list of image scales for the given context."""
-    def __init__(context, request) -> None:
+    def __init__(self, context, request) -> None:
         """Adapts context and the request."""
-    def __call__() -> None:
+    def __call__(self) -> None:
         """Call IImageScalesFieldAdapter on all fields."""
 
 class IImageScalesFieldAdapter(Interface):
@@ -15,7 +15,7 @@ class IImageScalesFieldAdapter(Interface):
     and not for others.  But adapters for text fields or relation fields
     are imaginable.
     """
-    def __init__(field, context, request) -> None:
+    def __init__(self, field, context, request) -> None:
         """Adapts field, context and request."""
-    def __call__() -> None:
+    def __call__(self) -> None:
         """Returns JSON compatible python data."""

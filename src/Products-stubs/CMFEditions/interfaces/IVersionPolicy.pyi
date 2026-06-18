@@ -4,5 +4,5 @@ class IVersionPolicy(Interface):
     """A version policy object, which describes and sets up a versioning
     policy
     """
-    def Title() -> None:
+    def Title(self) -> None:
         """Returns a nice name for the policy"""

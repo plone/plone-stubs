@@ -5,12 +5,12 @@ class IPropertiesTool(Interface):
     """Manage properties of the site as a whole."""
 
     id: Incomplete
-    def editProperties(props) -> None:
+    def editProperties(self, props) -> None:
         """Change portal settings.
 
         Permission --  Manage portal
         """
-    def smtp_server() -> None:
+    def smtp_server(self) -> None:
         """Get local SMTP server.
 
         Returns -- String

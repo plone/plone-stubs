@@ -7,7 +7,7 @@ class IBrowserIdManager(Interface):
     visitors, and for servicing requests from Session Data Managers
     related to the browser id.
     """
-    def hasBrowserId() -> None:
+    def hasBrowserId(self) -> None:
         """Return true if there is a browser id for the current request.
 
         o Permission required: Access contents information
@@ -15,7 +15,7 @@ class IBrowserIdManager(Interface):
         o Does *not* raise an error if the request contains a broken
           browser id.
         """
-    def getBrowserId(create: int = 1) -> None:
+    def getBrowserId(self, create: int = 1) -> None:
         """Return a browser id for the current request.
 
         o If create is false, return None if there is no browser id associated
@@ -36,7 +36,7 @@ class IBrowserIdManager(Interface):
         o Raises BrowserIdManagerErr if an ill-formed browser id
           is found in REQUEST.
         """
-    def getBrowserIdName() -> None:
+    def getBrowserIdName(self) -> None:
         """
         Returns a string with the name of the cookie/form variable which is
         used by the current browser id manager as the name to look up when
@@ -44,7 +44,7 @@ class IBrowserIdManager(Interface):
 
         Permission required: Access contents information
         """
-    def isBrowserIdNew() -> None:
+    def isBrowserIdNew(self) -> None:
         """Returns true if browser id is 'new'.
 
         A browser id is 'new'
@@ -55,14 +55,14 @@ class IBrowserIdManager(Interface):
 
         Raises:  BrowserIdManagerErr.  If there is no current browser id.
         """
-    def isBrowserIdFromCookie() -> None:
+    def isBrowserIdFromCookie(self) -> None:
         """Return true if browser id comes from a cookie.
 
         o Permission required: Access contents information
 
         o Raise BrowserIdManagerErr if there is no current browser id.
         """
-    def isBrowserIdFromForm() -> None:
+    def isBrowserIdFromForm(self) -> None:
         """Return true if browser id comes from a form variable.
 
         o Variable may come from either the query string or a post.
@@ -71,14 +71,14 @@ class IBrowserIdManager(Interface):
 
         o Raise BrowserIdManagerErr if there is no current browser id.
         """
-    def isBrowserIdFromUrl() -> None:
+    def isBrowserIdFromUrl(self) -> None:
         """Return true if browser id comes from a cookie.
 
         o Permission required: Access contents information
 
         o Raise BrowserIdManagerErr if there is no current browser id.
         """
-    def flushBrowserIdCookie() -> None:
+    def flushBrowserIdCookie(self) -> None:
         """Deletes the browser id cookie from the client browser.
 
         o Permission required: Access contents information
@@ -86,7 +86,7 @@ class IBrowserIdManager(Interface):
         o Raise BrowserIdManagerErr if the 'cookies' namespace isn't
           a browser id namespace.
         """
-    def setBrowserIdCookieByForce(bid) -> None:
+    def setBrowserIdCookieByForce(self, bid) -> None:
         """Sets the browser id cookie to browser id 'bid' by force.
 
         o Useful when you need to 'chain' browser id cookies across domains
@@ -97,7 +97,7 @@ class IBrowserIdManager(Interface):
         o Raise BrowserIdManagerErr if the 'cookies' namespace isn't
           a browser id namespace.
         """
-    def getHiddenFormField() -> None:
+    def getHiddenFormField(self) -> None:
         """Return a string usable as a hidden form field for the browser id.
 
         o String is of the form::
@@ -107,7 +107,7 @@ class IBrowserIdManager(Interface):
         o name and the value represent the current browser id
           name and current browser id.
         """
-    def encodeUrl(url, style: str = "querystring") -> None:
+    def encodeUrl(self, url, style: str = "querystring") -> None:
         """Encode a given URL with the current browser id.
 
         o Two forms of URL-encoding are supported: 'querystring' and 'inline'.
@@ -152,14 +152,14 @@ class ISessionDataManager(Interface):
     related to Session Data Objects.  It also communicates with a Browser
     Id Manager to provide information about browser ids.
     """
-    def getBrowserIdManager() -> None:
+    def getBrowserIdManager(self) -> None:
         """Return the nearest acquirable browser id manager.
 
         o Raise SessionDataManagerErr if no browser id manager can be found.
 
         o Permission required: Access session data
         """
-    def getSessionData(create: int = 1) -> None:
+    def getSessionData(self, create: int = 1) -> None:
         """Return a Session Data Object for the current browser id.
 
         o If there is no current browser id, and create is true,
@@ -169,14 +169,14 @@ class ISessionDataManager(Interface):
 
         o Permission required: Access session data
         """
-    def hasSessionData() -> None:
+    def hasSessionData(self) -> None:
         """Does a Session Data Object exist for the current browser id?
 
         o Do not create a Session Data Object if one does not exist.
 
         o Permission required: Access session data
         """
-    def getSessionDataByKey(key) -> None:
+    def getSessionDataByKey(self, key) -> None:
         """Return a Session Data Object associated with 'key'.
 
         o If there is no Session Data Object associated with 'key',
@@ -187,7 +187,7 @@ class ISessionDataManager(Interface):
 
 class IMutableSessionDataManager(ISessionDataManager):
     """A session data manager that can clear sessions."""
-    def clearSessionData() -> None:
+    def clearSessionData(self) -> None:
         """Clear all data stored in the current user session, if it exists.
 
         o Permission required: Access arbitrary user session data

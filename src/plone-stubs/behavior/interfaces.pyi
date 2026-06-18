@@ -8,11 +8,11 @@ class IBehaviorAssignable(Interface):
     There is no default implementation of this adapter. The mechanism for
     assigning behaiors to an object or type of object is application specific.
     """
-    def supports(behavior_interface) -> None:
+    def supports(self, behavior_interface) -> None:
         """Determine if the context supports the given behavior, returning
         True or False.
         """
-    def enumerateBehaviors() -> None:
+    def enumerateBehaviors(self) -> None:
         """Return an iterable of all the IBehaviors supported by the context."""
 
 class IBehavior(Interface):
@@ -44,7 +44,7 @@ class IBehaviorAdapterFactory(Interface):
     """
 
     behavior: Incomplete
-    def __call__(context) -> None:
+    def __call__(self, context) -> None:
         """Invoke the behavior-specific factory if the context can be adapted
         to IBehaviorAssignable and
         IBehaviorAssignable(context).supports(self.behavior.interface) returns
