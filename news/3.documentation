@@ -1,0 +1,1 @@
+Document how to install plone-stubs in projects that combine uv (managed = false) with mxdev. @ericof
