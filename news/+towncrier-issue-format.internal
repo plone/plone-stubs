@@ -1,0 +1,1 @@
+Fixed the issue links in the change log, which pointed at an unrendered template placeholder instead of this repository. @ericof
