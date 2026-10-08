@@ -13,7 +13,7 @@ keywords = [
     "typing",
     "mypy",
 ]
-requires-python = ">=3.12"
+requires-python = ">=3.10"
 license = "GPL-2.0-only"
 dependencies = []
 classifiers = [
@@ -22,6 +22,8 @@ classifiers = [
   "Operating System :: OS Independent",
   "Programming Language :: Python",
   "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
   "Programming Language :: Python :: 3.14",
@@ -106,7 +108,7 @@ name = "Tests"
 showcontent = true
 
 [tool.ruff]
-target-version = "py312"
+target-version = "py310"
 line-length = 88
 fix = true
 lint.select = [
