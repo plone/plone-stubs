@@ -98,8 +98,8 @@ def scalePILImage(image, width=None, height=None, mode: str = "scale", direction
 
 def scale_svg_image(
     image: io.BytesIO,
-    target_width: None | int,
-    target_height: None | int,
+    target_width: int | None,
+    target_height: int | None,
     mode: str = "contain",
 ) -> tuple[bytes, tuple[int, int]]:
     """Scale and crop a SVG image to another display size.
