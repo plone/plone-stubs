@@ -74,7 +74,7 @@ filename = "CHANGELOG.md"
 start_string = "<!-- towncrier release notes start -->\n"
 title_format = "## {version} ({project_date})"
 template = "news/.changelog_template.jinja"
-issue_format = "[#{issue}]({{ cookiecutter.__repository_url }}/issues/{issue})"
+issue_format = "[#{issue}](https://github.com/plone/plone-stubs/issues/{issue})"
 underlines = ["", "", ""]
 
 [[tool.towncrier.type]]
