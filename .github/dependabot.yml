@@ -1,0 +1,16 @@
+version: 2
+updates:
+
+  - package-ecosystem: "github-actions"
+    directories:
+      # Workflows under .github/workflows
+      - "/"
+    schedule:
+      # Check for updates to GitHub Actions every week
+      interval: "weekly"
+    labels:
+      # Setting labels replaces Dependabot's defaults, so keep them
+      - "dependencies"
+      - "github_actions"
+      # Skips the change log check in .github/workflows/changelog.yml
+      - "skip changelog"
